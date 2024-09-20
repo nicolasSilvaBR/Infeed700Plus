@@ -7,3 +7,5 @@ sqlalchemy>=2.0.0
 pyodbc>=4.0.0
 matplotlib>=3.9.2
 plotly>=5.24.1
+requests_ntlm
+requests
