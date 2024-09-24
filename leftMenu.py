@@ -2,28 +2,37 @@ import streamlit as st
 import pandas as pd
 from databaseConnection import mydb
 import streamlit.components.v1 as components
-from leftMenu_custom_css import leftMenu_custom_css  # Custom CSS for left menu
 
 # Establish database connection
 engine = mydb()
 
-# Function to create the sidebar with navigation links and logo
+# Credenciais
+ipAddress = "10.202.2.22"
+port = "80"
+database = "Infeed700"
+ReportServerName = "ReportServer"
+username = "icm\\ndasilva"
+password = "1984Icm022*"
+reportRDLname = "Intake"
+
+headers = {"Intake": 1, "Blending": 2, "Press": 3}
+reports = {"Intake": 1, "IntakeTip": 1, "Blending": 2,"Press Summary": 3}
+
 def LeftMenu():
-    # Sidebar image (logo)
-    st.sidebar.image("icmLogo.png", use_column_width=False, width=100)
+    # Carregar o arquivo CSS
+    def local_css(file_name):
+        with open(file_name) as f:
+            st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
-    # Function to create the navigation menu in the sidebar
-    def create_sidebar_menu():
-        st.sidebar.markdown("""
-        <div class="sidebar-menu">
-            <a target="_self" class="sidebar-item" href="?page=intake">Intake <span>›</span></a>
-            <a target="_self" class="sidebar-item" href="?page=intakeDashboard">Intake Dashboard <span>›</span></a>
-            <a target="_self" class="sidebar-item" href="?page=intakeTips">Intake Tips <span>›</span></a>
-        </div>
-        """, unsafe_allow_html=True)
+    # Chamar a função para carregar o CSS
+    local_css("style.css")
 
-    # Inject custom CSS for the menu
-    leftMenu_custom_css()
 
-    # Display the sidebar menu
-    create_sidebar_menu()
+    with st.sidebar:
+        for header, valor in headers.items():
+            with st.expander(header, expanded=False):
+                for report, valor2 in reports.items():
+                    if valor2 == valor:
+                        st.markdown(f"""
+                            <a target="_self" class="sidebar-item" href="http://{ipAddress}:{port}/{ReportServerName}/Pages/ReportViewer.aspx?%2f{database}%2f{report}&rs:Command=Render">{report} <span>›</span></a>
+                        """, unsafe_allow_html=True)

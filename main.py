@@ -4,11 +4,7 @@ from leftMenu import LeftMenu  # Import the left menu functionality
 import requests
 from requests_ntlm import HttpNtlmAuth  # Autenticação NTLM
 
-# Configure the page layout to "wide" (esta linha deve ser a primeira)
 st.set_page_config(layout="wide")
-
-# Apply custom left menu styles (if necessary)
-leftMenu_custom_css()
 
 # Display the left menu
 LeftMenu()
@@ -44,7 +40,7 @@ if response.status_code == 200:
 
     # Código HTML para incorporar o iframe
     iframe_code = f"""
-    <iframe width="100%" height="100%" style="min-height: 100vh;" src="{report_url}" frameborder="0" allowfullscreen></iframe>
+    <iframe width="100%" height="100%" style="min-height: 120vh;" src="{report_url}" frameborder="0" allowfullscreen></iframe>
     """
 
    # Renderiza o iframe no Streamlit

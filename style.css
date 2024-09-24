@@ -1,0 +1,118 @@
+/* Estilo para o contêiner principal do menu lateral */
+.sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    border: 1px solid #f0f0f0;
+    margin-top: 20px;
+}
+
+/* Customização geral do st.expander */
+[data-testid="stExpander"] {
+    border: 1px solid #E0E0E0;
+    border-radius: 8px;
+    background-color: #F9F9F9;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Tamanho da fonte do label do st.expander */
+div[data-testid="stExpander"] details summary p {
+    font-size: 18px;
+}
+
+/* Estilização do título do expander */
+[data-testid="stExpander"] summary {
+    font-size: 48px;
+    font-weight: bold;
+    color: #333;
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+/* Efeito hover no título do expander */
+[data-testid="stExpander"] summary:hover {
+    background-color: rgba(0, 123, 255, 0.1);
+    color: #007BFF;
+    transition: all 0.3s ease;
+}
+
+/* Customização dos itens internos do expander */
+[data-testid="stExpander"] div[role="group"] {
+    font-size: 48px;
+    color: #555;
+    padding: 10px 15px;
+    background-color: #FFFFFF;
+    border-top: 1px solid #E0E0E0;
+    border-radius: 0 0 8px 8px;
+}
+
+/* Efeito de borda ativa quando o expander está aberto */
+[data-testid="stExpander"][open] {
+    background-color: #F1F7FF;
+    border: 1px solid #007BFF;
+}
+
+/* Customização para links dentro do expander */
+.sidebar-item {
+    padding: 14px 20px;
+    text-align: left;
+    text-decoration: none;
+    color: #333;
+    font-size: 18px;
+    font-family: 'Helvetica Neue', sans-serif;
+    transition: all 0.3s ease;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Efeito hover nos links */
+.sidebar-item:hover {
+    background-color: #e3f2fd;
+    color: #007BFF;
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Efeito de clique nos links */
+.sidebar-item:active {
+    background-color: #007BFF;
+    color: white;
+    transform: translateY(0);
+}
+
+/* Estilização dos ícones dentro dos links */
+.sidebar-item span {
+    font-size: 20px;
+    color: #007BFF;
+    transition: color 0.3s ease;
+}
+
+/* Mudar a cor dos ícones no hover */
+.sidebar-item:hover span {
+    color: #0056b3;
+}
+
+/* Customização da barra de rolagem */
+[data-testid="stExpander"] div[role="group"]::-webkit-scrollbar {
+    width: 6px;
+}
+
+/* Personalização da cor da barra de rolagem */
+[data-testid="stExpander"] div[role="group"]::-webkit-scrollbar-thumb {
+    background-color: #007BFF;
+    border-radius: 10px;
+}
+
+[data-testid="stExpander"] div[role="group"]::-webkit-scrollbar-track {
+    background-color: #E0E0E0;
+}
