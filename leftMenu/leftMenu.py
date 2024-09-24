@@ -31,7 +31,7 @@ def LeftMenu():
             st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
     # Call the local_css function to load styles from "style.css"
-    local_css("style.css")
+    local_css("leftMenu\style.css")
 
     # Create a sidebar for navigation
     with st.sidebar:

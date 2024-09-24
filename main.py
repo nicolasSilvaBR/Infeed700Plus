@@ -1,5 +1,5 @@
 import streamlit as st  # Importing Streamlit for building the web application
-from leftMenu import LeftMenu  # Import the left menu functionality
+from leftMenu.leftMenu import LeftMenu  # Import the left menu functionality
 import requests  # Importing the requests library for making HTTP requests
 from requests_ntlm import HttpNtlmAuth  # Import NTLM authentication support
 
