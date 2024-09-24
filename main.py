@@ -43,7 +43,7 @@ if response.status_code == 200:
     """
 
     # Render the iframe in Streamlit
-    st.components.v1.html(iframe_code, height=800, scrolling=True)
+    st.components.v1.html(iframe_code, height=900, scrolling=False)
 else:
     # Display an error message if the request was not successful
     st.error(f"Error accessing the report: {response.status_code}")
