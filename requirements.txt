@@ -11,3 +11,4 @@ requests_ntlm
 requests
 sklearn
 streamlit-icons
+streamlit-option-menu
