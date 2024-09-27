@@ -23,7 +23,7 @@ username = "icm\\ndasilva"
 password = "1984Icm022*"
 
 # Construct the URL for the SSRS report
-ssrs_url = f"http://{ipAddress}:{port}/{ReportServerName}/Pages/ReportViewer.aspx?%2f{database}%2f{reportRDLname}&rs:Command=Render"
+ssrs_url = f"http://{ipAddress}:{port}/{ReportServerName}/Pages/ReportViewer.aspx?%2f{database}%2f{reportRDLname}&rs:Command=Render&MinDate=2024-08-01"
 
 # Make the request using NTLM authentication
 response = requests.get(ssrs_url, auth=HttpNtlmAuth(username, password))
