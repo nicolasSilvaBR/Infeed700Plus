@@ -1,7 +1,10 @@
 import streamlit as st
 
 headers = {1:"Intake", 2:"Blending", 3:"Press"}
-reports = {1:["Intakes","Intake"],2:["Blending / Batching","Batch"]}
+reports = {1:[["Intakes","Intake"],["Intake Tips","TipBreakdown"]],
+           2:[["Blending / Batching","Batch"],["Blending / Run","BatchByRunNumber"]]
+        }
+
 
 def LeftMenu():
     # Load CSS for custom styles
@@ -15,7 +18,8 @@ def LeftMenu():
         for key, header in headers.items():
             with st.expander(header, expanded=False):               
                 for key2, report in reports.items():
-                    if key2 == key:                        
-                        if st.button(report[0]):
-                            st.session_state['selected_report'] = report[1]
+                    if key2 == key:
+                        for reportitem in report:                  
+                            if st.button(reportitem[0],key=reportitem[1]):
+                                st.session_state['selected_report'] = reportitem[1]
 

@@ -32,7 +32,7 @@ response = requests.get(ssrs_url, auth=HttpNtlmAuth(username, password))
 if response.status_code == 200:
     report_url = f"{ssrs_url}&rs:Embed=true&rc:Parameters=Collapsed"
     iframe_code = f"""
-    <iframe width="100%" height="100%" style="min-height: 120vh;" src="{report_url}" frameborder="0" allowfullscreen></iframe>
+    <iframe width="100%" height="100%" style="min-height: 150vh;" src="{report_url}" frameborder="0" allowfullscreen></iframe>
     """
     st.components.v1.html(iframe_code, height=900, scrolling=False)
 else:
