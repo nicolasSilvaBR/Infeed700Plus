@@ -31,7 +31,7 @@ menu_styles = {
     
     # Estilos dos ícones exibidos ao lado de cada item de menu
     "icon": {
-        "color": "#007bff",  # Cor padrão dos ícones
+        "color": "#818274",  # Cor padrão dos ícones
         "font-size": "20px",  # Tamanho do ícone
         "transition": "color 0.3s ease",  # Transição suave para mudança de cor ao selecionar
     },
@@ -50,7 +50,7 @@ menu_styles = {
     
     # Estilos aplicados ao link selecionado (ativo)
     "nav-link-selected": {
-        "background-color": "#007bff",  # Cor de fundo do item selecionado
+        "background-color": "#10454F",  # Cor de fundo do item selecionado
         "color": "white",  # Cor do texto do item selecionado
         "font-weight": "bold",  # Deixa o texto em negrito para destaque
     },
