@@ -1,20 +1,26 @@
-/*Styling for the main container of the sidebar menu*/
+/* Styling for the main container of the sidebar menu */
 .sidebar-menu {
     display: flex;  
     flex-direction: column;  /* Arrange items in a vertical column */
-    padding: 15px;  /* Padding inside the sidebar */
-    background-color: #f8f9fa;  /* Light gray background for sidebar */
-    border-radius: 12px;  /* Rounded corners for sidebar */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Soft shadow for the sidebar */
-    margin-top: 20px;  /* Spacing above the sidebar */
+    padding: 0px!important;  /* Internal padding for the container */
+    background-color: #ffffff;  /* Background color for menu */
+    border: 0px solid #e0e0e0;  /* Light border around the menu */
+    border-radius: 8px;  /* Rounded corners */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);  /* Light shadow for depth */
+    width: 300px;  /* Width of the menu */
+    max-width: 100%;  /* Maximum width for responsiveness */
+    margin: 0px auto;  /* Center the menu with top and bottom margins */
+    transition: all 0.3s ease-in-out;  /* Smooth transition for style changes */
+    opacity: 0.95;  /* Opacity for the container */
+    backdrop-filter: blur(5px);  /* Blur effect on background */
 }
 
 /* General customization for the st.expander component */
 [data-testid="stExpander"] {
-    border: 1px solid #dee2e6;  /* Border color for expander */
+    border: 0px solid #dee2e6;  /* Border color for expander */
     border-radius: 8px;  /* Rounded corners for expander */
     background-color: #ffffff;  /* White background for expander */
-    padding: 12px;  /* Padding inside the expander */
+    padding: 0px;  /* Padding inside the expander */
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);  /* Subtle shadow for expander */
 }
 
@@ -27,18 +33,18 @@ div[data-testid="stExpander"] details summary p {
 /* Styling for the expander title */
 [data-testid="stExpander"] summary {
     font-size: 20px;  /* Font size for the expander title */
-    font-weight: 600;  /* Make the title semi-bold */
+    font-weight: 600;  /* Semi-bold title */
     color: #333;  /* Dark grey color for the title text */
     background-color: #ffffff;  /* White background for the title */
     border-radius: 6px;  /* Rounded corners for the title */
     padding: 12px;  /* Padding for the title */
-    cursor: pointer;  /* Pointer cursor to indicate clickability */
+    cursor: pointer;  /* Pointer cursor for clickability */
     transition: background-color 0.3s ease;  /* Smooth transition for hover effect */
 }
 
 /* Hover effect for the expander title */
 [data-testid="stExpander"] summary:hover {
-    background-color: rgba(0, 123, 255, 0.1);  /* Light blue background on hover */
+    background-color: rgba(190, 217, 91, 0.1);  /* Light green background on hover */
 }
 
 /* Custom styling for the inner items of the expander */
@@ -59,15 +65,15 @@ div[data-testid="stExpander"] details summary p {
 
 /* Custom styling for links within the expander sidebar */
 .sidebar-item {
-    padding: 12px;  /* Padding inside the sidebar link */
+    padding: 10px 15px;  /* Padding inside the sidebar link */
     text-align: left;  /* Left align text for links */
     text-decoration: none;  /* Remove underline from links */
     color: #333;  /* Dark grey color for link text */
     font-size: 16px;  /* Font size for the link */
-    font-family: 'Helvetica Neue', sans-serif;  /* Use a sans-serif font */
+    font-family: 'Segoe UI', sans-serif;  /* Use a sans-serif font */
     transition: background-color 0.3s ease, color 0.3s ease;  /* Smooth transition for link effects */
-    border-radius: 8px;  /* Rounded corners for links */
-    margin-bottom: 2px;  /* Minimal spacing between links */
+    border-radius: 5px;  /* Rounded corners for links */
+    margin: 10px 0;  /* Vertical spacing between links */
     display: flex;  /* Use flexbox for aligning content */
     align-items: center;  /* Vertically center link content */
     justify-content: space-between;  /* Distribute space between items */
@@ -76,8 +82,8 @@ div[data-testid="stExpander"] details summary p {
 
 /* Hover effect for the sidebar links */
 .sidebar-item:hover {
-    background-color: rgba(0, 123, 255, 0.1);  /* Light blue background on hover */
-    color: #007bff;  /* Blue text color on hover */
+    background-color: rgba(190, 217, 91, 0.1);  /* Light green background on hover */
+    color: #0056b3;  /* Dark blue text color on hover */
 }
 
 /* Active/click effect for the sidebar links */
@@ -121,8 +127,8 @@ button[kind="secondary"] {
     font-size: 16px;  /* Font size for buttons */
     border-radius: 8px;  /* Rounded corners for buttons */
     border: 1px solid #dee2e6;  /* Light border around buttons */
-    margin-bottom: 2px;  /* Minimal spacing between buttons */
-    padding: 8px 16px;  /* Adjusted padding for a more compact button */
+    margin: 2px 0;  /* Minimal spacing between buttons */
+    padding: 8px 16px;  /* Padding for a more compact button */
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);  /* Subtle shadow for buttons */
     width: 100%;  
     text-align: left;  
@@ -133,7 +139,7 @@ button[kind="secondary"] {
 
 /* Hover effect for the buttons */
 button[kind="secondary"]:hover {
-    background-color: rgba(0, 123, 255, 0.1);  /* Light blue background on hover */
+    background-color: rgba(190, 217, 91, 0.1);  /* Light green background on hover */
     color: #007bff;  
     border-color: #007bff;  /* Change border color on hover */
 }

@@ -3,15 +3,15 @@
 menu_styles = {
     # Estilos gerais do container que envolve o menu
     "container": {
-        "padding": "10px!important",  # Espaçamento interno do container (bordas)
+        "padding": "0px!important",  # Espaçamento interno do container (bordas)
         "background-color": "#ffffff",  # Cor de fundo do menu
-        "border": "1px solid #e0e0e0",  # Borda leve ao redor do menu
-        "border-radius": "8px",  # Bordas arredondadas
+        "border": "0px solid #e0e0e0",  # Borda leve ao redor do menu
+        "border-radius": "0px",  # Bordas arredondadas
         "box-shadow": "0 2px 8px rgba(0, 0, 0, 0.1)",  # Sombra leve para profundidade
-        "width": "300px",  # Largura do menu
+        "width": "350px",  # Largura do menu
         "max-width": "100%",  # Largura máxima para responsividade
         "font-family": "Segoe UI",  # Fonte utilizada no menu
-        "margin": "5px auto",  # Centraliza o menu com margem superior e inferior
+        "margin": "0px auto",  # Centraliza o menu com margem superior e inferior
         "transition": "all 0.3s ease-in-out",  # Transição suave para qualquer mudança de estilo
         "opacity": "0.95",  # Define a opacidade do container
         "backdrop-filter": "blur(5px)",  # Efeito de desfoque no fundo (moderno e clean)
