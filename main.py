@@ -22,9 +22,10 @@ database = "Infeed700"
 ReportServerName = "ReportServer"
 username = "icm\\ndasilva"
 password = "1984Icm022*"
+minDate = "2024-08-01"
 
 # Construct the URL for the SSRS report
-ssrs_url = f"http://{ipAddress}:{port}/{ReportServerName}/Pages/ReportViewer.aspx?%2f{database}%2f{reportRDLname}&rs:Command=Render&MinDate=2024-08-01"
+ssrs_url = f"http://{ipAddress}:{port}/{ReportServerName}/Pages/ReportViewer.aspx?%2f{database}%2f{reportRDLname}&rs:Command=Render&MinDate={minDate}"
 
 # Make the request to the SSRS report using NTLM authentication
 try:
