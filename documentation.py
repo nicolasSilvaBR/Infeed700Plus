@@ -150,15 +150,40 @@ elif selected == "Expander Style CSS":
 
 elif selected == "Secrets.toml":
     st.title(".streamlit/secrets.toml")
+    st.write("Dont forget to add the secrets file in the right directory")
+    st.code("""
+        Infeed700/
+        ├── main.py                     # Main entry point for the Streamlit application
+        │
+        ├── requirements.txt             # List of dependencies for the application
+        │        
+        └── .streamlit/
+            └── secrets.toml            # Secrets for database connection
+            └── config.toml             # Streamlit Configuration Settings [theme][server] 
+    """,language='toml')
+    st.subheader("Current secrets.toml:")
     st.code(secrets_toml, language='toml')
 
 elif selected == "Config.toml":
     st.title(".streamlit/config.toml")
+    st.write("Dont forget to add the Config file in the right directory")
+    st.code("""
+        Infeed700/
+        ├── main.py                     # Main entry point for the Streamlit application
+        │
+        ├── requirements.txt             # List of dependencies for the application
+        │        
+        └── .streamlit/
+            └── secrets.toml            # Secrets for database connection
+            └── config.toml             # Streamlit Configuration Settings [theme][server] 
+    """,language='toml') 
+    st.subheader("Current config.toml:")
     st.code(streamlit_config, language='toml')
 
 elif selected == "Requirements.txt":
-    st.title("requirements.txt")
-    st.code(requirements_txt, language='plaintext')
+    st.title("requirements.txt")    
+    st.subheader("Current requirements:")
+    st.code(requirements_txt, language='python')
 
 elif selected == "Styles.py":
     st.title("styles.py")
@@ -166,4 +191,5 @@ elif selected == "Styles.py":
 
 elif selected == "Setup.bat":
     st.title("setup.bat")
+    st.subheader("Current setup:")
     st.code(setup_bat_code, language='batch')
