@@ -1,0 +1,16 @@
+[server]
+port = 8501
+
+
+[theme]
+primaryColor = "#1b4d57"  # Primary color used in the app
+backgroundColor = "#F0F0F5"  # Background color for the app
+secondaryBackgroundColor = "#E0E0EF"  # Secondary background color
+textColor = "#1b4d57"  # Color of the text in the app
+font = "Segoe UI"  # Font style used throughout the app
+
+fontSize = "14px"  # Base font size for the app
+fontWeight = "200"  # Font weight for text
+borderColor = "#1b4d57"  # Color for borders in the app
+linkColor = "#1b4d57"  # Color for hyperlinks
+hoverColor = "#1b4d57"  # Hover color for buttons and links
