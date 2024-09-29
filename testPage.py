@@ -2,20 +2,21 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 from styles import menu_styles  # Importando os estilos do arquivo style.py
 
+
+# Definição dos headers e relatórios
+headers = {1: "Intake", 2: "Blending"}
+reports = {
+    1: [["Intakes", "Intake"], ["Intake Tips", "TipBreakdown"]],
+    2: [["Blending / Batching", "Batch"], ["Blending / Run", "BatchByRunNumber"]]
+}
+
 def LeftMenu():
     # Load CSS for custom styles
     def local_css(file_name):
         with open(file_name) as f:
             st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
-    local_css("leftMenu/expanderStyle.css")
-
-    # Definição dos headers e relatórios
-    headers = {1: "Intake", 2: "Blending"}
-    reports = {
-        1: [["Intakes", "Intake"], ["Intake Tips", "TipBreakdown"]],
-        2: [["Blending / Batching", "Batch"], ["Blending / Run", "BatchByRunNumber"]]
-    }
+    local_css("leftMenu/expanderStyle.css")   
 
     with st.sidebar:
         # Menu de opções principal

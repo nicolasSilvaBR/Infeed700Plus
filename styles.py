@@ -19,14 +19,14 @@ menu_styles = {
         # "background-size": "cover",  # Faz a imagem de fundo cobrir todo o container
         "overflow": "hidden",  # Garante que nenhum conteúdo transborde fora do container
         "display": "flex",  # Utiliza Flexbox para alinhamento interno
-        # "flex-direction": "column",  # Alinha itens em coluna (opcional para menus verticais)
-        # "justify-content": "center",  # Centraliza itens no eixo vertical (opcional)
-        # "align-items": "center",  # Centraliza itens no eixo horizontal (opcional)
-        # "transform": "scale(1)",  # Preparado para efeitos de transformação (zoom)
-        # "hover": {  
-        #     "transform": "scale(1.05)",  # Efeito de zoom suave ao passar o mouse
-        #     "box-shadow": "0 4px 12px rgba(0, 0, 0, 0.15)"  # Aumenta a sombra ao passar o mouse
-        # }
+        "flex-direction": "column",  # Alinha itens em coluna (opcional para menus verticais)
+        "justify-content": "center",  # Centraliza itens no eixo vertical (opcional)
+        #"align-items": "center",  # Centraliza itens no eixo horizontal (opcional)
+        "transform": "scale(1)",  # Preparado para efeitos de transformação (zoom)
+        "hover": {  
+            "transform": "scale(5.05)",  # Efeito de zoom suave ao passar o mouse
+            "box-shadow": "0 4px 12px rgba(0, 0, 0, 0.15)"  # Aumenta a sombra ao passar o mouse
+        }
     },
     
     # Estilos dos ícones exibidos ao lado de cada item de menu
@@ -34,11 +34,15 @@ menu_styles = {
         "color": "#818274",  # Cor padrão dos ícones
         "font-size": "20px",  # Tamanho do ícone
         "transition": "color 0.3s ease",  # Transição suave para mudança de cor ao selecionar
+        "hover": {
+            "color": "#f39c12",  # Nova cor ao passar o mouse
+            "transform": "scale(1.2)",  # Aumenta o ícone em 20%
+        }
     },
     
     # Estilos dos links de navegação (itens do menu)
     "nav-link": {
-        "font-size": "18px",  # Tamanho da fonte dos links
+        "font-size": "12px",  # Tamanho da fonte dos links
         "text-align": "left",  # Alinhamento do texto
         "margin": "10px 0",  # Espaçamento vertical entre os links
         "padding": "10px 15px",  # Espaçamento interno dos links
@@ -46,6 +50,10 @@ menu_styles = {
         "transition": "background-color 0.3s ease, color 0.3s ease",  # Transição suave para mudanças de cor
         "cursor": "pointer",  # Exibe o cursor de ponteiro ao passar sobre os links
         "font-weight": "normal",  # Peso da fonte (normal para itens não selecionados)
+        "hover": {
+            "color": "#f39c12",  # Nova cor ao passar o mouse
+            "transform": "scale(1.2)",  # Aumenta o ícone em 20%
+        }
     },
     
     # Estilos aplicados ao link selecionado (ativo)
