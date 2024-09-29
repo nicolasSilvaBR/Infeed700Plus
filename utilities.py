@@ -3,7 +3,7 @@ import logging
 
 def load_svg(file_path):
     """Carrega o conteúdo de um arquivo SVG ou retorna um ícone padrão se falhar."""
-    default_icon = "7-square"  # Ícone padrão
+    default_icon = "bar-chart-fill"  # Ícone padrão
 
     try:
         with open(file_path, "r") as svg_file:

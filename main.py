@@ -3,12 +3,13 @@ from leftMenu.leftMenu import LeftMenu
 import requests
 from requests_ntlm import HttpNtlmAuth
 
+# Set the page layout for the Streamlit app
 st.set_page_config(layout="wide")
 
-# Display the left menu
+# Display the left menu for navigation
 LeftMenu()
 
-# Initialize session state if not already set
+# Initialize session state for the selected report if not already set
 if 'selected_report' not in st.session_state:
     st.session_state['selected_report'] = "Intake"
 
@@ -25,13 +26,14 @@ password = "1984Icm022*"
 # Construct the URL for the SSRS report
 ssrs_url = f"http://{ipAddress}:{port}/{ReportServerName}/Pages/ReportViewer.aspx?%2f{database}%2f{reportRDLname}&rs:Command=Render&MinDate=2024-08-01"
 
-# Make the request using NTLM authentication
+# Make the request to the SSRS report using NTLM authentication
 try:
     response = requests.get(ssrs_url, auth=HttpNtlmAuth(username, password), timeout=10)
 
     # Check if the request was successful
     if response.status_code == 200:
         report_url = f"{ssrs_url}&rs:Embed=true&rc:Parameters=Collapsed"
+        # Create an iframe to display the report
         iframe_code = f"""
         <iframe width="100%" height="100%" style="min-height: 150vh;" src="{report_url}" frameborder="0" allowfullscreen></iframe>
         """
@@ -39,6 +41,7 @@ try:
     else:
         st.error(f"Error accessing the report: {response.status_code}")
 
+# Handle specific connection errors and provide user guidance
 except requests.exceptions.ConnectTimeout:
     error_message = """
     **Connection Timeout Error**
@@ -53,5 +56,6 @@ except requests.exceptions.ConnectTimeout:
     """
     st.error(error_message)
 
+# Handle other request-related errors
 except requests.exceptions.RequestException as e:
     st.error(f"Error accessing the report: {e}")
