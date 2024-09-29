@@ -4,6 +4,22 @@ from streamlit_option_menu import option_menu
 st.set_page_config(layout="wide")
 
 # Textos e códigos para as seções
+Overview = '''\
+The Infeed700 application is a sophisticated interactive platform developed by **ICMC Solutions** utilizing **Streamlit**. This project aims to transition from the existing SSRS reporting system to a new solution using Python Streamlit. The new system will enhance interactivity, visual quality, and ease of report development and maintenance. 
+
+Designed to serve multiple clients, Infeed700 prioritizes user experience with its responsive interface and intuitive navigation. Users can effortlessly switch between different reporting modules, including "Intake", "Blending", and "Press", allowing for dynamic data analysis tailored to their specific needs.
+
+### Key Features:
+- **User-Friendly Interface**: The application’s layout is designed for ease of use, minimizing the learning curve for new users.
+- **Data Visualization**: With integrated SSRS reports, users can visualize data effectively, leading to informed decision-making.
+- **Customizable Reports**: The application supports various report types, enabling tailored data presentations for different operational needs.
+
+The project will be executed in multiple phases, with defined responsibilities across various teams. The solution will be implemented on-premises, and existing stored procedures will be used to maintain continuity with the current system. 
+
+Infeed700 is not only a tool for data visualization but also a comprehensive solution for business intelligence, providing valuable insights through advanced data analytics and reporting capabilities.
+'''
+
+
 readme_text = '''\
 ## Overview
 
@@ -57,14 +73,13 @@ Infeed700/
 │
 ├── main.py                     # Main entry point for the Streamlit application
 │
-├── config.toml                 # Configuration settings for the Streamlit application
-│
 ├── requirements.txt             # List of dependencies for the application
 │
 ├── setup.bat                    # Batch file for setting up the environment
 │
 └── .streamlit/
     └── secrets.toml            # Secrets for database connection
+    └── config.toml             # Streamlit Configuration Settings [theme][server]
 '''
 
 dependency_support = '''\
@@ -108,6 +123,19 @@ instance = "MSSQLSERVER_DEV"
 [api_service]
 api_key = "YOUR_API_KEY"
 api_url = "https://api.example.com/"
+'''
+config_toml = '''\
+# Streamlit Configuration Settings
+
+[server]
+port = 8501  # The port on which the Streamlit app will run
+
+[theme]
+primaryColor = "#F39C12"  # Primary color used in the app
+backgroundColor = "#F0F0F5"  # Background color for the app
+secondaryBackgroundColor = "#E0E0EF"  # Secondary background color
+textColor = "#262730"  # Color of the text in the app
+font = "Segoe UI"  # Font style used throughout the app
 '''
 
 requirements_txt = '''\
@@ -380,17 +408,37 @@ pause
 with st.sidebar:
     selected = option_menu(
         menu_title="Documentation",  # Título do menu
-        options=["Infeed700 Application Documentation", "README.md", "Project Structure", "Dependency Support", 
-                 "Main.py", "LeftMenu.py", "Expander Style CSS", "Secrets.toml", "Requirements.txt", "Setup.bat"],  # Incluindo Setup.bat
-        icons=["book", "file-text", "folder", "link", "file-code", "file-code", "file-code", "file-code", "file-code", "file-code"],  # Ícones
+        options=["Overview", 
+                 "README.md", 
+                 "Project Structure", 
+                 "Dependency Support", 
+                 "Requirements.txt", 
+                 "Setup.bat",
+                 "Secrets.toml",
+                 "Config.toml",
+                 "Main.py", 
+                 "LeftMenu.py", 
+                 "Expander Style CSS",                   
+                 ],  # Incluindo Setup.bat
+        icons=["book", 
+               "file-text", 
+               "folder", 
+               "link", 
+               "filetype-txt", 
+               "windows", 
+               "filetype-py",
+               "filetype-py",
+               "filetype-py", 
+               "filetype-py", 
+               "filetype-css"],  # Ícones
         menu_icon="list",  # Ícone do menu
         default_index=0,  # Índice padrão selecionado
     )
 
 # Exibe o conteúdo correspondente com base na seleção
-if selected == "Infeed700 Application Documentation":
-    st.title("Infeed700 Application Documentation")
-    st.markdown(readme_text)
+if selected == "Overview":
+    st.title("Overview")
+    st.markdown(Overview)
 
 elif selected == "README.md":
     st.title("README.md")
@@ -419,6 +467,10 @@ elif selected == "Expander Style CSS":
 elif selected == "Secrets.toml":
     st.title(".streamlit/secrets.toml")
     st.code(secrets_toml, language='toml')
+
+elif selected == "Config.toml":
+    st.title(".streamlit/Config.toml")
+    st.code(config_toml, language='toml')
 
 elif selected == "Requirements.txt":
     st.title("requirements.txt")
