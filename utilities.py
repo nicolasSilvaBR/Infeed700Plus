@@ -1,6 +1,7 @@
 import streamlit as st
 import logging
 
+@st.cache_resource
 def load_svg(file_path):
     """Load the content of an SVG file or return a default icon if it fails."""
     default_icon = "bar-chart-fill"  # Default icon to use if SVG loading fails
