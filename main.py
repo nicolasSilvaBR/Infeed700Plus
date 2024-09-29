@@ -1,7 +1,7 @@
 import streamlit as st
 from leftMenu.leftMenu import LeftMenu
-import requests
-from requests_ntlm import HttpNtlmAuth
+from embeddedSSRS import embed_ssrs_report
+import pandas as pd  # Import pandas for date handling
 
 # Set the page layout for the Streamlit app
 st.set_page_config(layout="wide")
@@ -9,54 +9,32 @@ st.set_page_config(layout="wide")
 # Display the left menu for navigation
 LeftMenu()
 
-# Initialize session state for the selected report if not already set
-if 'selected_report' not in st.session_state:
-    st.session_state['selected_report'] = "Intake"
+# Initialize session state for the project type
+if 'Project' not in st.session_state:
+    st.session_state['Project'] = 'Dashboards'  # Set default project to Dashboards
 
-reportRDLname = st.session_state['selected_report']
+# Retrieve the dates from session state with default values
+minDate = st.session_state.get('minDate', pd.to_datetime("2024-08-01")).strftime('%Y-%m-%d')  # Default start date
+maxDate = st.session_state.get('maxDate', pd.to_datetime("2024-08-31")).strftime('%Y-%m-%d')  # Default end date
 
-# Database credentials and configuration settings
-ipAddress = "10.202.2.22"
-port = "80"
-database = "Infeed700"
-ReportServerName = "ReportServer"
-username = "icm\\ndasilva"
-password = "1984Icm022*"
-minDate = "2024-08-01"
+def display_ssrs_report():
+    """Function to display the SSRS report."""
+    # Initialize session state for the selected report if not already set
+    if 'selected_report' not in st.session_state:
+        st.session_state['selected_report'] = "Intake"  # Set default report to Intake
 
-# Construct the URL for the SSRS report
-ssrs_url = f"http://{ipAddress}:{port}/{ReportServerName}/Pages/ReportViewer.aspx?%2f{database}%2f{reportRDLname}&rs:Command=Render&MinDate={minDate}"
+    reportRDLname = st.session_state['selected_report']  # Get the selected report name
+    embed_ssrs_report(reportRDLname, minDate, maxDate)  # Call function to embed the SSRS report
 
-# Make the request to the SSRS report using NTLM authentication
-try:
-    response = requests.get(ssrs_url, auth=HttpNtlmAuth(username, password), timeout=10)
+def display_dashboard():
+    """Function to display the dashboard content."""
+    # Display a message with the selected date range
+    st.write(f"Displaying dashboard content for dates: {minDate} to {maxDate}")
 
-    # Check if the request was successful
-    if response.status_code == 200:
-        report_url = f"{ssrs_url}&rs:Embed=true&rc:Parameters=Collapsed"
-        # Create an iframe to display the report
-        iframe_code = f"""
-        <iframe width="100%" height="100%" style="min-height: 150vh;" src="{report_url}" frameborder="0" allowfullscreen></iframe>
-        """
-        st.components.v1.html(iframe_code, height=900, scrolling=False)
-    else:
-        st.error(f"Error accessing the report: {response.status_code}")
-
-# Handle specific connection errors and provide user guidance
-except requests.exceptions.ConnectTimeout:
-    error_message = """
-    **Connection Timeout Error**
-
-    Possible reasons for this issue:
-    1. Verify that the provided IP address `10.202.2.22` is correct and reachable.
-    2. Ensure that the port `80` is open and accessible on the target server.
-    3. Double-check the database name `Infeed700` in your report URL.
-    4. Go to the `.secrets.toml` file and verify that the credentials (username and password) are correctly configured.
-
-    Please resolve these potential issues and try again.
-    """
-    st.error(error_message)
-
-# Handle other request-related errors
-except requests.exceptions.RequestException as e:
-    st.error(f"Error accessing the report: {e}")
+# Check which project is selected
+if st.session_state['Project'] == 'SSRS Reports':
+    st.header("SSRS Report")  # Add a header for the SSRS Report section
+    display_ssrs_report()  # Call the function to display the SSRS report
+else:
+    st.header("Dashboard")  # Add a header for the Dashboard section
+    display_dashboard()  # Call the function to display the dashboard content

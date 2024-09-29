@@ -39,6 +39,10 @@ with open('setup.bat', 'r') as file:
 with open('.streamlit/config.toml', 'r') as file:  # Ensure the path is correct
     streamlit_config = file.read()
 
+# Read the content of the embeddedSSRS.py file
+with open('embeddedSSRS.py', 'r') as file:
+    embeddedSSRS = file.read()
+
 # Textos e códigos para as seções
 Overview = '''\
 The Infeed700 application is a sophisticated interactive platform developed by **ICMC Solutions** utilizing **Streamlit**. This project aims to transition from the existing SSRS reporting system to a new solution using Python Streamlit. The new system will enhance interactivity, visual quality, and ease of report development and maintenance. 
@@ -103,7 +107,9 @@ with st.sidebar:
                  "Config.toml",
                  "Main.py", 
                  "LeftMenu.py", 
-                 "Expander Style CSS"],  # Incluindo Setup.bat
+                 "Expander Style CSS",
+                 "Embed SSRS"],  # Incluindo Setup.bat
+                 
         icons=["book", 
                "file-text", 
                "folder", 
@@ -114,7 +120,8 @@ with st.sidebar:
                "filetype-py",
                "filetype-py", 
                "filetype-py", 
-               "filetype-css"],  # Ícones
+               "filetype-css",
+               "filetype-sql"],  # Ícones
         menu_icon="list",  # Ícone do menu
         default_index=0,  # Índice padrão selecionado
     )
@@ -193,3 +200,8 @@ elif selected == "Setup.bat":
     st.title("setup.bat")
     st.subheader("Current setup:")
     st.code(setup_bat_code, language='batch')
+
+elif selected == "Embed SSRS":
+    st.title("Embed SSRS")
+    st.subheader("Current Embed SSRS:")
+    st.code(embeddedSSRS, language='python')
