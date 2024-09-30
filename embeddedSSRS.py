@@ -29,9 +29,11 @@ def embed_ssrs_report(reportRDLname, minDate, maxDate):
         if response.status_code == 200:
             report_url = f"{ssrs_url}&rs:Embed=true&rc:Parameters=Collapsed"
             iframe_code = f"""
-            <iframe width="100%" height="100%" style="min-height: 150vh;" src="{report_url}" frameborder="0" allowfullscreen></iframe>
+            <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" 
+                    src="{report_url}" frameborder="0" allowfullscreen></iframe>
             """
-            st.components.v1.html(iframe_code, height=900, scrolling=False)
+            # Usar height grande o suficiente para preencher a tela e garantir que o iframe ocupe 100% da área
+            st.components.v1.html(iframe_code, height=800, scrolling=False)
         else:
             st.error(f"Error accessing the report: {response.status_code}. Check the report name or parameters.")
     except requests.exceptions.ConnectTimeout:

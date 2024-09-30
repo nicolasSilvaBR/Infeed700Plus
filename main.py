@@ -4,8 +4,19 @@ from embeddedSSRS import embed_ssrs_report
 import pandas as pd
 from reports.Intake.intake import intake_page  # Importando a função intake_page corretamente
 
+
 # Configurar layout da página
-st.set_page_config(layout="wide")
+st.set_page_config(
+    page_title="Infeed700 Reports",
+    page_icon="🧊",
+    layout="wide",
+    initial_sidebar_state="expanded",
+    menu_items={
+        'Get Help': 'https://www.extremelycoolapp.com/help',
+        'Report a bug': "https://www.extremelycoolapp.com/bug",
+        'About': "# Infeed700. Version 1.0 *BETA* ICM CSL"
+    }
+)
 
 # Exibir o menu lateral
 LeftMenu()
@@ -31,7 +42,7 @@ def display_ssrs_report():
 
 def display_dashboard():
     """Função para exibir o conteúdo do dashboard."""
-    # st.write(f"Displaying dashboard content for the dates: {minDate} to {maxDate}")
+    # st.write(f"Displaying dashboard content for the dates: {m inDate} to {maxDate}")
     # Chamar a função intake_page para exibir o dashboard do Intake
     intake_page(mindate=minDate, maxdate=maxDate)
 
@@ -39,6 +50,7 @@ def display_dashboard():
 if st.session_state['Project'] == 'SSRS Reports':
     st.header(f"SSRS Report{st.session_state['selected_report']}")
     display_ssrs_report()
+    st.cache_data.clear()
 else:
     st.header("Dashboard")
     display_dashboard()

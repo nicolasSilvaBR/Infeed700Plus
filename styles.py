@@ -8,7 +8,7 @@ menu_styles = {
         "border": "0px solid #e0e0e0",  # Borda leve ao redor do menu
         "border-radius": "0px",  # Bordas arredondadas
         "box-shadow": "0 2px 8px rgba(0, 0, 0, 0.1)",  # Sombra leve para profundidade
-        "width": "350px",  # Largura do menu
+        "width": "320px",  # Largura do menu
         "max-width": "100%",  # Largura máxima para responsividade
         "font-family": "Segoe UI",  # Fonte utilizada no menu
         "margin": "0px auto",  # Centraliza o menu com margem superior e inferior

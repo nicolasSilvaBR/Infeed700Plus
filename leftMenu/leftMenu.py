@@ -1,7 +1,7 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
 from styles import menu_styles  # Import custom styles for the menu
-from utilities import load_svg  # Function to load SVG icons
+from functions.load_svg import load_svg
 import os  # File and path handling
 import pandas as pd  # Date handling
 
@@ -27,7 +27,7 @@ def display_report_selection(headers, reports):
         if headerskey in reports:  # Ensure the header key exists in reports
             with st.expander(headerName, expanded=False):
                 # Get the list of report options
-                options = [report[0] for report in reports[headerskey]]
+                options = [report[0] for report in reports[headerskey]] # list comprehension
 
                 # Create the report option menu using option_menu
                 report_option = option_menu(
@@ -50,6 +50,7 @@ def display_report_selection(headers, reports):
                     st.session_state[session_key] = selected_report
                     # Update the global selected report only when user makes a new selection
                     st.session_state['selected_report'] = selected_report
+                    st.cache_data.clear()
 
     # Display the final selected report for debugging purposes
     #st.write(f"Global Selected Report: {st.session_state['selected_report']}")  # Debugging output
