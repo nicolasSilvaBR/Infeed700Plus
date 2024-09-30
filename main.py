@@ -23,8 +23,7 @@ def display_ssrs_report():
         st.session_state['selected_report'] = "Intake"  # Default value
     
     # Get the report name from session_state
-    reportRDLname = st.session_state['selected_report']
-    st.write(reportRDLname)
+    reportRDLname = st.session_state['selected_report']    
     # Call the function to embed the SSRS report
     embed_ssrs_report(reportRDLname, minDate, maxDate)
 
