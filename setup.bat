@@ -19,7 +19,7 @@ if %ERRORLEVEL% neq 0 (
 
 :: Install the dependencies globally
 echo Installing dependencies globally...
-pip install -r requirements.txt
+pip install --no-index --find-links=libs/ -r requirements.txt
 if %ERRORLEVEL% neq 0 (
     echo Failed to install dependencies. Please check the requirements.txt file.
     pause
