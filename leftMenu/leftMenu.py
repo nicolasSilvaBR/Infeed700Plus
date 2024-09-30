@@ -53,7 +53,8 @@ def display_report_selection(headers, reports):
 
     # Display the final selected report for debugging purposes
     #st.write(f"Global Selected Report: {st.session_state['selected_report']}")  # Debugging output
-
+    
+st.cache_data.clear()
 def LeftMenu():
     """Build the sidebar menu for the Streamlit app."""
     load_local_css("leftMenu/expanderStyle.css")

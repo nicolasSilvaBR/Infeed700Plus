@@ -2,14 +2,11 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 from databaseConnection import mydb
-from leftMenu_custom_css import leftMenu_custom_css
 import json
 import os
 
-
 # Estabelecer a conexão com o banco de dados
 engine = mydb()
-
 
 # Ler o arquivo de mapeamento de colunas JSON
 def load_columns_mapping():
