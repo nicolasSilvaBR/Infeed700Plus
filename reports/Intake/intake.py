@@ -8,15 +8,14 @@ import os
 from functions.create_card import create_card
 
 
-# Establish a connection to the database using a custom function (mydb)
-engine = mydb()
-
 # Function to load the column mapping from a JSON file
 def load_columns_mapping():
     """
     This function reads a JSON file that contains the column mappings for renaming
     columns in the final dataset. If the JSON file is not found, it returns an error message.
     """
+    
+
     json_file_path = 'reports/intake/intake_columns.json'  # Path to the JSON file
     if os.path.exists(json_file_path):
         with open(json_file_path, 'r') as f:
@@ -126,6 +125,9 @@ def intake_page(mindate, maxdate):
                 supplier = f"'{supplier}'" if supplier != 'NULL' else 'NULL'
                 calloff = f"'{calloff}'" if calloff != 'NULL' else 'NULL'
                 keytypes = f"'{keytypes}'" if keytypes != 'NULL' else 'NULL'
+
+                # Establish a connection to the database using a custom function (mydb)
+                engine = mydb()
 
                 # SQL Stored Procedure execution
                 storedProcedure = f"""

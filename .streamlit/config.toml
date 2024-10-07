@@ -3,7 +3,21 @@ port = 8501
 
 
 [theme]
-#primaryColor = "#1b4d57"  # Primary color used in the app
-#backgroundColor = "#F0F0F5"  # Background color for the app
-#secondaryBackgroundColor = "#E0E0EF"  # Secondary background color
-#textColor = "#1b4d57"  # Color of the text in the app
+primaryColor = "#475b7c"               # Primary color used in the app, buttons, dates, text etc
+backgroundColor = "#ffffff"            # Background color for the app
+secondaryBackgroundColor = "#f0f2f6"   # Secondary background color, sidebar menu
+textColor = "dark-gray"                  # Color of the text in the app
+font = "sans serif"                    # Font used in the app
+
+[widgets]
+backgroundColor = "#f6f7f8"            # Background color for the widgets
+secondaryBackgroundColor = "#3F7373"    # Secondary background color for the widgets
+textColor = "#1b4d57"                  # Color of the text in the widgets
+font = "sans serif"                    # Font used in the widgets
+
+
+
+
+
+
+

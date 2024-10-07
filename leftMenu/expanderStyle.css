@@ -1,10 +1,10 @@
 /* Styling for the main container of the sidebar menu */
 .sidebar-menu {
     display: flex;  
-    flex-direction: column;  /* Arrange items in a vertical column */
-    padding: 0px!important;  /* Internal padding for the container */
-    background-color: #ffffff;  /* Background color for menu */
-    border: 0px solid #e0e0e0;  /* Light border around the menu */
+    flex-direction: column;                     /* Arrange items in a vertical column */
+    padding: 0px!important;                     /* Internal padding for the container */
+    background-color: #ffffff;                /* Background color for menu */
+    border: 0px solid #e0e0e0;                /* Light border around the menu */
     border-radius: 8px;  /* Rounded corners */
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);  /* Light shadow for depth */
     width: 300px;  /* Width of the menu */
@@ -44,7 +44,7 @@ div[data-testid="stExpander"] details summary p {
 
 /* Hover effect for the expander title */
 [data-testid="stExpander"] summary:hover {
-    background-color: rgba(190, 217, 91, 0.1);  /* Light green background on hover */
+    background-color: #ebeff7;  /* Light green background on hover */
 }
 
 /* Custom styling for the inner items of the expander */
