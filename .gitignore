@@ -2,3 +2,4 @@ __pycache__/
 *.py[cod]
 .streamlit/secrets.toml
 documentation/Streamlit & SSRS.txt
+*.log
