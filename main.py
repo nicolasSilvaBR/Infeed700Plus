@@ -3,7 +3,7 @@ import streamlit as st
 from leftMenu.leftMenu import LeftMenu
 from embeddedSSRS import embed_ssrs_report
 import pandas as pd
-from reports.Intake.intake import intake_page  # Importing the intake_page function
+from reports.intake.intake import intake_page  # Importing the intake_page function
 import logging
 
 config.set_page_config()

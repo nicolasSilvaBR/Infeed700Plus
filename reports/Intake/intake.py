@@ -4,6 +4,7 @@ import plotly.express as px
 from databaseConnection import mydb
 import json
 import os
+import reports.intake.intake_parameters as intake_parameters
 
 # Cache the loading of the column mapping to avoid repeated file I/O
 @st.cache_data
@@ -37,33 +38,13 @@ def intake_page(mindate, maxdate):
     parameters and generate a report with statistics and charts.
     """
     
-    # Input parameters
-    with st.container():
-        col1, col2 = st.columns([10, 1])
-
-        with col1:
-            with st.expander("Input Parameters", expanded=False):
-                input_col1, input_col2, input_col3 = st.columns(3)
-                
-                with input_col1:
-                    suppliercode = st.text_input('Supplier Code', value='NULL', key='input_suppliercode')
-                    supplier = st.text_input('Supplier', value='NULL', key='input_supplier')
-                    hauliercode = st.text_input('Haulier Code', value='NULL', key='input_hauliercode')
-                    haulier = st.text_input('Haulier', value='NULL', key='input_haulier')
-
-                with input_col2:
-                    intakestatustypes = st.text_input('Intake Status Types', value='1,2,3', key='input_intakestatustypes')
-                    rminclude = st.text_input('RM Include', value='-1', key='input_rminclude')
-                    keytypes = st.text_input('Key Types', value='1,31,41,51', key='input_keytypes')
-
-                with input_col3:
-                    calloff = st.text_input('Call Off', value='NULL', key='input_calloff')
-                    siteid = st.number_input('Site ID', value=0, key='input_siteid')
-
-        with col2:
-            if st.button('Run Report', key='run_report_button'):
-                st.session_state.run_report = True
-
+    # Input parameters   
+    # Importing the intake_parameters function from the reports/intake/intake_parameters.py file
+    # This function returns the values of the input parameters    
+    # The function is called only once and the results are cached for subsequent runs    
+    # The function is also used to generate the SQL query for the report    
+    suppliercode, supplier, hauliercode, haulier, intakestatustypes, rminclude, keytypes, calloff, siteid = intake_parameters.intake_parameters()
+    
     # Run the report logic
     if 'run_report' not in st.session_state:
         st.session_state.run_report = False
@@ -96,7 +77,8 @@ def intake_page(mindate, maxdate):
                     @siteid = {siteid},
                     @keytypes = {keytypes}
                 """
-                dataSource = pd.read_sql(storedProcedure, engine).sort_values('timein')
+                dataSource = pd.read_sql(storedProcedure, engine)
+                dataSource.sort_values(by='timein',axis=0, ascending=False,inplace=False,kind='quicksort')
                 dataSource['timein'] = pd.to_datetime(dataSource['timein'], errors='coerce')
                 dataSource['date'] = dataSource['timein'].dt.date
                 dataSource['nettweight'] = dataSource['nettweight'].fillna(0)
