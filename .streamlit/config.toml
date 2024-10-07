@@ -5,7 +5,7 @@ port = 8501
 [theme]
 primaryColor = "#475b7c"               # Primary color used in the app, buttons, dates, text etc
 backgroundColor = "#ffffff"            # Background color for the app
-secondaryBackgroundColor = "#f0f2f6"   # Secondary background color, sidebar menu
+secondaryBackgroundColor = "#F2F2F2"   # Secondary background color, sidebar menu
 textColor = "dark-gray"                  # Color of the text in the app
 font = "sans serif"                    # Font used in the app
 

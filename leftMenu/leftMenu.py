@@ -3,7 +3,8 @@ from streamlit_option_menu import option_menu
 from styles import menu_styles  # Import custom styles for the menu
 import os  # File and path handling
 import pandas as pd  # Date handling
-from utilities import load_local_css as css  # Function to load local CSS files
+import utilities as utl # Function to load local CSS files
+
 
 # Define headers and reports for the menu
 headers = {1: "Intake", 2: "Blending", 3: "Press"}
@@ -53,9 +54,9 @@ def display_report_selection(headers, reports):
 def LeftMenu():
     """Build the sidebar menu for the Streamlit app."""
     
-    css("leftMenu/expanderStyle.css")  # Load the CSS from the file
+    utl.load_local_css("leftMenu/expanderStyle.css")  # Load the CSS from the file
 
-    png_file_path = os.path.join("images", "ICM_300X80.png")  # Load the PNG icon          
+    png_file_path = os.path.join("images", "ICM_300X80_OPT3.png")  # Load the PNG icon          
 
     with st.sidebar:
         # Display the logo directly using st.image
@@ -80,28 +81,22 @@ def LeftMenu():
             )
 
             # Save the project selection in session_state
-            st.session_state['Project'] = selectedMenu
-
-        # Section for selecting dates with calendar icon
-        with st.expander(label="📅 Date Input", expanded=True):
-            col1, col2 = st.columns(2)
-            with col1:
-                minDate = st.date_input("Start Date", value=pd.to_datetime("2024-08-01"))
-            with col2:
-                maxDate = st.date_input("End Date", value=pd.to_datetime("2024-08-31"))
-
-            # Save the selected dates in session_state
-            st.session_state['minDate'] = minDate
-            st.session_state['maxDate'] = maxDate
+            st.session_state['Project'] = selectedMenu        
 
         # Show report menu if "SSRS Reports" is selected
         if selectedMenu == "SSRS Reports":
             display_report_selection(headers, reports)
-
             # Set "Intake" as the default global report if nothing else is selected
             if 'selected_report' not in st.session_state:
-                st.session_state['selected_report'] = "Intake"
+                st.session_state['selected_report'] = "Intake"          
 
+
+        st.divider()  # Divider before footer
+
+        # Call the footer function
+        utl.display_footer()
+
+       
 # Execute LeftMenu only if the file is run directly
 if __name__ == "__main__":
     LeftMenu()

@@ -3,108 +3,74 @@ import streamlit as st
 from leftMenu.leftMenu import LeftMenu
 from embeddedSSRS import embed_ssrs_report
 import pandas as pd
-from reports.Intake.intake import intake_page  # Importando a função intake_page corretamente
+from reports.Intake.intake import intake_page  # Importing the intake_page function
 import logging
 
 config.set_page_config()
 
-# Define the level of logging
+# Define the level of logging (if needed)
 # logging.basicConfig(filename='debug.log', 
 #                     level=logging.DEBUG, 
 #                     format='%(asctime)s - %(levelname)s - %(message)s')
 
 def main():       
 
-    LeftMenu()    
+    LeftMenu()  # Display the left sidebar menu
 
-    # Verificar se o projeto está definido no session_state
+    # Section for selecting dates with a calendar icon
+    with st.expander(label="📅 Date Input", expanded=False):
+        col1, col2 = st.columns(2)
+        with col1:
+            # Start Date input field
+            minDate = st.date_input("Start Date", value=pd.to_datetime("2024-08-01"))
+        with col2:
+            # End Date input field
+            maxDate = st.date_input("End Date", value=pd.to_datetime("2024-08-31"))
+
+        # Save the selected dates in session_state for later use
+        st.session_state['minDate'] = minDate
+        st.session_state['maxDate'] = maxDate  
+
+    # Check if the "Project" is defined in session_state, otherwise default to "Dashboards"
     if 'Project' not in st.session_state:
-        st.session_state['Project'] = 'Dashboards'  # Definir Dashboards como valor padrão
+        st.session_state['Project'] = 'Dashboards'  # Default value
 
-    logging.info(f"Project: {st.session_state['Project']}")
-    # Obter as datas do session_state ou definir valores padrão
+    logging.info(f"Project: {st.session_state['Project']}")  # Log the current project
+
+    # Get the dates from session_state or set default values
     minDate = st.session_state.get('minDate', pd.to_datetime("2024-10-01")).strftime('%Y-%m-%d')
     maxDate = st.session_state.get('maxDate', pd.to_datetime("2024-10-30")).strftime('%Y-%m-%d')
 
     def display_ssrs_report():
-        """ Function to view the SSRS report."""
+        """ Function to display the SSRS report. """
         try:
-            with st.spinner('Running Report...'):           
+            with st.spinner('Running Report...'):  # Show a spinner while the report is loading
+                # Set default report to "Intake" if no report is selected
                 if 'selected_report' not in st.session_state:
-                    st.session_state['selected_report'] = "Intake"  # Valor padrão
+                    st.session_state['selected_report'] = "Intake"  # Default report
                 
-                # Obter o nome do relatório do session_state
+                # Get the report name from session_state
                 reportRDLname = st.session_state['selected_report']    
-                # Chamar a função para incorporar o relatório SSRS
+                
+                # Call the function to embed the SSRS report
                 embed_ssrs_report(reportRDLname, minDate, maxDate)
         except:
-            st.error("An error occurred while loading the report. Verify that the SSRS server is online.")
-
+            st.error("An error occurred while loading the report. Verify that the SSRS server is online.")  # Error message
 
     def display_dashboard():
-        """Função para exibir o conteúdo do dashboard."""  
-        # Chamar a função intake_page para exibir o dashboard do Intake
+        """ Function to display the dashboard content. """  
+        # Call the intake_page function to display the Intake dashboard
         intake_page(mindate=minDate, maxdate=maxDate)
 
-    # Exibir o conteúdo com base na seleção do menu
+    # Display content based on the menu selection
     if st.session_state['Project'] == 'SSRS Reports':
-       # st.header(f"SSRS Report{st.session_state['selected_report']}")
+        # If "SSRS Reports" is selected, display the SSRS report
         display_ssrs_report()
-        st.cache_data.clear()
+        st.cache_data.clear()  # Clear cached data after displaying the report
     else:
+        # If "Dashboards" is selected, display the dashboard
         display_dashboard()
-        
 
+# Entry point of the application
 if __name__ == '__main__':
     main()
-
-
-
-
-# # Configurar layout da página
-# st.set_page_config(
-#     page_title="Infeed700 Reports",
-#     page_icon="🧊",
-#     layout="wide",
-#     initial_sidebar_state="expanded",
-#     menu_items={
-#         'Get Help': 'https://www.extremelycoolapp.com/help',
-#         'Report a bug': "https://www.extremelycoolapp.com/bug",
-#         'About': "# Infeed700. Version 1.0 *BETA* ICM CSL"
-#     }
-# )
-
-# # Exibir o menu lateral
-# LeftMenu()
-
-# # Verificar se o projeto está definido no session_state
-# if 'Project' not in st.session_state:
-#     st.session_state['Project'] = 'Dashboards'  # Definir Dashboards como valor padrão
-
-# # Obter as datas do session_state ou definir valores padrão
-# minDate = st.session_state.get('minDate', pd.to_datetime("2024-10-01")).strftime('%Y-%m-%d')
-# maxDate = st.session_state.get('maxDate', pd.to_datetime("2024-10-30")).strftime('%Y-%m-%d')
-
-# def display_ssrs_report():
-#     """Função para exibir o relatório SSRS."""
-#     if 'selected_report' not in st.session_state:
-#         st.session_state['selected_report'] = "Intake"  # Valor padrão
-    
-#     # Obter o nome do relatório do session_state
-#     reportRDLname = st.session_state['selected_report']    
-#     # Chamar a função para incorporar o relatório SSRS
-#     embed_ssrs_report(reportRDLname, minDate, maxDate)
-
-
-# def display_dashboard():
-#     """Função para exibir o conteúdo do dashboard."""  
-#     # Chamar a função intake_page para exibir o dashboard do Intake
-#     intake_page(mindate=minDate, maxdate=maxDate)
-
-# # Exibir o conteúdo com base na seleção do menu
-# if st.session_state['Project'] == 'SSRS Reports':
-#    # st.header(f"SSRS Report{st.session_state['selected_report']}")
-#     display_ssrs_report()
-#     st.cache_data.clear()
-# else:
-#     display_dashboard()

@@ -5,12 +5,13 @@ def set_page_config():
 
     st.set_page_config(
         page_title="Infeed700 Reports",
-        page_icon="🧊",
+        page_icon="📊",
         layout="wide",
         initial_sidebar_state="expanded",
         menu_items={
-            'Get Help': 'https://www.extremelycoolapp.com/help',
-            'Report a bug': "https://www.extremelycoolapp.com/bug",
-            'About': "# Infeed700. Version 1.0 *BETA* ICM CSL"
-        }
+            'Get Help': 'https://icmcsl.com/',
+            'Report a bug': "https://icmcsl.com/",
+            'About': "Infeed700. Version 1.0 *BETA* ICM CSL"            
+        }     
+
     )
