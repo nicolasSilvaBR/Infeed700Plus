@@ -12,12 +12,20 @@ def embed_ssrs_report(reportRDLname, minDate, maxDate):
         minDate (str): Start date.
         maxDate (str): End date.
     """
-    ipAddress = "10.202.2.22"
-    port = "80"
-    database = "Infeed700"
-    ReportServerName = "ReportServer"
-    username = "icm\\ndasilva"
-    password = "1984Icm022*"
+
+    # ssrs credentials
+    ssrs_config = st.secrets["ssrs_config"]
+    required_keys = ["ipAddress", "port", "database", "ReportServerName", "username","password"]
+    if not all(key in ssrs_config for key in required_keys):
+        st.error("SSRS configuration not found in secrets.toml. Please add it to use this feature.")
+        return    
+
+    ipAddress = ssrs_config["ipAddress"]
+    port = ssrs_config["port"]
+    database = ssrs_config['database']
+    ReportServerName = ssrs_config['ReportServerName']
+    username = ssrs_config['username']
+    password = ssrs_config['password']
 
     # Build the SSRS report URL
     ssrs_url = f"http://{ipAddress}:{port}/{ReportServerName}/Pages/ReportViewer.aspx?%2f{database}%2f{reportRDLname}&rs:Command=Render&MinDate={minDate}&MaxDate={maxDate}"

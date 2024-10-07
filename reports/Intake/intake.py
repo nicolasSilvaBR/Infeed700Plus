@@ -176,14 +176,11 @@ def intake_page(mindate, maxdate):
                         tab1, tab2, tab3, tab4 = st.tabs(["📅 Table", "📊 Charts", "📈 Statistics", "🔍 Insights"])
 
                         # Full table tab
-                        with tab1:
-                            st.write("### Full Data Table")
+                        with tab1:                            
                             st.dataframe(data=dataSource_filtered.sort_values('Time In'), hide_index=True,use_container_width=True,height=600)                       
 
                         # Charts
-                        with tab2:
-                            st.write("### Charts for Net Weight by Material and by Bay")
-
+                        with tab2:   
                             # Group data for visualization
                             grouped_data = dataSource_filtered.groupby('RM Name').agg({'Nett Weight': 'sum'}).reset_index()
 

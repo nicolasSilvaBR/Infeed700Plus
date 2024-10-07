@@ -26,8 +26,8 @@ if 'Project' not in st.session_state:
     st.session_state['Project'] = 'Dashboards'  # Definir Dashboards como valor padrão
 
 # Obter as datas do session_state ou definir valores padrão
-minDate = st.session_state.get('minDate', pd.to_datetime("2024-08-01")).strftime('%Y-%m-%d')
-maxDate = st.session_state.get('maxDate', pd.to_datetime("2024-08-31")).strftime('%Y-%m-%d')
+minDate = st.session_state.get('minDate', pd.to_datetime("2024-10-01")).strftime('%Y-%m-%d')
+maxDate = st.session_state.get('maxDate', pd.to_datetime("2024-10-30")).strftime('%Y-%m-%d')
 
 def display_ssrs_report():
     """Função para exibir o relatório SSRS."""
@@ -41,16 +41,14 @@ def display_ssrs_report():
 
 
 def display_dashboard():
-    """Função para exibir o conteúdo do dashboard."""
-    # st.write(f"Displaying dashboard content for the dates: {m inDate} to {maxDate}")
+    """Função para exibir o conteúdo do dashboard."""  
     # Chamar a função intake_page para exibir o dashboard do Intake
     intake_page(mindate=minDate, maxdate=maxDate)
 
 # Exibir o conteúdo com base na seleção do menu
 if st.session_state['Project'] == 'SSRS Reports':
-    st.header(f"SSRS Report{st.session_state['selected_report']}")
+   # st.header(f"SSRS Report{st.session_state['selected_report']}")
     display_ssrs_report()
     st.cache_data.clear()
 else:
-    st.header("Dashboard")
     display_dashboard()

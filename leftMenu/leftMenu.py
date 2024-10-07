@@ -8,8 +8,8 @@ import pandas as pd  # Date handling
 # Define headers and reports for the menu
 headers = {1: "Intake", 2: "Blending", 3: "Press"}
 reports = {
-    1: [["Intakes", "Intake"], ["Intake Tips", "TipBreakdown"]],
-    2: [["Blending / Batching", "Batch"], ["Blending / Run", "BatchByRunNumber"]],   
+    1: [["Intakes", "Intake"], ["Intake Tips", "TipBreakdown"],['Intake Summary','IntakeSummary'],['Raw Material Mass Balance','RMUsageVsRMintake']],
+    #2: [["Blending / Batching", "Batch"], ["Blending / Run", "BatchByRunNumber"]],   
 }
 
 def load_local_css(file_name):
