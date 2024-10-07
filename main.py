@@ -8,9 +8,11 @@ import logging
 
 config.set_page_config()
 
-logging.basicConfig(filename='streamlit.log', 
-                    level=logging.DEBUG, 
-                    format='%(asctime)s - %(levelname)s - %(message)s')
+# Define the level of logging
+# logging.basicConfig(filename='debug.log', 
+#                     level=logging.DEBUG, 
+#                     format='%(asctime)s - %(levelname)s - %(message)s')
+
 def main():       
 
     LeftMenu()    
