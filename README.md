@@ -1,4 +1,5 @@
 # Infeed700 Application Documentation
+# Python Version 3.12.5
 
 ## Table of Contents
 
