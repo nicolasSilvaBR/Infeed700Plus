@@ -41,7 +41,7 @@ def embed_ssrs_report(reportRDLname, minDate, maxDate):
                     src="{report_url}" frameborder="0" allowfullscreen></iframe>
             """
             # Usar height grande o suficiente para preencher a tela e garantir que o iframe ocupe 100% da área
-            st.components.v1.html(iframe_code, height=800, scrolling=False)
+            st.components.v1.html(iframe_code, height=780, scrolling=False)
         else:
             st.error(f"Error accessing the report: {response.status_code}. Check the report name or parameters.")
     except requests.exceptions.ConnectTimeout:
