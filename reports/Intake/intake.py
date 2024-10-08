@@ -103,10 +103,9 @@ def intake_page(mindate, maxdate):
 
                         # Charts tab
                         # Charts using plotly library  
-                        with tab2:
-                            
+                        with tab2:                           
 
-                            # Gráfico de Linha: Entrada e Saída ao Longo do Tempo
+########################### # Gráfico de Linha: Entrada e Saída ao Longo do Tempo
                             # Objetivo: Visualizar como a entrada e saída de materiais variaram ao longo do tempo (Time In e Time Out).
                             # Gráfico: Line Chart mostrando a quantidade de transações em cada dia ou por faixa de tempo.
                             dataSource_filtered['Time In'] = pd.to_datetime(dataSource_filtered['Time In'])
@@ -124,17 +123,16 @@ def intake_page(mindate, maxdate):
                                 color_discrete_sequence=['#0072B2'],  # Define a cor do gráfico    
                                 template='plotly_white' ,           # Define o template do gráfico    
                                 markers=True,                     # Define os marcadores do gráfico  
-                                text='Nett Weight'  # Adiciona os rótulos de dados
-                            
+                                text='Nett Weight',  # Adiciona os rótulos de dados                                                        
                             )
                             # Aumentar o tamanho dos rótulos dos dados e dos marcadores
                             line.update_traces(
-                                textposition='top center',  # Posição dos rótulos
-                                textfont_size=12,  # Tamanho da fonte dos rótulos
-                                marker_size=10,    # Tamanho dos marcadores    
-                                line_width=2       # Largura da linha
+                                textposition='bottom right',  # Posição dos rótulos
+                                textfont_size=14,  # Tamanho da fonte dos rótulos
+                                marker_size=6,    # Tamanho dos marcadores    
+                                line_width=2 ,      # Largura da linha
+                                
                             )
-
                             # Ajustar o layout do gráfico
                             line.update_layout(
                                 xaxis_title_font={'size': 12},  # Tamanho da fonte do título do eixo X
@@ -144,82 +142,48 @@ def intake_page(mindate, maxdate):
                                 height=600                      # Altura do gráfico
                             )
                             # Display the chart
-
-                            # Show the chart
                             st.plotly_chart(line, use_container_width=True)
 
+                            st.divider()                          
+                              
+############################ Grouping data sources to use in the charts 
+                            sum_rm_name_groupped = dataSource_filtered.groupby('RM Name').agg({'Nett Weight': 'sum'}).reset_index()   
 
-                            col1,col2 = st.columns(2)
-                            with col1:    
-                                # Grouping data sources to use in the charts 
-                                sum_rm_name_groupped = dataSource_filtered.groupby('RM Name').agg({'Nett Weight': 'sum'}).reset_index()   
+                            # Bar Chart of Net Weight Intake by Raw Material Name
+                            chart = px.bar(
+                                sum_rm_name_groupped.sort_values("Nett Weight"),                                     
+                                y="RM Name",
+                                x="Nett Weight",
+                                orientation="h",
+                                title="Net Weight Intake by Raw Material Name",
+                                labels={'Nett Weight': 'Net Weight', 'RM Name': 'Raw Material Name'},
+                                color_discrete_sequence=['#475b7d'],
+                                text_auto=',.2f',  # format numbers with 2 decimal places
+                                opacity=1,                                    
+                            )
+                            # Increase the size of the text inside the bars
+                            chart.update_traces(
+                                textfont_size=10,  # increase the font size of the text inside the bars
+                                textangle=0,       # text angle
+                                textposition='outside'  # text position 
+                            )
+                            # Increase the size of the font and title of the axes
+                            chart.update_layout(
+                                xaxis_title_font={'size': 12},  # Font size of the X-axis title
+                                yaxis_title_font={'size': 12},  # Font size of the Y-axis title 
+                                title_font={'size': 14},        # Font size of the chart title
+                                width=600,                      # Adjust the width 
+                                height=600                      # Adjust the height
+                            )
+                            # Display the chart
+                            st.plotly_chart(chart, use_container_width=True,key="bar_chart_rm_name_chart1")
 
-                                # Bar Chart of Net Weight Intake by Raw Material Name
-                                chart = px.bar(
-                                    sum_rm_name_groupped.sort_values("Nett Weight"),                                     
-                                    y="RM Name",
-                                    x="Nett Weight",
-                                    orientation="h",
-                                    title="Net Weight Intake by Raw Material Name",
-                                    labels={'Nett Weight': 'Net Weight', 'RM Name': 'Raw Material Name'},
-                                    color_discrete_sequence=['#475b7d'],
-                                    text_auto=',.2f',  # format numbers with 2 decimal places
-                                    opacity=1,                                    
-                                )
-                                # Increase the size of the text inside the bars
-                                chart.update_traces(
-                                    textfont_size=10,  # increase the font size of the text inside the bars
-                                    textangle=0,       # text angle
-                                    textposition='outside'  # text position 
-                                )
-                                # Increase the size of the font and title of the axes
-                                chart.update_layout(
-                                    xaxis_title_font={'size': 12},  # Font size of the X-axis title
-                                    yaxis_title_font={'size': 12},  # Font size of the Y-axis title 
-                                    title_font={'size': 14},        # Font size of the chart title
-                                    width=600,                      # Adjust the width 
-                                    height=600                      # Adjust the height
-                                )
-                                # Display the chart
-                                st.plotly_chart(chart, use_container_width=True,key="bar_chart_rm_name_chart1")
-
-                            with col2:  
-                                # Bar Chart of Net Weight Intake by Raw Material Name
-                                chart2 = px.bar(
-                                    sum_rm_name_groupped.sort_values("Nett Weight"),                                     
-                                    y="RM Name",
-                                    x="Nett Weight",
-                                    orientation="h",
-                                    title="Net Weight Intake by Raw Material Name",
-                                    labels={'Nett Weight': 'Net Weight', 'RM Name': 'Raw Material Name'},
-                                    color_discrete_sequence=['#475b7d'],
-                                    text_auto=',.2f',  # format numbers with 2 decimal places
-                                    opacity=1,                                    
-                                )
-                                # Increase the size of the text inside the bars
-                                chart2.update_traces(
-                                    textfont_size=10,  # increase the font size of the text inside the bars
-                                    textangle=0,       # text angle
-                                    textposition='outside'  # text position 
-                                )
-                                # Increase the size of the font and title of the axes
-                                chart2.update_layout(
-                                    xaxis_title_font={'size': 12},  # Font size of the X-axis title
-                                    yaxis_title_font={'size': 12},  # Font size of the Y-axis title 
-                                    title_font={'size': 14},        # Font size of the chart title
-                                    width=600,                      # Adjust the width 
-                                    height=600                      # Adjust the height
-                                )
-                                # Display the chart
-                                st.plotly_chart(chart2, use_container_width=True,key="bar_chart_rm_name_chart2")
-                            
-
-                        # Statistics tab
+####################### # Statistics tab
                         with tab3:
                             st.write("### Descriptive Statistics of the Data")
                             st.write(dataSource_filtered.describe())
 
-                        # Insights tab
+####################### # Insights tab
                         with tab4:
                             st.write("### Key Insights")
                             st.write(f"- The raw material with the highest total weight is: {sum_rm_name_groupped.iloc[0]['RM Name']} "
