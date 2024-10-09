@@ -42,3 +42,11 @@ html, body {
     margin: 0;
     padding: 0;
 }
+
+/* Injetar estilo para cabeçalhos de tabela gerados por st.dataframe */
+.css-1ex1afd th {
+    background-color: #0056b3 !important;
+    color: white !important;
+    text-align: center;
+    font-size: 16px !important;
+}

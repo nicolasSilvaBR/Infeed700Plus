@@ -108,6 +108,8 @@ This section explains how to set up your Streamlit applications to run in the ba
 
 ### Step 1: Create a Batch Script to Run Streamlit Apps in the Background
 
+If all the `.py` files (`main.py`, `documentation.py`, `testPage.py`) are located in the **same directory** as the `.bat` file, you can use the following batch script:
+
 1. Open a text editor (such as Notepad) and paste the following content:
 
     ```bat
@@ -124,9 +126,11 @@ This section explains how to set up your Streamlit applications to run in the ba
     exit
     ```
 
-2. Save this file as `run_streamlit_apps.bat` in a location where it will not be deleted or moved (e.g., `C:\Scripts\run_streamlit_apps.bat`).
+2. Save this file as `run_streamlit_apps.bat` in the same directory where all the `.py` files are located.
 
 ### Step 2: Set Up Task Scheduler to Run the Script at Startup
+
+Once the `.bat` file is created, we will configure the Windows **Task Scheduler** to run it automatically at startup.
 
 1. Press `Win + R` to open the **Run** dialog.
 2. Type `taskschd.msc` and press **Enter** to open **Task Scheduler**.
@@ -149,8 +153,13 @@ This section explains how to set up your Streamlit applications to run in the ba
 
 1. In the **Actions** tab, click **New**.
 2. Select **Start a program** from the **Action** dropdown.
-3. In **Program/script**, click **Browse** and select the `run_streamlit_apps.bat` file created earlier.
-4. Click **OK** to save the action.
+3. In **Program/script**, click **Browse** and select the `run_streamlit_apps.bat` file.
+4. In **Start in (optional)**, enter the full directory path where the `.bat` and `.py` files are located. For example:
+
+   - **Program/script**: `C:\path\to\your\directory\run_streamlit_apps.bat`
+   - **Start in**: `C:\path\to\your\directory\`
+
+5. Click **OK** to save the action.
 
 ### Step 6: Test the Task
 
@@ -160,3 +169,11 @@ This section explains how to set up your Streamlit applications to run in the ba
 By following these steps, your Streamlit apps will start running in the background automatically each time the computer starts or restarts.
 
 ---
+
+### Notes:
+
+- If the `.bat` file and the Python scripts are in the **same directory**, you don't need to specify the full paths to the `.py` files in the script.
+- Make sure to enter the correct path in the **Start in (optional)** field when creating the task in **Task Scheduler** to ensure it runs in the correct directory.
+
+---
+

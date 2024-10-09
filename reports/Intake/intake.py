@@ -85,7 +85,7 @@ def intake_page(mindate, maxdate):
                 dataSource['nettweight'] = dataSource['nettweight'].fillna(0)
 
                 if dataSource.empty:
-                    st.write("No data available to display.")
+                    st.write("💬 No data available to display.")
                 else:
                     columns_to_display = load_columns_mapping()
                     if columns_to_display:
@@ -96,11 +96,23 @@ def intake_page(mindate, maxdate):
 
                        
                         # Organize the content in tabs
-                        tab1, tab2, tab3, tab4, tab5,tab6 = st.tabs(["📅 Table", "📊 Charts", "📈 Statistics", "🔍 Insights","📚 Explainer","⬇️ Export"])
+                        tab1,tab2,tab3,tab4,tab5,tab6,tab7 = st.tabs(["📅 Table", "📊 Charts", "📈 Statistics", "🔍 Insights","📚 Explainer","⬇️ Export","🔑 KPI`s"])
+                        
+                        # Convert dates to European format (DD/MM/YYYY)
+                        mindate_eu = pd.to_datetime(mindate).strftime('%d/%m/%Y')
+                        maxdate_eu = pd.to_datetime(maxdate).strftime('%d/%m/%Y')
 
                         # Full table tab
                         with tab1:
-                            st.dataframe(dataSource_filtered, hide_index=True, use_container_width=True, height=700)
+                            dateCol1,dateCol2 = st.columns([6,1])
+                            with dateCol1:
+                                #st.write(f"##### Intake Report")
+                                st.markdown(f'<span style="color:#006010;font-size:20px;">Intake Report</span>', unsafe_allow_html=True)
+                            with dateCol2:
+                                #st.write(f"Date from: {mindate_eu}  To: {maxdate_eu}")
+                                st.markdown(f'<span style="color:black;font-size:13px;">Date from: {mindate_eu}  To: {maxdate_eu}</span>', unsafe_allow_html=True)
+                            st.dataframe(dataSource_filtered, hide_index=True, use_container_width=True, height=670)
+                            #st.data_editor(data=dataSource_filtered,height=670,hide_index=True,use_container_width=True,)
 
                         # Charts tab
                         # Charts using plotly library  
@@ -220,6 +232,11 @@ def intake_page(mindate, maxdate):
                                         file_name='dataSource_filtered.csv',
                                         mime='text/csv'
                                     )
+                        with tab7:
+                            col1, col2, col3 = st.columns(3)
+                            col1.metric("Temperature", "70 °C", "1.2 °C")
+                            col2.metric("Wind", "9 Km/h", "-8%")
+                            col3.metric("Humidity", "86%", "4%")
 
 
                     else:

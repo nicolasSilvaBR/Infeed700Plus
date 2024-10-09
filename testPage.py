@@ -30,3 +30,4 @@ if uploaded_file is not None:
     load_and_display_data(uploaded_file)
 else:
     st.write("Please upload a CSV file to view its content.")
+
