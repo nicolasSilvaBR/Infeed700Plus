@@ -5,6 +5,8 @@ import os  # File and path handling
 import pandas as pd  # Date handling
 import utilities as utl # Function to load local CSS files
 
+# Path to the logo image file
+sidebar_logo_image_name = "ICM_300X80_OPT14.png"  
 
 # Define headers and reports for the menu
 headers = {1: "Intake", 2: "Blending", 3: "Press"}
@@ -35,7 +37,13 @@ def display_report_selection(headers, reports):
                     icons=["table"] * len(options),
                     default_index=0,  # Default to the first option
                     key=f"option_menu_{headerName}",
-                    styles=menu_styles
+                    styles={
+                        "container": menu_styles["container"], # styles.py sets the container style
+                        "icon": menu_styles["icon"],
+                        "nav-link": menu_styles["nav-link"],
+                        "nav-link-selected": menu_styles["nav-link-selected"],
+                        "icon-selected": menu_styles["icon-selected"], 
+                    }
                 )
 
                 # Get the selected report based on the user's selection
@@ -52,11 +60,13 @@ def display_report_selection(headers, reports):
 
 # Function to generate the sidebar menu
 def LeftMenu():
-    """Build the sidebar menu for the Streamlit app."""
+    """Build the sidebar menu for the Streamlit app.
+    The first menu at top of the sidebar below the logo is the "Infeed700" menu.
+    """
     
     utl.load_local_css("leftMenu/expanderStyle.css")  # Load the CSS from the file
 
-    png_file_path = os.path.join("images", "ICM_300X80_OPT3.png")  # Load the PNG icon          
+    png_file_path = os.path.join(f"images", sidebar_logo_image_name)  # Load the PNG icon          
 
     with st.sidebar:
         # Display the logo directly using st.image
@@ -66,13 +76,13 @@ def LeftMenu():
         # Main menu
         with st.expander(label='', expanded=True):            
             selectedMenu = option_menu(
-                menu_title="Infeed700",
+                menu_title="Infeed700",     
                 menu_icon='bar-chart',
                 options=["Dashboards", "SSRS Reports"],
                 icons=["pie-chart-fill", "grid-3x3-gap-fill"],
                 default_index=0,  # Default to Dashboards
                 styles={
-                        "container": menu_styles["container"],
+                        "container": menu_styles["container"], # styles.py sets the container style
                         "icon": menu_styles["icon"],
                         "nav-link": menu_styles["nav-link"],
                         "nav-link-selected": menu_styles["nav-link-selected"],

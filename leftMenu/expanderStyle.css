@@ -26,13 +26,13 @@
 
 /* Font size customization for the label inside st.expander */
 div[data-testid="stExpander"] details summary p {
-    font-size: 16px;  /* Font size for label inside expander */
+    font-size: 16px;    /* Font size for label inside expander, title in the expander ex: Intakes, Blending */
     color: #555;  /* Medium grey color for text */
 }
 
 /* Styling for the expander title */
 [data-testid="stExpander"] summary {
-    font-size: 20px;  /* Font size for the expander title */
+    font-size: 10px;  /* Font size for the expander title */
     font-weight: 600;  /* Semi-bold title */
     color: #333;  /* Dark grey color for the title text */
     background-color: #ffffff;  /* White background for the title */
@@ -49,7 +49,7 @@ div[data-testid="stExpander"] details summary p {
 
 /* Custom styling for the inner items of the expander */
 [data-testid="stExpander"] div[role="group"] {
-    font-size: 16px;  /* Font size for inner content of expander */
+    font-size: 12px;  /* Font size for inner content of expander */
     color: #555;  /* Medium grey color for inner content text */
     padding: 5px 15px;  /* Padding inside the group content */
     background-color: #ffffff;  /* White background for inner content */

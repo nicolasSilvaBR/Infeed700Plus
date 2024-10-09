@@ -1,4 +1,4 @@
-# Arquivo style.py
+# File style.py
 # The file is used to define the styles of the menu, including the container, links, icons, and selected state.
 # The styles are defined in a dictionary, where each key represents a class or ID of an HTML element, and the value is a dictionary of styles to be applied to that element.
 
@@ -9,80 +9,82 @@
 # - nav-link-selected: styles for the selected state of the links (menu items)
 # - icon-selected: styles for the icon when the item is selected
 
-
 menu_styles = {
-    # Estilos gerais do container que envolve o menu
-    "container": {
-        "padding": "0px!important",                     # Espaçamento interno do container (bordas)
-        "background-color": "#ffffff",                  # Cor de fundo do menu
-        "border": "0px solid #e0e0e0",                  # Borda leve ao redor do menu
-        "border-radius": "0px",                         # Bordas arredondadas
-        "box-shadow": "0 2px 8px rgba(150, 150, 147, 0.5)",   # Sombra leve para profundidade
-        "width": "370px",                               # Largura do menu  
-        "max-width": "100%",                            # Largura máxima para responsividade
-        "font-family": "Segoe UI",                      # Fonte utilizada no menu
-        "margin": "0px auto",                           # Centraliza o menu com margem superior e inferior
-        "transition": "all 0.3s ease-in-out",           # Transição suave para qualquer mudança de estilo
-        "opacity": "1",                              # Define a opacidade do container  
-        "backdrop-filter": "blur(5px)",                 # Efeito de desfoque no fundo (moderno e clean)
-        # "background-image": "url('path/to/image.jpg')",  # Exemplo para adicionar imagem de fundo
-        # "background-size": "cover",                   # Faz a imagem de fundo cobrir todo o container
-        "overflow": "hidden",                           # Garante que nenhum conteúdo transborde fora do container
-        #"display": "flex",                              # Utiliza Flexbox para alinhamento interno
-        "flex-direction": "column",                     # Alinha itens em coluna (opcional para menus verticais)   
-        "justify-content": "center",                    # Centraliza itens no eixo vertical (opcional)
-        #"align-items": "center",                       # Centraliza itens no eixo horizontal (opcional)
-        "transform": "scale(1)",                        # Preparado para efeitos de transformação (zoom)       
-        "hover": {  
-            "transform": "scale(1.05)",                 # Efeito de zoom suave ao passar o mouse
-            "box-shadow": "0 4px 12px rgba(150, 150, 147, 0.15)"  # Aumenta a sombra ao passar o mouse
-        }
-    },
-
-     # Estilos do ícone quando o item está selecionado
+    # General styles for the container that wraps the menu
+    # Icon styles when the item is selected
     "icon-selected": {
         "color": "#ffffff!important",  # Force the color change when selected
     },
-    
-    # Estilos dos ícones exibidos ao lado de cada item de menu
-    "icon": {
-        "color": "#006018",                             # Cor padrão dos ícones
-        "font-size": "20px",                            # Tamanho da fonte dos ícones
-        "transition": "color 0.5s ease",                # Transição suave para mudança de cor ao selecionar                
-    },
-   
-    # Estilos dos links de navegação (itens do menu)
-    "nav-link": {
-        "font-size": "15px",                            # Tamanho da fonte dos links
-        "text-align": "left",                           # Alinhamento do texto
-        "margin": "2px 0",                              # Espaçamento vertical entre os links
-        "padding": "7px 10px",                          # Espaçamento interno dos links
-        "border-radius": "8px",                         # Bordas arredondadas dos links
-        "transition": "background-color 0.3s ease, color 0.3s ease", # Transição suave para mudanças de cor
-        "cursor": "pointer",                            # Exibe o cursor de ponteiro ao passar sobre os links        
-        #"display": "flex",                             # Utiliza Flexbox para alinhamento interno
-        "align-items": "center",                        # Centraliza os itens no eixo horizontal
-        "justify-content": "space-between",             # Espaçamento entre os itens
-        "width": "100%",                                # Largura total dos links
-        "max-width": "100%",                            # Largura máxima dos links
-        #"text-decoration": "none",                     # Remove o sublinhado dos links
-        "color": "black",                               # Cor padrão dos links
-        "background-color": "transparent",              # Cor de fundo padrão dos links
-        "border": "0px solid transparent",              # Borda padrão dos links
-        "opacity": "1",                               # Opacidade padrão dos links
-        # Hover
-        "hover": {
-            "background-color": "rgba(190, 217, 91, 0.1)",  # Cor de fundo ao passar o mouse (efeito hover)
-            "color": "#0056b3",                             # Cor do texto ao passar o mouse   
+
+    "container": {
+        "padding": "0px!important",                     # Internal padding of the container (borders)
+        "background-color": "#ffffff",                  # Menu background color
+        "border": "0px solid #e0e0e0",                  # Light border around the menu
+        "border-radius": "0px",                         # Rounded borders
+        "box-shadow": "0 2px 8px rgba(150, 150, 147, 0.5)",   # Light shadow for depth
+        "width": "370px",                               # Menu width
+        "max-width": "100%",                            # Maximum width for responsiveness
+        "font-family": "Segoe UI",                      # Font used in the menu
+        "font-size": "12px",                            # Adjusts font size for the entire container
+        "margin": "0px auto",                           # Center the menu with top and bottom margin
+        "transition": "all 0.3s ease-in-out",           # Smooth transition for any style changes
+        "opacity": "1",                                 # Defines the container's opacity
+        "backdrop-filter": "blur(5px)",                 # Background blur effect (modern and clean)
+        # "background-image": "url('path/to/image.jpg')",  # Example for adding background image
+        # "background-size": "cover",                   # Make the background image cover the whole container
+        "overflow": "hidden",                           # Ensures that no content overflows outside the container
+        #"display": "flex",                              # Use Flexbox for internal alignment
+        "flex-direction": "column",                     # Align items in a column (optional for vertical menus)
+        "justify-content": "center",                    # Center items on the vertical axis (optional)
+        #"align-items": "center",                       # Center items on the horizontal axis (optional)
+        "transform": "scale(1)",                        # Prepared for transformation effects (zoom)
+        "hover": {  
+            "transform": "scale(1.05)",                 # Smooth zoom effect on hover
+            "box-shadow": "0 4px 12px rgba(150, 150, 147, 0.15)"  # Increase shadow on hover
         }
     },
     
-    # Estilos aplicados ao link selecionado (ativo)
-    "nav-link-selected": {
-        "background-color": "#02401D",                  # Cor de fundo do item selecionado
-        "color": "white",                               # Cor do texto do item selecionado
-        "font-weight": "bold",                          # Deixa o texto em negrito para destaque
+    # Styles for the icons displayed next to each menu item
+    "icon": {
+        "color": "#006018",                             # Default color for icons
+        "font-size": "20px",                            # Font size for icons
+        "transition": "color 0.5s ease",                # Smooth transition for color change when selected
+    },
+   
+    # Styles for the navigation links (menu items)
+    "nav-link": {
+        "font-size": "15px",                            # Font size for links
+        "text-align": "left",                           # Text alignment
+        "margin": "2px 0",                              # Vertical spacing between links
+        "padding": "2px 10px",                          # Internal spacing for links, space between each report name
+        "border-radius": "6px",                         # Rounded borders for links
+        "transition": "background-color 0.3s ease, color 0.3s ease", # Smooth transition for color changes
+        "cursor": "pointer",                            # Display pointer cursor when hovering over links
+        #"display": "line",                              # Use Flexbox for internal alignment
+        "align-items": "center",                        # Center items on the horizontal axis
+        "justify-content": "space-between",             # Space between items
+        "width": "100%",                                # Full width for links
+        "max-width": "100%",                            # Maximum width for links        
+        "color": "#73726F",                             # Default color for links
+        "background-color": "transparent",              # Default background color for links
+        "border": "0px solid transparent",              # Default border for links
+        "opacity": "1",                                 # Default opacity for links        
+        "hover": {
+            "background-color": "rgba(190, 217, 91, 0.1)",  # Background color on hover effect
+            "color": "#0056b3",                             # Text color on hover
+        }
     },
     
-    
+    # Styles applied to the selected (active) link
+    "nav-link-selected": {
+        "background-color": "#00401f",                  # Background color for selected item
+        "color": "white",                               # Text color for selected item
+        "font-weight": "bold",                          # Bold text for emphasis
+        "border": "0px solid #00401f",                  # Border for selected item
+        "opacity": "1",                                 # Full opacity for selected item
+        "hover": {
+            "background-color": "#0056b3",              # Background color on hover effect
+            "color": "white",                           # Text color on hover effect
+        }
+    },
 }
