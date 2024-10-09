@@ -96,11 +96,11 @@ def intake_page(mindate, maxdate):
 
                        
                         # Organize the content in tabs
-                        tab1, tab2, tab3, tab4, tab5,tab6 = st.tabs(["📅 Table", "📊 Charts", "📈 Statistics", "🔍 Insights","📚 Explainer","⬇️ Download"])
+                        tab1, tab2, tab3, tab4, tab5,tab6 = st.tabs(["📅 Table", "📊 Charts", "📈 Statistics", "🔍 Insights","📚 Explainer","⬇️ Export"])
 
                         # Full table tab
                         with tab1:
-                            st.dataframe(dataSource_filtered, hide_index=True, use_container_width=True, height=600)
+                            st.dataframe(dataSource_filtered, hide_index=True, use_container_width=True, height=700)
 
                         # Charts tab
                         # Charts using plotly library  

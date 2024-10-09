@@ -104,7 +104,7 @@ def LeftMenu():
 
         st.divider()  # Divider before footer
 
-        # Call the footer function
+        # Call the footer function from utilities.py
         utl.display_footer()
 
        

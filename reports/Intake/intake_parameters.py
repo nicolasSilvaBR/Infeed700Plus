@@ -1,4 +1,5 @@
 import streamlit as st
+import pandas as pd
 
 def intake_parameters():
     '''
@@ -10,7 +11,19 @@ def intake_parameters():
         col1, col2 = st.columns([10, 1])
 
         with col1:
-            with st.expander("Input Parameters", expanded=False):
+            with st.expander("📶 Input Parameters", expanded=False):
+
+                # Section for selecting dates with a calendar icon                
+                dateCol1, dateCol2 = st.columns(2)
+                with dateCol1:
+                    minDate = st.date_input("Start Date", value=pd.to_datetime("2024-10-01"))
+                with dateCol2:
+                    maxDate = st.date_input("End Date", value=pd.to_datetime("2024-10-30"))
+
+                # Save the selected dates in session_state for later use
+                st.session_state['minDate'] = minDate
+                st.session_state['maxDate'] = maxDate  
+
                 input_col1, input_col2, input_col3 = st.columns(3)
                 
                 with input_col1:

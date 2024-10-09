@@ -3,49 +3,49 @@
 
 /* Styling for the main container of the sidebar menu */
 .sidebar-menu {
-    display: flex;  
-    flex-direction: column;  
-    padding: 0px!important;  
-    background-color: #ffffff;  
-    border: 0px solid #e0e0e0;  
-    border-radius: 8px;  
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);  
-    width: 320px;  
-    max-width: 100%;  
-    margin: 0px auto;  
-    transition: all 0.3s ease-in-out;  
-    opacity: 0.95;  
-    backdrop-filter: blur(5px);  
+    display: flex;  /* Flexbox layout for arranging the menu items */
+    flex-direction: column;  /* Stack items vertically */
+    padding: 0px!important;  /* Remove default padding */
+    background-color: #ffffff;  /* Set the background color to white */
+    border: 0px solid #e0e0e0;  /* Remove border */
+    border-radius: 8px;  /* Add rounded corners */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);  /* Add subtle shadow for depth */
+    width: 320px;  /* Set a fixed width for the sidebar */
+    max-width: 100%;  /* Ensure it doesn't exceed the screen width */
+    margin: 0px auto;  /* Center the sidebar */
+    transition: all 0.3s ease-in-out;  /* Smooth transition for changes */
+    opacity: 0.95;  /* Slight transparency */
+    backdrop-filter: blur(5px);  /* Apply a background blur effect */
 }
 
 /* General customization for the st.expander component */
 [data-testid="stExpander"] {
-    border: 0px solid #dee2e6;  /* Border color for expander */
-    border-radius: 8px;  /* Rounded corners for expander */
-    background-color: #ffffff;  /* White background for expander */
-    padding: 0px;  /* Padding inside the expander */
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);  /* Subtle shadow for expander */
+    border: 0px solid #dee2e6;  /* Define the border color for the expander */
+    border-radius: 8px;  /* Add rounded corners to the expander */
+    background-color: #ffffff;  /* Set background color to white */
+    padding: 0px;  /* Remove padding inside the expander */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);  /* Add subtle shadow to the expander */
 }
 
 /* Font size customization for the label inside st.expander */
 div[data-testid="stExpander"] details summary p {
-    font-size: 16px;
-    color: #555;
+    font-size: 16px;  /* Set font size for expander label */
+    color: #555;  /* Set font color */
 }
 
 /* Styling for the expander title */
 [data-testid="stExpander"] summary {
     font-size: 14px;  /* Font size for the expander title */
-    font-weight: 600;  
-    color: #333;  
-    background-color: #ffffff;  
-    border-radius: 6px;  
-    padding: 10px;  
+    font-weight: 600;  /* Make the title bold */
+    color: #333;  /* Set title color */
+    background-color: #ffffff;  /* Set background color for the title */
+    border-radius: 6px;  /* Add rounded corners */
+    padding: 10px;  /* Add padding for spacing */
 }
 
 /* Hover effect for the expander title */
 [data-testid="stExpander"] summary:hover {
-    background-color: #F2F2F2;
+    background-color: #F2F2F2;  /* Change background color on hover */
 }
 
 /* Hover effect for each individual menu item (link) */
@@ -57,41 +57,41 @@ div[data-testid="stExpander"] details summary p {
 
 /* Hover effect for the icons inside each sidebar item */
 .sidebar-item:hover span {
-    color: #0056b3 !important;  /* Dark blue color for the icon on hover */
+    color: #0056b3 !important;  /* Change the icon color to dark blue on hover */
 }
 
 /* Custom styling for the inner items of the expander */
 [data-testid="stExpander"] div[role="group"] {
-    font-size: 12px;  
-    color: #555;  
-    padding: 0px 0px;  
-    background-color: #ffffff;  
-    border-top: 1px solid #dee2e6;  
-    border-radius: 0 0 8px 8px;  
+    font-size: 12px;  /* Smaller font size for inner items */
+    color: #555;  /* Set text color */
+    padding: 0px 0px;  /* Remove padding */
+    background-color: #ffffff;  /* Set background to white */
+    border-top: 1px solid #dee2e6;  /* Add a top border */
+    border-radius: 0 0 8px 8px;  /* Rounded bottom corners */
 }
 
 /* Active border effect when the expander is open */
 [data-testid="stExpander"][open] {
-    background-color: #f1f7ff;  
-    border: 1px solid #007bff;
+    background-color: #f1f7ff;  /* Light blue background when expander is open */
+    border: 1px solid #007bff;  /* Blue border when open */
 }
 
 /* Custom styling for links within the expander sidebar */
 .sidebar-item {
-    padding: 10px 15px;
-    text-align: left;  
-    color: #333;
-    font-size: 16px;  
-    font-family: 'Segoe UI', sans-serif;  
-    border-radius: 5px;
-    margin: 10px 0;  
-    display: flex;  
-    align-items: center;  
-    justify-content: space-between;
+    padding: 10px 15px;  /* Add padding around each menu item */
+    text-align: left;  /* Align text to the left */
+    color: #333;  /* Set text color */
+    font-size: 16px;  /* Set font size */
+    font-family: 'Segoe UI', sans-serif;  /* Set font family */
+    border-radius: 5px;  /* Add rounded corners */
+    margin: 10px 0;  /* Add spacing between menu items */
+    display: flex;  /* Flexbox layout for items */
+    align-items: center;  /* Align items vertically */
+    justify-content: space-between;  /* Space between text and icon */
 }
 
 /* Styling for icons inside the sidebar links */
 .sidebar-item span {
-    font-size: 20px;
-    color: #007bff;
+    font-size: 20px;  /* Set font size for icons */
+    color: #007bff;  /* Blue color for icons */
 }

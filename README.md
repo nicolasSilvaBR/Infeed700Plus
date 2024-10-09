@@ -19,6 +19,7 @@
     - [6. Private Methods and Variables](#6-private-methods-and-variables)
     - [7. Naming Test Files and Functions](#7-naming-test-files-and-functions)
     - [8. General Guidelines](#8-general-guidelines)
+5. [Setting Up Automatic Background Execution of Streamlit Apps on Windows](#setting-up-automatic-background-execution-of-streamlit-apps-on-windows)
 
 ---
 
@@ -101,87 +102,61 @@ This document outlines Python naming conventions and best practices for naming f
 
 ---
 
-### 1. Naming Python Files
+## Setting Up Automatic Background Execution of Streamlit Apps on Windows
 
-Python filenames should be written in **snake_case**, with lowercase letters and words separated by underscores (`_`). This ensures clarity and consistency.
+This section explains how to set up your Streamlit applications to run in the background automatically when your PC starts or restarts using a batch script and the Windows Task Scheduler.
 
-#### Examples:
-- `main.py`
-- `database_connection.py`
-- `report_generator.py`
+### Step 1: Create a Batch Script to Run Streamlit Apps in the Background
 
----
+1. Open a text editor (such as Notepad) and paste the following content:
 
-### 2. Naming Functions
+    ```bat
+    @echo off
+    :: Start main.py on port 8501 in the background
+    start /b "" streamlit run main.py --server.port 8501
 
-Function names should follow the **snake_case** convention. They should be descriptive enough to clearly convey the purpose of the function.
+    :: Start documentation.py on port 8504 in the background
+    start /b "" streamlit run documentation.py --server.port 8504
 
-#### Examples:
-- `get_user_data()`
-- `calculate_total_weight()`
-- `send_email_notification()`
+    :: Start testPage.py on port 8503 in the background
+    start /b "" streamlit run testPage.py --server.port 8503
 
----
+    exit
+    ```
 
-### 3. Naming Variables
+2. Save this file as `run_streamlit_apps.bat` in a location where it will not be deleted or moved (e.g., `C:\Scripts\run_streamlit_apps.bat`).
 
-Variable names should also follow the **snake_case** convention and be descriptive. Short, concise names that convey meaning are ideal.
+### Step 2: Set Up Task Scheduler to Run the Script at Startup
 
-#### Examples:
-- `total_weight`
-- `max_date`
-- `is_active_user`
+1. Press `Win + R` to open the **Run** dialog.
+2. Type `taskschd.msc` and press **Enter** to open **Task Scheduler**.
 
----
+### Step 3: Create a New Task
 
-### 4. Naming Classes
+1. In **Task Scheduler**, click **Create Task**.
+2. In the **General** tab:
+    - Name the task, e.g., **Run Streamlit Apps**.
+    - Select **Run whether user is logged on or not**.
+    - Check **Do not store password** if you want the task to run without needing a password.
 
-Class names should follow the **PascalCase** convention (also known as **CamelCase**), with the first letter of each word capitalized.
+### Step 4: Configure Triggers
 
-#### Examples:
-- `UserProfile`
-- `ReportGenerator`
-- `DatabaseConnection`
+1. In the **Triggers** tab, click **New**.
+2. In the **Begin the task** dropdown, select **At startup**.
+3. Click **OK** to save the trigger.
 
----
+### Step 5: Configure Actions
 
-### 5. Naming Constants
+1. In the **Actions** tab, click **New**.
+2. Select **Start a program** from the **Action** dropdown.
+3. In **Program/script**, click **Browse** and select the `run_streamlit_apps.bat` file created earlier.
+4. Click **OK** to save the action.
 
-Constants should be written in **UPPERCASE** with words separated by underscores (`_`). Constants are values that should not change throughout the program.
+### Step 6: Test the Task
 
-#### Examples:
-- `MAX_RETRIES`
-- `DEFAULT_TIMEOUT`
-- `API_KEY`
+1. In **Task Scheduler**, right-click on the task and select **Run** to test whether the Streamlit apps start correctly.
+2. Restart your computer to confirm that the task runs automatically on startup.
 
----
-
-### 6. Private Methods and Variables
-
-Private methods and variables should start with a single underscore (`_`). This indicates that the method or variable is intended for internal use within the class and should not be accessed outside.
-
-#### Examples:
-- `_connect_to_database()`
-- `_validate_user_input()`
+By following these steps, your Streamlit apps will start running in the background automatically each time the computer starts or restarts.
 
 ---
-
-### 7. Naming Test Files and Functions
-
-When writing tests, the test file names should be in **snake_case**, typically prefixed with `test_`. Test functions should also follow **snake_case** and be descriptive.
-
-#### Examples:
-- `test_database_connection.py`
-- `test_user_authentication.py`
-
----
-
-### 8. General Guidelines
-
-- **Be descriptive**: Choose names that clearly describe the purpose of the file, function, variable, or class.
-- **Avoid abbreviations**: Use full words whenever possible to make your code easier to read.
-- **Keep names short but meaningful**: While names should be descriptive, avoid making them unnecessarily long.
-
----
-
-By adhering to these naming conventions and best practices, your Python code will be more organized, easier to understand, and maintainable. Consistency is key to writing high-quality code that others (or you) can read and maintain over time.

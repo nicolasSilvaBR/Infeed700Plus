@@ -50,7 +50,7 @@ menu_styles = {
     "nav-link": {
         "font-size": "15px",  # Font size for links
         "color": "#73726F",   # Default color for links    
-        "padding": "2px 10px",# Internal spacing for links, space between each report name   
+        "padding": "px 10px",# Internal spacing for links, space between each report name   
     },
     
     # Selected link (active state)
@@ -60,4 +60,3 @@ menu_styles = {
         "font-weight": "bold",  # Bold text for emphasis
     },
 }
-

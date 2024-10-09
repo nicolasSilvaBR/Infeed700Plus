@@ -1,54 +1,32 @@
 import streamlit as st
-from streamlit_option_menu import option_menu
-from styles import menu_styles  # Importando os estilos do arquivo style.py
+import pandas as pd
 
+st.set_page_config(page_title="Data Lab", page_icon=":bar_chart:", layout="wide")
+# Título da página
+st.subheader("Upload CSV, Visualize Data, and Select Columns to Display")
 
-# Definição dos headers e relatórios
-headers = {1: "Intake", 2: "Blending"}
-reports = {
-    1: [["Intakes", "Intake"], ["Intake Tips", "TipBreakdown"]],
-    2: [["Blending / Batching", "Batch"], ["Blending / Run", "BatchByRunNumber"]]
-}
+# Função para carregar e exibir os dados
+def load_and_display_data(uploaded_file):
+    # Carrega o arquivo CSV em um DataFrame
+    df = pd.read_csv(uploaded_file)
+    
+    # Exibe as colunas disponíveis
+    st.write("### Columns in the CSV file:")
+    all_columns = df.columns.tolist()
+    selected_columns = st.multiselect("Select columns to display:", all_columns, default=all_columns)
+    
+    # Exibe as colunas selecionadas
+    st.write("### Data from the CSV file (selected columns):")
+    st.dataframe(df[selected_columns])
+    
+    return df, selected_columns
 
-def LeftMenu():
-    # Load CSS for custom styles
-    def local_css(file_name):
-        with open(file_name) as f:
-            st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+# Componente para upload de arquivo CSV
+uploaded_file = st.file_uploader("Upload your CSV file", type=["csv"])
 
-    local_css("leftMenu/expanderStyle.css")   
-
-    with st.sidebar:
-        # Menu de opções principal
-        with st.expander(label='',expanded=True):
-            selectedMenu = option_menu(
-                menu_title="Infeed700",
-                menu_icon="reception-4",
-                options=["Dashboards", "SSRS Reports"],
-                icons=["pie-chart-fill", "grid-3x3-gap-fill"],
-                default_index=0,
-                styles=menu_styles  # Aplicando os estilos importados
-            )
-
-        # Criando a opção para o menu de SSRS Reports
-        if selectedMenu == "SSRS Reports":
-            for headerskey, headerName in headers.items():
-                # Verificar se a chave existe em reports
-                if headerskey in reports:
-                    with st.expander(headerName, expanded=False):
-                        report_option = option_menu(
-                            menu_title=None,
-                            menu_icon="reception-4",
-                            options=[report[0] for report in reports[headerskey]],
-                            icons=["table"] * len(reports[headerskey]),
-                            default_index=0,
-                            key=headerName,
-                            styles=menu_styles  # Aplicando os estilos
-                        )
-
-                        for report in reports[headerskey]:
-                            if report[0] == report_option:
-                                st.session_state['selected_report'] = report[1]
-
-# Chama a função para exibir o menu
-LeftMenu()
+# Verifica se um arquivo foi carregado
+if uploaded_file is not None:
+    # Carrega os dados e permite escolher as colunas para exibir
+    load_and_display_data(uploaded_file)
+else:
+    st.write("Please upload a CSV file to view its content.")

@@ -43,6 +43,10 @@ with open('.streamlit/config.toml', 'r') as file:  # Ensure the path is correct
 with open('embeddedSSRS.py', 'r') as file:
     embeddedSSRS = file.read()
 
+# Read the content of the databaseConnection.py file
+with open('databaseConnection.py', 'r') as file:
+    embeddedSSRS = file.read()
+
 # Textos e códigos para as seções
 Overview = '''\
 The Infeed700 application is a sophisticated interactive platform developed by **ICMC Solutions** utilizing **Streamlit**. This project aims to transition from the existing SSRS reporting system to a new solution using Python Streamlit. The new system will enhance interactivity, visual quality, and ease of report development and maintenance. 
@@ -105,8 +109,10 @@ with st.sidebar:
                  "Setup.bat",
                  "Secrets.toml",
                  "Config.toml",
-                 "Main.py", 
-                 "LeftMenu.py", 
+                 "Main", 
+                 "Data base connection",
+                 "Left Menu", 
+                 "Styles",
                  "Expander Style CSS",
                  "Embed SSRS"],  # Incluindo Setup.bat
                  
@@ -118,6 +124,7 @@ with st.sidebar:
                "windows", 
                "filetype-py",
                "filetype-py",
+               "filetype-py", 
                "filetype-py", 
                "filetype-py", 
                "filetype-css",
@@ -143,17 +150,26 @@ elif selected == "Dependency Support":
     st.title("Dependency Support")
     st.markdown(dependency_support)
 
-elif selected == "Main.py":
+elif selected == "Main":
     st.title("main.py")
     st.code(main_py_code, language='python')
 
-elif selected == "LeftMenu.py":
+elif selected == "Left Menu":
     st.title("leftMenu/leftMenu.py")
     st.code(left_menu_code, language='python')
 
 elif selected == "Expander Style CSS":
     st.title("leftMenu/expanderStyle.css")
     st.code(expander_style_css, language='css')
+
+elif selected == "Styles":
+    st.title("Styles.py")
+    st.code(expander_style_css, language='css')
+
+elif selected == "Data base connection":
+    st.title("Data base connection.py")
+    st.code(expander_style_css, language='css')
+
 
 elif selected == "Secrets.toml":
     st.title(".streamlit/secrets.toml")

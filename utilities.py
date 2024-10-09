@@ -43,8 +43,8 @@ def display_footer():
         """
         <div class="footer">
             <p>
-                <a href="https://icmcsl.com/" target="_blank">Infeed700</a> | 
-                <a href="https://icmcsl.com/" target="_blank">Support</a> | 
+                <a href="http://10.202.2.22:8503/" target="_blank">Data Lab</a> | 
+                <a href="Http://10.202.2.22:8504/" target="_blank">Support</a> | 
                 <a href="https://icmcsl.com/contact/" target="_blank">Contact Us</a>
             </p>
         </div>

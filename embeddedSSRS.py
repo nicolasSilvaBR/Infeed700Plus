@@ -1,8 +1,9 @@
 import streamlit as st
 import requests
 from requests_ntlm import HttpNtlmAuth
+import pandas as pd
 
-@st.cache_resource
+
 def embed_ssrs_report(reportRDLname, minDate, maxDate):
     """
     Embeds an SSRS report into the Streamlit app.
@@ -12,6 +13,17 @@ def embed_ssrs_report(reportRDLname, minDate, maxDate):
         minDate (str): Start date.
         maxDate (str): End date.
     """
+    # Section for selecting dates with a calendar icon
+    with st.expander(label="📅 Date Input", expanded=False):
+        col1, col2 = st.columns(2)
+        with col1:
+            minDate = st.date_input("Start Date", value=pd.to_datetime("2024-10-01"))
+        with col2:
+            maxDate = st.date_input("End Date", value=pd.to_datetime("2024-10-30"))
+
+        # Save the selected dates in session_state for later use
+        st.session_state['minDate'] = minDate
+        st.session_state['maxDate'] = maxDate  
     
     # ssrs credentials
     ssrs_config = st.secrets["ssrs_config"]
