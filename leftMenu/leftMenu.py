@@ -87,6 +87,7 @@ def LeftMenu():
                         "nav-link": menu_styles["nav-link"],
                         "nav-link-selected": menu_styles["nav-link-selected"],
                         "icon-selected": menu_styles["icon-selected"], 
+                        "menu_title": menu_styles["menu_title"],  # Apply the menu title style
                 }
             )
 

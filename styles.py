@@ -1,3 +1,4 @@
+import streamlit as st
 # File style.py
 # The file is used to define the styles of the menu, including the container, links, icons, and selected state.
 # The styles are defined in a dictionary, where each key represents a class or ID of an HTML element, and the value is a dictionary of styles to be applied to that element.
@@ -9,11 +10,21 @@
 # - nav-link-selected: styles for the selected state of the links (menu items)
 # - icon-selected: styles for the icon when the item is selected
 
+sidebar = st.secrets["sidebar"]
+
+
 menu_styles = {
-    # General styles for the container that wraps the menu
+    # General styles for the container that wraps the menu    
+    
+    "menu_title": {
+        "font-size": "12px",  # Adjust the font size as needed
+        "font-weight": "bold",  # Optional: Make the title bold
+        "text-align": "left",  # Optional: Center the title
+        "color": "#333333",  # Optional: Set the color of the title
+    },
     # Icon styles when the item is selected
     "icon-selected": {
-        "color": "#ffffff!important",  # Force the color change when selected
+        "color": sidebar['icon_color'],  # Force the color change when selected
     },
 
     "container": {
@@ -45,8 +56,8 @@ menu_styles = {
     },
     
     # Styles for the icons displayed next to each menu item
-    "icon": {
-        "color": "#006018",                             # Default color for icons
+    "icon": {  
+        "color": sidebar['icon_color'],     
         "font-size": "20px",                            # Font size for icons
         "transition": "color 0.5s ease",                # Smooth transition for color change when selected
     },
@@ -77,7 +88,7 @@ menu_styles = {
     
     # Styles applied to the selected (active) link
     "nav-link-selected": {
-        "background-color": "#00401f",                  # Background color for selected item
+        "background-color": sidebar['selected_item_color'],# Background color for selected item
         "color": "white",                               # Text color for selected item
         "font-weight": "bold",                          # Bold text for emphasis
         "border": "0px solid #00401f",                  # Border for selected item
