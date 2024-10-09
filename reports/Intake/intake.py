@@ -5,6 +5,7 @@ from databaseConnection import mydb
 import json
 import os
 import reports.intake.intake_parameters as intake_parameters
+from fpdf import FPDF
 
 # Cache the loading of the column mapping to avoid repeated file I/O
 @st.cache_data
@@ -95,7 +96,7 @@ def intake_page(mindate, maxdate):
 
                        
                         # Organize the content in tabs
-                        tab1, tab2, tab3, tab4 = st.tabs(["📅 Table", "📊 Charts", "📈 Statistics", "🔍 Insights"])
+                        tab1, tab2, tab3, tab4, tab5,tab6 = st.tabs(["📅 Table", "📊 Charts", "📈 Statistics", "🔍 Insights","📚 Explainer","⬇️ Download"])
 
                         # Full table tab
                         with tab1:
@@ -184,12 +185,74 @@ def intake_page(mindate, maxdate):
                             st.write(dataSource_filtered.describe())
 
 ####################### # Insights tab
-                        with tab4:
+                        with tab4:                            
                             st.write("### Key Insights")
-                            st.write(f"- The raw material with the highest total weight is: {sum_rm_name_groupped.iloc[0]['RM Name']} "
-                                    f"with {sum_rm_name_groupped.iloc[0]['Nett Weight']} kg.")
-                            st.write(f"- A total of {len(dataSource_filtered['RM Name'].unique())} different raw materials were processed.")
-                            st.write(f"- The highest site ID in the data is: {dataSource_filtered['Site ID'].max()}.")
+                            
+                            # Insight 1: Raw Material with the highest total weight
+                            st.write(f"- The raw material with the highest total intake weight is: **{sum_rm_name_groupped.iloc[0]['RM Name']}** "
+                                    f"with a total of **{sum_rm_name_groupped.iloc[0]['Nett Weight']:,} kg**.")
+                            
+                            # Insight 2: Number of different raw materials processed
+                            st.write(f"- A total of **{len(dataSource_filtered['RM Name'].unique())}** distinct raw materials were processed during the reporting period.")
+                                                  
+                            # Insight 4: Total processed weight
+                            total_weight = dataSource_filtered['Ordered Weight'].sum()
+                            st.write(f"- The total weight of all raw materials processed amounts to **{total_weight:,} kg**.")
+                            
+                            # Insight 5: Most frequent bay used for deliveries
+                            most_frequent_bay = dataSource_filtered['Bay Number'].mode()[0]
+                            st.write(f"- The bay most frequently used for deliveries is Bay **{most_frequent_bay}**.")                            
+                           
+
+                        with tab5:
+                            st.markdown("""
+                                        ##### Intake 
+
+                                        The **Intake 700** report tracks the intake of raw materials into the production system. It records essential details related to the timing, identification, and logistics of material deliveries. Below are the key aspects of the report:
+
+                                        ##### 1. Timing Information:
+                                        - **Time In / Time Out**: These fields record the exact timestamps when raw materials arrive and leave the intake area.
+                                        - **Created On**: The date and time when the record was created, likely reflecting when the delivery process started.
+
+                                        ##### 2. Material Information:
+                                        - **RM Code / RM Name**: The "Raw Material Code" and the corresponding "Raw Material Name" provide identification of the material being delivered (e.g., Wheatfeed, Maize Gluten, etc.).
+                                        - **Ordered Weight**: Indicates the quantity of the raw material ordered, measured in kilograms or tons.
+
+                                        ##### 3. Logistics and Tracking:
+                                        - **Bay Number**: The intake bay where the material is offloaded.
+                                        - **Docket Number**: A unique identifier tracking the delivery and receipt of the materials.
+                                        - **Supplier Docket / Lot Number**: Additional tracking information provided by the supplier, ensuring traceability of the material.
+
+                                        ##### 4. Other Relevant Details:
+                                        - **Notes**: These columns may contain additional information related to the delivery, such as remarks from the supplier or intake personnel.
+                                        - **Site Description**: Information about the site where the materials were delivered, ensuring clarity about the intake location.
+
+                                        ---
+
+                                        This report aids in tracking raw material deliveries, confirming received quantities, and overseeing the timing and logistics of the intake process. It offers a clear and organized approach to verifying delivery details and managing the material flow efficiently.
+
+                            """)
+                        with tab6:
+                            # Converter o DataFrame para CSV
+                            csv = dataSource_filtered.to_csv(index=False)
+
+                            with st.container():
+                                col1, col2 = st.columns([1,8])
+                                # Adicionar botão de download para CSV
+                                with col1:
+                                    st.download_button(
+                                        label="Download as CSV",
+                                        data=csv,
+                                        file_name='dataSource_filtered.csv',
+                                        mime='text/csv'
+                                    )
+                                    st.download_button(
+                                        label="Download as PDF",
+                                        data=csv,
+                                        file_name='dataSource_filtered.csv',
+                                        mime='text/csv'
+                                    )
+
 
                     else:
                         st.write("No column mapping found. Please check the mapping file.")

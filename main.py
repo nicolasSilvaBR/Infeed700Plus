@@ -23,9 +23,9 @@ def main():
     with st.expander(label="📅 Date Input", expanded=False):
         col1, col2 = st.columns(2)
         with col1:
-            minDate = st.date_input("Start Date", value=pd.to_datetime("2024-08-01"))
+            minDate = st.date_input("Start Date", value=pd.to_datetime("2024-10-01"))
         with col2:
-            maxDate = st.date_input("End Date", value=pd.to_datetime("2024-08-31"))
+            maxDate = st.date_input("End Date", value=pd.to_datetime("2024-10-30"))
 
         # Save the selected dates in session_state for later use
         st.session_state['minDate'] = minDate

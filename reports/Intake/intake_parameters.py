@@ -4,7 +4,7 @@ def intake_parameters():
     '''
     This function is used to display the input parameters for the intake report.    
     '''
-    st.session_state.run_report = False
+    st.session_state.run_report = True
 
     with st.container():
         col1, col2 = st.columns([10, 1])
