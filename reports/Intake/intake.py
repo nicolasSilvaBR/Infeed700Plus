@@ -5,7 +5,7 @@ from databaseConnection import mydb
 import json
 import os
 import reports.intake.intake_parameters as intake_parameters
-from fpdf import FPDF
+import reports.intake.charts.line_chart_nett_weight_by_day as line_chart_nett_weight_by_day
 
 # Cache the loading of the column mapping to avoid repeated file I/O
 @st.cache_data
@@ -104,52 +104,16 @@ def intake_page(mindate, maxdate):
 
                         # Charts tab
                         # Charts using plotly library  
-                        with tab2:                           
-
-########################### # Gráfico de Linha: Entrada e Saída ao Longo do Tempo
-                            # Objetivo: Visualizar como a entrada e saída de materiais variaram ao longo do tempo (Time In e Time Out).
-                            # Gráfico: Line Chart mostrando a quantidade de transações em cada dia ou por faixa de tempo.
-                            dataSource_filtered['Time In'] = pd.to_datetime(dataSource_filtered['Time In'])
-                            dataSource_filtered['Time In'] = dataSource_filtered['Time In'].dt.date
-                            net_weight_by_day = dataSource_filtered[['Time In','Nett Weight']]
-
-                            net_weight_by_day = net_weight_by_day.groupby('Time In')['Nett Weight'].sum()
-
-                            line = px.line(
-                                net_weight_by_day,
-                                x=net_weight_by_day.index,
-                                y='Nett Weight',
-                                title='Nett Weight by Day',
-                                labels={'Time In': 'Date', 'Nett Weight': 'Nett Weight (kg)'},
-                                color_discrete_sequence=['#0072B2'],  # Define a cor do gráfico    
-                                template='plotly_white' ,           # Define o template do gráfico    
-                                markers=True,                     # Define os marcadores do gráfico  
-                                text='Nett Weight',  # Adiciona os rótulos de dados                                                        
-                            )
-                            # Aumentar o tamanho dos rótulos dos dados e dos marcadores
-                            line.update_traces(
-                                textposition='bottom right',  # Posição dos rótulos
-                                textfont_size=14,  # Tamanho da fonte dos rótulos
-                                marker_size=6,    # Tamanho dos marcadores    
-                                line_width=2 ,      # Largura da linha
-                                
-                            )
-                            # Ajustar o layout do gráfico
-                            line.update_layout(
-                                xaxis_title_font={'size': 12},  # Tamanho da fonte do título do eixo X
-                                yaxis_title_font={'size': 12},  # Tamanho da fonte do título do eixo Y 
-                                title_font={'size': 14},        # Tamanho da fonte do título do gráfico
-                                width=600,                      # Largura do gráfico
-                                height=600                      # Altura do gráfico
-                            )
-                            # Display the chart
-                            st.plotly_chart(line, use_container_width=True)
+                        with tab2:    
+                            # Line Chart of Net Weight Intake by Day
+                            line_chart_nett_weight_by_day.line_chart_nett_weight_by_day(dataSource_filtered)
 
                             st.divider()                          
                               
-############################ Grouping data sources to use in the charts 
+                            # Grouping data sources to use in the charts 
                             sum_rm_name_groupped = dataSource_filtered.groupby('RM Name').agg({'Nett Weight': 'sum'}).reset_index()   
 
+                            # Bar Chart of Net Weight Intake by Raw Material Name
                             # Bar Chart of Net Weight Intake by Raw Material Name
                             chart = px.bar(
                                 sum_rm_name_groupped.sort_values("Nett Weight"),                                     
@@ -160,31 +124,35 @@ def intake_page(mindate, maxdate):
                                 labels={'Nett Weight': 'Net Weight', 'RM Name': 'Raw Material Name'},
                                 color_discrete_sequence=['#475b7d'],
                                 text_auto=',.2f',  # format numbers with 2 decimal places
-                                opacity=1,                                    
+                                opacity=1,                                 
                             )
+
                             # Increase the size of the text inside the bars
                             chart.update_traces(
-                                textfont_size=10,  # increase the font size of the text inside the bars
-                                textangle=0,       # text angle
-                                textposition='outside'  # text position 
+                                textposition='outside',  # Position of the text outside the bars
+                                textfont=dict(size=36),  # Increase the size of the text labels
+                                cliponaxis=False,        # Avoid text clipping outside the bars
                             )
+
                             # Increase the size of the font and title of the axes
                             chart.update_layout(
-                                xaxis_title_font={'size': 12},  # Font size of the X-axis title
-                                yaxis_title_font={'size': 12},  # Font size of the Y-axis title 
-                                title_font={'size': 14},        # Font size of the chart title
+                                xaxis_title_font={'size': 14},  # Font size of the X-axis title
+                                yaxis_title_font={'size': 14},  # Font size of the Y-axis title 
+                                title_font={'size': 16},        # Font size of the chart title
                                 width=600,                      # Adjust the width 
                                 height=600                      # Adjust the height
                             )
-                            # Display the chart
-                            st.plotly_chart(chart, use_container_width=True,key="bar_chart_rm_name_chart1")
 
-####################### # Statistics tab
+                            # Display the chart
+                            st.plotly_chart(chart, use_container_width=True, key="bar_chart_rm_name_chart1")
+
+
+                        # Statistics tab
                         with tab3:
                             st.write("### Descriptive Statistics of the Data")
                             st.write(dataSource_filtered.describe())
 
-####################### # Insights tab
+                        # Insights tab
                         with tab4:                            
                             st.write("### Key Insights")
                             

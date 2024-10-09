@@ -12,7 +12,7 @@ def embed_ssrs_report(reportRDLname, minDate, maxDate):
         minDate (str): Start date.
         maxDate (str): End date.
     """
-
+    
     # ssrs credentials
     ssrs_config = st.secrets["ssrs_config"]
     required_keys = ["ipAddress", "port", "database", "ReportServerName", "username","password"]
