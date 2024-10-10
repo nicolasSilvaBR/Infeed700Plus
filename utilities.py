@@ -45,7 +45,8 @@ def display_footer():
             <p>
                 <a href="http://10.202.2.22:8503/" target="_blank">Data Lab</a> | 
                 <a href="Http://10.202.2.22:8504/" target="_blank">Support</a> | 
-                <a href="https://icmcsl.com/contact/" target="_blank">Contact Us</a>
+                <a href="https://icmcsl.com/contact/" target="_blank">Contact Us</a> |
+                <a href="https://forms.gle/jm3wTqskS1LD2D328" target="_blank">Feedback</a>
             </p>
         </div>
         """,

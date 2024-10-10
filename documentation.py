@@ -49,7 +49,7 @@ with open('databaseConnection.py', 'r') as file:
 
 # Textos e códigos para as seções
 Overview = '''\
-The Infeed700 application is a sophisticated interactive platform developed by **ICMC Solutions** utilizing **Streamlit**. This project aims to transition from the existing SSRS reporting system to a new solution using Python Streamlit. The new system will enhance interactivity, visual quality, and ease of report development and maintenance. 
+The Infeed700 application is a sophisticated interactive platform developed by **ICM Computer Systems ltd** utilizing **Streamlit**. This project aims to transition from the existing SSRS reporting system to a new solution using Python Streamlit. The new system will enhance interactivity, visual quality, and ease of report development and maintenance. 
 
 Designed to serve multiple clients, Infeed700 prioritizes user experience with its responsive interface and intuitive navigation. Users can effortlessly switch between different reporting modules, including "Intake", "Blending", and "Press", allowing for dynamic data analysis tailored to their specific needs.
 
