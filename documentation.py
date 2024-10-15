@@ -1,5 +1,6 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
+from road_map import road_map
 
 st.set_page_config(layout="wide")
 
@@ -102,6 +103,7 @@ with st.sidebar:
     selected = option_menu(
         menu_title="Documentation",  # Título do menu
         options=["Overview", 
+                 "Infrastructure", 
                  "README.md", 
                  "Project Structure", 
                  "Dependency Support", 
@@ -117,6 +119,7 @@ with st.sidebar:
                  "Embed SSRS"],  # Incluindo Setup.bat
                  
         icons=["book", 
+               "book",
                "file-text", 
                "folder", 
                "link", 
@@ -221,3 +224,6 @@ elif selected == "Embed SSRS":
     st.title("Embed SSRS")
     st.subheader("Current Embed SSRS:")
     st.code(embeddedSSRS, language='python')
+
+elif selected == "Infrastructure":       
+    road_map()
