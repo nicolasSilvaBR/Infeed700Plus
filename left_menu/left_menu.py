@@ -2,28 +2,30 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 from styles import menu_styles  # Import custom styles for the menu
 import os  # File and path handling
-from utilities import load_local_css,display_footer,get_header_dict  # Import custom functions from utilities.py
+from utilities import load_local_css,display_footer,get_header_dict,get_report_dict  # Import custom functions from utilities.py
 from database_connection import mydb
 import pandas as pd
 
 # Path to the logo image file
 sidebar_logo_image_name = "ICM_300X80_OPT14.png"  
 
-reports = {
-    1: [
-        ["Intakes", "Intake"], 
-        ["Intake Tips", "TipBreakdown"], 
-        ['Intake Summary', 'IntakeSummary'], 
-        ['Raw Material Mass Balance', 'RMUsageVsRMintake']
-    ],
-    2: [["Blending / Batching", "Batch"], ["Blending / Run", "BatchByRunNumber"]],
-}
+# reports = {
+#     1: [
+#         ["Intakes", "Intake"], 
+#         ["Intake Tips", "TipBreakdown"], 
+#         ['Intake Summary', 'IntakeSummary'], 
+#         ['Raw Material Mass Balance', 'RMUsageVsRMintake']
+#     ],
+#     2: [["Blending / Batching", "Batch"], ["Blending / Run", "BatchByRunNumber"]],
+# }
 
 # Function to display report selection menu
-def display_report_selection(engine,reports):
+
+def display_report_selection(engine):
     """Display report selection menu based on headers and defined reports."""
 
     headers = get_header_dict(engine)
+    reports = get_report_dict(engine)
 
     for headerskey, headerName in headers.items():
         if headerskey in reports:  # Ensure the header key exists in reports
@@ -37,7 +39,7 @@ def display_report_selection(engine,reports):
                     menu_icon="reception-4",
                     options=options,
                     icons=["table"] * len(options),
-                    default_index=0,  # Default to the first option
+                    default_index=-1,  # Default to the first option
                     key=f"option_menu_{headerName}",
                     styles={
                         "container": menu_styles["container"], # styles.py sets the container style
@@ -98,7 +100,7 @@ def LeftMenu(engine):
 
         # Show report menu if "SSRS Reports" is selected
         if selectedMenu == "SSRS Reports":
-            display_report_selection(engine, reports)
+            display_report_selection(engine)
             # Set "Intake" as the default global report if nothing else is selected
             if 'selected_report' not in st.session_state:
                 st.session_state['selected_report'] = "Intake"          

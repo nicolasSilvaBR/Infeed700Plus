@@ -75,3 +75,22 @@ def get_header_dict(engine):
 
     return header_dict
         
+
+ # Function to get the report dictionary
+def get_report_dict(engine):
+
+    sql_query = """
+        SELECT	
+            [HeaderId]
+            ,[ReportDisplayName]
+            ,[ReportName]
+            ,ItemDisplayOrder
+        FROM [Report].[MenuItems]
+        WHERE IsActive = 1
+        ORDER BY  [HeaderId],[ReportDisplayName],[ItemDisplayOrder]
+        """
+
+    df = pd.read_sql_query(sql_query, engine)   
+    reports_dict = df.groupby('HeaderId')[['ReportDisplayName', 'ReportName']].apply(lambda x: x.values.tolist()).to_dict()
+
+    return reports_dict
