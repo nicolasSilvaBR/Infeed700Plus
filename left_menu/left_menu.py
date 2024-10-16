@@ -2,7 +2,6 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 from styles import menu_styles  # Import custom styles for the menu
 import os  # File and path handling
-import pandas as pd  # Date handling
 import utilities as utl # Function to load local CSS files
 
 # Path to the logo image file
@@ -64,7 +63,7 @@ def LeftMenu():
     The first menu at top of the sidebar below the logo is the "Infeed700" menu.
     """
     
-    utl.load_local_css("leftMenu/expanderStyle.css")  # Load the CSS from the file
+    utl.load_local_css("left_menu/expander_style.css")  # Load the CSS from the file
 
     png_file_path = os.path.join(f"images", sidebar_logo_image_name)  # Load the PNG icon          
 

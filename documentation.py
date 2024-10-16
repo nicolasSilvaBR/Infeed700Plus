@@ -20,12 +20,12 @@ with open('requirements.txt', 'r') as file:
 with open('main.py', 'r') as file:
     main_py_code = file.read()
 
-# Read the content of the leftMenu/leftMenu.py file
-with open('leftMenu/leftMenu.py', 'r') as file:
+# Read the content of the left_menu/leftMenu.py file
+with open('left_menu/left_menu.py', 'r') as file:
     left_menu_code = file.read()
 
-# Read the content of the leftMenu/expanderStyle.css file
-with open('leftMenu/expanderStyle.css', 'r') as file:
+# Read the content of the left_menu/expanderStyle.css file
+with open('left_menu/expander_style.css', 'r') as file:
     expander_style_css = file.read()
 
 # Read the content of the styles.py file
@@ -41,11 +41,11 @@ with open('.streamlit/config.toml', 'r') as file:  # Ensure the path is correct
     streamlit_config = file.read()
 
 # Read the content of the embeddedSSRS.py file
-with open('embeddedSSRS.py', 'r') as file:
+with open('embedded_SSRS.py', 'r') as file:
     embeddedSSRS = file.read()
 
 # Read the content of the databaseConnection.py file
-with open('databaseConnection.py', 'r') as file:
+with open('database_connection.py', 'r') as file:
     embeddedSSRS = file.read()
 
 # Textos e códigos para as seções
@@ -71,7 +71,7 @@ Infeed700/
 │   └── (other images and icons)
 │
 ├── LeftMenu/                   # Directory for left menu-related files
-│   ├── leftMenu.py             # Contains the logic for the left menu
+│   ├── left_menu.py             # Contains the logic for the left menu
 │   ├── expanderStyle.css        # Custom styles for the left menu
 │
 ├── styles.py                   # Custom styles for the menu
@@ -158,11 +158,11 @@ elif selected == "Main":
     st.code(main_py_code, language='python')
 
 elif selected == "Left Menu":
-    st.title("leftMenu/leftMenu.py")
+    st.title("left_menu/left_menu.py")
     st.code(left_menu_code, language='python')
 
 elif selected == "Expander Style CSS":
-    st.title("leftMenu/expanderStyle.css")
+    st.title("left_menu/expanderStyle.css")
     st.code(expander_style_css, language='css')
 
 elif selected == "Styles":
