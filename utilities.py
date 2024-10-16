@@ -1,4 +1,7 @@
 import streamlit as st
+from database_connection import mydb
+import pandas as pd
+
 
 # Function to load local CSS file
 def load_local_css(file_name):
@@ -54,6 +57,21 @@ def display_footer():
     )
 
 
-
-
+ # Function to get the header dictionary
+def get_header_dict(engine):
     
+    sql_query = """
+        SELECT
+            [HeaderId]
+            ,[HeaderDisplayName]    
+        FROM [Report].[MenuHeader]
+        WHERE IsActive = 1
+            AND HeaderId <> 9
+        ORDER by [WebHeaderDisplayOrder]  
+        """
+
+    df = pd.read_sql_query(sql_query, engine)
+    header_dict = df.set_index('HeaderId')['HeaderDisplayName'].to_dict()
+
+    return header_dict
+        

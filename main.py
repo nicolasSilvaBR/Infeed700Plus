@@ -5,6 +5,7 @@ from embedded_SSRS import embed_ssrs_report
 import pandas as pd
 from reports.intake.intake import intake_page  # Importing the intake_page function
 import logging
+from database_connection import mydb  # Importing the mydb function
 
 config.set_page_config()
 
@@ -17,7 +18,10 @@ def load_local_css(file_name):
 load_local_css("main_content.css")  # Update this path as needed
 
 def main():
-    LeftMenu()  # Display the left sidebar menu
+    engine = mydb()  # Get the database engine
+    logging.info(f"Database engine: {engine}")  # Log the database engine
+
+    LeftMenu(engine)  # Display the left sidebar menu
 
     # # Section for selecting dates with a calendar icon
     # with st.expander(label="📅 Date Input", expanded=False):
@@ -46,6 +50,8 @@ def main():
             with st.spinner('Running Report...'):
                 if 'selected_report' not in st.session_state:
                     st.session_state['selected_report'] = "Intake"  # Default report
+
+                    
                 reportRDLname = st.session_state['selected_report']    
                 embed_ssrs_report(reportRDLname, minDate, maxDate)
         except:
@@ -62,7 +68,7 @@ def main():
     if st.session_state['Project'] == 'SSRS Reports':
         display_ssrs_report()
         st.cache_data.clear()  # Clear cached data after displaying the report
-    else:
+    elif st.session_state['Project'] == 'Dashboards':
         display_dashboard()
 
     # Close the main content div

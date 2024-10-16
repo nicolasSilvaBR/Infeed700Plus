@@ -2,13 +2,13 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 from styles import menu_styles  # Import custom styles for the menu
 import os  # File and path handling
-import utilities as utl # Function to load local CSS files
+from utilities import load_local_css,display_footer,get_header_dict  # Import custom functions from utilities.py
+from database_connection import mydb
+import pandas as pd
 
 # Path to the logo image file
 sidebar_logo_image_name = "ICM_300X80_OPT14.png"  
 
-# Define headers and reports for the menu
-headers = {1: "Intake", 2: "Blending", 3: "Press"}
 reports = {
     1: [
         ["Intakes", "Intake"], 
@@ -16,12 +16,15 @@ reports = {
         ['Intake Summary', 'IntakeSummary'], 
         ['Raw Material Mass Balance', 'RMUsageVsRMintake']
     ],
-    # 2: [["Blending / Batching", "Batch"], ["Blending / Run", "BatchByRunNumber"]],
+    2: [["Blending / Batching", "Batch"], ["Blending / Run", "BatchByRunNumber"]],
 }
 
 # Function to display report selection menu
-def display_report_selection(headers, reports):
+def display_report_selection(engine,reports):
     """Display report selection menu based on headers and defined reports."""
+
+    headers = get_header_dict(engine)
+
     for headerskey, headerName in headers.items():
         if headerskey in reports:  # Ensure the header key exists in reports
             with st.expander(headerName, expanded=False):
@@ -58,12 +61,12 @@ def display_report_selection(headers, reports):
                     st.cache_data.clear()
 
 # Function to generate the sidebar menu
-def LeftMenu():
+def LeftMenu(engine):
     """Build the sidebar menu for the Streamlit app.
     The first menu at top of the sidebar below the logo is the "Infeed700" menu.
     """
     
-    utl.load_local_css("left_menu/expander_style.css")  # Load the CSS from the file
+    load_local_css("left_menu/expander_style.css")  # Load the CSS from the file
 
     png_file_path = os.path.join(f"images", sidebar_logo_image_name)  # Load the PNG icon          
 
@@ -95,7 +98,7 @@ def LeftMenu():
 
         # Show report menu if "SSRS Reports" is selected
         if selectedMenu == "SSRS Reports":
-            display_report_selection(headers, reports)
+            display_report_selection(engine, reports)
             # Set "Intake" as the default global report if nothing else is selected
             if 'selected_report' not in st.session_state:
                 st.session_state['selected_report'] = "Intake"          
@@ -104,7 +107,7 @@ def LeftMenu():
         st.divider()  # Divider before footer
 
         # Call the footer function from utilities.py
-        utl.display_footer()
+        display_footer()
 
        
 # Execute LeftMenu only if the file is run directly
