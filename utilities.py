@@ -87,7 +87,7 @@ def get_report_dict(engine):
             ,ItemDisplayOrder
         FROM [Report].[MenuItems]
         WHERE IsActive = 1
-        ORDER BY  [HeaderId],[ReportDisplayName],[ItemDisplayOrder]
+        ORDER BY  [HeaderId],[ItemDisplayOrder],[ReportDisplayName]
         """
 
     df = pd.read_sql_query(sql_query, engine)   

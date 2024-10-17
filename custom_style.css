@@ -1,0 +1,41 @@
+/* Estilos modernos e clean para o menu na barra lateral */
+.sidebar-menu {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin-bottom: 20px;
+}
+
+.sidebar-menu label {
+    font-size: 14px;
+    color: #2c3e50;
+    font-weight: 600;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.sidebar-menu select {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #bdc3c7;
+    border-radius: 8px;
+    background-color: #ecf0f1;
+    color: #2c3e50;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    outline: none;
+    box-shadow: none;
+}
+
+.sidebar-menu select:focus {
+    border-color: #2980b9;
+    box-shadow: 0 0 5px rgba(41, 128, 185, 0.5);
+}
+
+.sidebar-menu select:hover {
+    background-color: #e0e0e0;
+}
+
+.sidebar-menu option {
+    padding: 10px;
+    background-color: #fff;
+    color: #2c3e50;
+}
