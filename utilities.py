@@ -57,7 +57,7 @@ def display_footer():
     )
 
 
- # Function to get the header dictionary
+# Function to get the header dictionary
 def get_header_dict(engine):
     
     sql_query = """
@@ -76,7 +76,7 @@ def get_header_dict(engine):
     return header_dict
         
 
- # Function to get the report dictionary
+# Function to get the report dictionary
 def get_report_dict(engine):
 
     sql_query = """
@@ -85,12 +85,44 @@ def get_report_dict(engine):
             ,[ReportDisplayName]
             ,[ReportName]
             ,ItemDisplayOrder
+            ,ISNULL([isPythonReportEnabled],0) as isPythonReportEnable
         FROM [Report].[MenuItems]
         WHERE IsActive = 1
         ORDER BY  [HeaderId],[ItemDisplayOrder],[ReportDisplayName]
         """
 
     df = pd.read_sql_query(sql_query, engine)   
-    reports_dict = df.groupby('HeaderId')[['ReportDisplayName', 'ReportName']].apply(lambda x: x.values.tolist()).to_dict()
+    reports_dict = df.groupby('HeaderId')[['ReportDisplayName', 'ReportName','isPythonReportEnable']].apply(lambda x: x.values.tolist()).to_dict()
 
     return reports_dict
+
+
+
+# Function to fetch and process the SQL query
+def get_report_headers_and_reports_names(engine):
+    sql_query = """
+        SELECT	
+            [MenuItems].[HeaderId]
+            ,[HeaderName]
+            ,[ReportDisplayName]
+            ,[ReportName]
+            ,ItemDisplayOrder
+            ,ISNULL([isPythonReportEnabled],0) as isPythonReportEnabled
+        FROM [Report].[MenuItems]
+        JOIN [Report].[MenuHeader] ON [MenuHeader].HeaderId = [MenuItems].HeaderId
+        WHERE [MenuItems].IsActive = 1 AND [MenuHeader].IsActive = 1
+        ORDER BY  
+            [MenuHeader].WebHeaderDisplayOrder,
+            [ItemDisplayOrder],
+            [ReportDisplayName]
+    """
+    # Read the SQL query into a DataFrame
+    df = pd.read_sql_query(sql_query, engine)
+    # Ensure the DataFrame is not empty
+    if df.empty:
+        st.error("No data found. Please check your database or query.")
+    else:
+        headers_name = df[['HeaderId', 'HeaderName']].drop_duplicates()
+        reports_names = df[['HeaderName', 'HeaderId', 'ReportDisplayName', 'ReportName', 'isPythonReportEnabled']]
+
+    return headers_name,reports_names

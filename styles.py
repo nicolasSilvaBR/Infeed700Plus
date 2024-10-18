@@ -21,14 +21,14 @@ menu_styles = {
     # Container styles (move layout-related properties to CSS)
     "container": {
         "padding": "0px!important",                     # Internal padding of the container (borders)
-        "background-color": "#ffffff!important",                  # Menu background color
+        "background-color": "#ffffff!important",          # Menu background color
         "border": "0px solid #e0e0e0",                  # Light border around the menu
-        "border-radius": "0px",                         # Rounded borders
-        "box-shadow": "0 2px 8px rgba(150, 150, 147, 0.5)",   # Light shadow for depth
+        "border-radius": "8px",                         # Rounded borders
+        "box-shadow": "10 2px 8px rgba(150, 150, 147, 0.5)",   # Light shadow for depth
         "width": "370px",                               # Menu width
         "max-width": "100%",                            # Maximum width for responsiveness
         "font-family": "Segoe UI",                      # Font used in the menu
-        #"font-size": "12px",                            # Adjusts font size for the entire container
+        "font-size": "16px",                            # Adjusts font size for the entire container
         "margin": "0px auto",                           # Center the menu with top and bottom margin
         "transition": "all 0.3s ease-in-out",           # Smooth transition for any style changes
         "opacity": "1",                                 # Defines the container's opacity
