@@ -21,7 +21,9 @@ def main():
     engine = mydb()  # Get the database engine
     logging.info(f"Database engine: {engine}")  # Log the database engine
 
-    LeftMenu(engine)  # Display the left sidebar menu   
+    LeftMenu(engine)  # Display the left sidebar menu  
+    
+    st.session_state['selected_report'] 
 
     minDate = st.session_state.get('minDate', pd.to_datetime("2024-10-01")).strftime('%Y-%m-%d')
     maxDate = st.session_state.get('maxDate', pd.to_datetime("2024-10-30")).strftime('%Y-%m-%d')

@@ -65,6 +65,7 @@ def LeftMenu(engine):
         else:
             st.write("No reports available for the selected category.")
         
+        
         st.divider()  # Divider before footer
 
         # Call the footer function from utilities.py
