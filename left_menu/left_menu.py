@@ -9,92 +9,62 @@ import pandas as pd
 # Path to the logo image file
 sidebar_logo_image_name = "ICM_300X80_OPT14.png"  
 
-
-def display_report_selection(engine):
-    """Display report selection menu based on headers and defined reports."""
-
-    headers = get_header_dict(engine)
-    reports = get_report_dict(engine)
-
-    for headerskey, headerName in headers.items():
-        if headerskey in reports:  # Ensure the header key exists in reports
-            with st.expander(headerName, expanded=False):
-                # Get the list of report options
-                options = [report[0] for report in reports[headerskey]]
-
-                # Create the report option menu using option_menu
-                report_option = option_menu(
-                    menu_title=None,
-                    menu_icon="reception-4",
-                    options=options,
-                    icons=["table"] * len(options),
-                    default_index=-1,  # Default to the first option
-                    key=f"option_menu_{headerName}",
-                    styles={
-                        "container": menu_styles["container"], # styles.py sets the container style
-                        "icon": menu_styles["icon"],
-                        "nav-link": menu_styles["nav-link"],
-                        "nav-link-selected": menu_styles["nav-link-selected"],
-                        "icon-selected": menu_styles["icon-selected"], 
-                    }
-                )
-
-                # Get the selected report based on the user's selection
-                selected_report = reports[headerskey][options.index(report_option)][1]
-
-                # Check if the user made a new selection in this specific header
-                session_key = f'selected_report_{headerName}'  # Unique session state key for each header
-                if st.session_state.get(session_key) != selected_report:
-                    # Update the session state for this header
-                    st.session_state[session_key] = selected_report
-                    # Update the global selected report only when user makes a new selection
-                    st.session_state['selected_report'] = selected_report
-                    st.cache_data.clear()
-
 # Function to generate the sidebar menu
 def LeftMenu(engine):
     """Build the sidebar menu for the Streamlit app.
     The first menu at top of the sidebar below the logo is the "Infeed700" menu.
-    """
-    
+    """    
     load_local_css("left_menu/expander_style.css")  # Load the CSS from the file
-
-    png_file_path = os.path.join(f"images", sidebar_logo_image_name)  # Load the PNG icon          
-
+    png_file_path = os.path.join(f"images", sidebar_logo_image_name) 
     with st.sidebar:
+        
         # Display the logo directly using st.image
         if os.path.exists(png_file_path):
             st.image(png_file_path, use_column_width=True)  # Adjust the width to fit the sidebar
-
-        # Main menu
-        with st.expander(label='', expanded=True):            
-            selectedMenu = option_menu(
-                menu_title="Infeed700",     
-                menu_icon='bar-chart',
-                options=["Dashboards", "SSRS Reports"],
-                icons=["pie-chart-fill", "grid-3x3-gap-fill"],
-                default_index=0,  # Default to Dashboards
-                styles={
-                        "container": menu_styles["container"], # styles.py sets the container style
-                        "icon": menu_styles["icon"],
-                        "nav-link": menu_styles["nav-link"],
-                        "nav-link-selected": menu_styles["nav-link-selected"],
-                        "icon-selected": menu_styles["icon-selected"], 
-                        "menu_title": menu_styles["menu_title"],  # Apply the menu title style
-                }
-            )
-
-            # Save the project selection in session_state
-            st.session_state['Project'] = selectedMenu        
-
-        # Show report menu if "SSRS Reports" is selected
-        if selectedMenu == "SSRS Reports":
-            display_report_selection(engine)
-            # Set "Intake" as the default global report if nothing else is selected
-            if 'selected_report' not in st.session_state:
-                st.session_state['selected_report'] = "Intake"          
-
-
+            
+        headers_name, reports_names = get_report_headers_and_reports_names(engine)
+        # Selectbox to choose a category
+        selected_header = st.selectbox(
+            label='',
+            options=headers_name['HeaderName'],
+            index=None,
+            placeholder='Choose a category'
+        ) 
+        # Filter reports based on the selected header
+        filtered_reports = reports_names[reports_names['HeaderName'] == selected_header]
+        
+        # If there are filtered reports, display them in the option menu
+        if not filtered_reports.empty:
+            reports_option = option_menu(
+                menu_title="Reports",
+                menu_icon="bar-chart",
+                icons=["chevron-double-right"] * len(filtered_reports),
+                default_index=0,  # Default to the first option
+                options=filtered_reports['ReportDisplayName'].tolist(),  # Use ReportDisplayName as options
+                key="select_report_options",
+                # styles={
+                #         "container": menu_styles["container"], # styles.py sets the container style
+                #         "icon": menu_styles["icon"],
+                #         "nav-link": menu_styles["nav-link"],
+                #         "nav-link-selected": menu_styles["nav-link-selected"],
+                #         "icon-selected": menu_styles["icon-selected"], 
+                #         "menu_title": menu_styles["menu_title"],  # Apply the menu title style
+                # }
+            )        
+            # Filter the reports based on the selected option from the option menu
+            selected_report_details = filtered_reports[filtered_reports['ReportDisplayName'] == reports_option]
+            
+            # Extract the 'ReportName' value as a simple string
+            if not selected_report_details.empty:
+                selected_report_name = selected_report_details['ReportName'].iloc[0]
+                st.session_state['selected_report'] = selected_report_name
+                #st.session_state['selected_report']
+            else:
+                st.session_state['selected_report']  
+                
+        else:
+            st.write("No reports available for the selected category.")
+        
         st.divider()  # Divider before footer
 
         # Call the footer function from utilities.py

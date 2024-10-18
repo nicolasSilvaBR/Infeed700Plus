@@ -5,6 +5,7 @@ from database_connection import mydb
 import pandas as pd
 
 
+  
 # This is already included in the main.py
 engine = mydb()
 
@@ -33,16 +34,16 @@ with st.sidebar:
     else:
         st.write("No reports available for the selected category.")
 
-# Display the selected header
-if 'selected_report_name' not in st.session_state:
-    st.session_state['selected_report_name']= None
+    # Display the selected header
+    if 'selected_report' not in st.session_state:
+        st.session_state['selected_report']= None
 
-st.write(f"Selected header: {selected_header}")
+    st.write(f"Selected header: {selected_header}")
 
-# Extract the 'ReportName' value as a simple string
-if not selected_report_details.empty:
-    selected_report_name = selected_report_details['ReportName'].iloc[0]
-    st.session_state['selected_report_name'] = selected_report_name
-    st.session_state['selected_report_name']
-else:
-    st.session_state['selected_report_name']
+    # Extract the 'ReportName' value as a simple string
+    if not selected_report_details.empty:
+        selected_report_name = selected_report_details['ReportName'].iloc[0]
+        st.session_state['selected_report'] = selected_report_name
+        st.session_state['selected_report']
+    else:
+        st.session_state['selected_report']
