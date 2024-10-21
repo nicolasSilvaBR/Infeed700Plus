@@ -55,7 +55,7 @@ def embed_ssrs_report(reportRDLname, minDate, maxDate):
             # Usar height grande o suficiente para preencher a tela e garantir que o iframe ocupe 100% da área
             st.components.v1.html(iframe_code, height=780, scrolling=False)
         else:
-            st.error(f"Error accessing the report: {response.status_code}. Check the report name or parameters.")
+            st.error(f"Error accessing the report: {response.status_code}. Check the report name or parameters. Check if the SSRS report '{reportRDLname}.rdl' exist in the web server.")
     except requests.exceptions.ConnectTimeout:
         st.error("Connection error: Timeout while trying to access the server.")
     except requests.exceptions.RequestException as e:
