@@ -28,10 +28,12 @@ def LeftMenu(engine):
             label='',
             options=headers_name['HeaderName'],
             index=None,
-            placeholder='Choose a category'
+            placeholder='Choose a category',
+            key='selected_header'
         ) 
         # Filter reports based on the selected header
-        filtered_reports = reports_names[reports_names['HeaderName'] == selected_header]
+        filtered_reports = reports_names[reports_names['HeaderName'] == selected_header]      
+        
         
         # If there are filtered reports, display them in the option menu
         if not filtered_reports.empty:
@@ -39,17 +41,9 @@ def LeftMenu(engine):
                 menu_title="Reports",
                 menu_icon="bar-chart",
                 icons=["chevron-double-right"] * len(filtered_reports),
-                default_index=0,  # Default to the first option
+                default_index= 0 ,  # Default to the first option
                 options=filtered_reports['ReportDisplayName'].tolist(),  # Use ReportDisplayName as options
-                key="select_report_options",
-                # styles={
-                #         "container": menu_styles["container"], # styles.py sets the container style
-                #         "icon": menu_styles["icon"],
-                #         "nav-link": menu_styles["nav-link"],
-                #         "nav-link-selected": menu_styles["nav-link-selected"],
-                #         "icon-selected": menu_styles["icon-selected"], 
-                #         "menu_title": menu_styles["menu_title"],  # Apply the menu title style
-                # }
+                key="select_report_options",                
             )        
             # Filter the reports based on the selected option from the option menu
             selected_report_details = filtered_reports[filtered_reports['ReportDisplayName'] == reports_option]
@@ -57,8 +51,7 @@ def LeftMenu(engine):
             # Extract the 'ReportName' value as a simple string
             if not selected_report_details.empty:
                 selected_report_name = selected_report_details['ReportName'].iloc[0]
-                st.session_state['selected_report'] = selected_report_name
-                #st.session_state['selected_report']
+                st.session_state['selected_report'] = selected_report_name                
             else:
                 st.session_state['selected_report']  
                 
