@@ -2,6 +2,7 @@ import streamlit as st
 import requests
 from requests_ntlm import HttpNtlmAuth
 import pandas as pd
+import datetime as datetime
 
 
 def embed_ssrs_report(reportRDLname, minDate, maxDate):
@@ -14,16 +15,24 @@ def embed_ssrs_report(reportRDLname, minDate, maxDate):
         maxDate (str): End date.
     """
     # Section for selecting dates with a calendar icon
-    with st.expander(label="📅 Date Input", expanded=False):
-        col1, col2 = st.columns(2)
+    with st.expander(label="📆 Date Input", expanded=False):
+        st.divider()
+        col1, col2,col3,col4,col5,col6,col_ = st.columns([2,2,1,1,1,1,6])
+        
         with col1:
-            minDate = st.date_input("Start Date", value=pd.to_datetime("2024-10-01"))
+            minDate = st.date_input("Start Date", value=pd.to_datetime("2024-10-01"), format="DD/MM/YYYY")
         with col2:
-            maxDate = st.date_input("End Date", value=pd.to_datetime("2024-10-30"))
+            maxDate = st.date_input("End Date", value=pd.to_datetime("2024-10-30"),format="DD/MM/YYYY")
+        with col3:
+            StartHour = st.selectbox(label='Start Hour',options=list(range(24)),index=0)
+        with col4:
+            EndHour = st.selectbox(label='End Hour',options=list(range(24)),index=23)
+        with col5:
+            StartMinute = st.selectbox(label='Start Minute',options=list(range(60)),index=0)
+        with col6:
+            EndMinute = st.selectbox(label='End Minute',options=list(range(60)),index=59)
 
-        # Save the selected dates in session_state for later use
-        st.session_state['minDate'] = minDate
-        st.session_state['maxDate'] = maxDate  
+        
     
     # ssrs credentials
     ssrs_config = st.secrets["ssrs_config"]
@@ -38,9 +47,14 @@ def embed_ssrs_report(reportRDLname, minDate, maxDate):
     ReportServerName = ssrs_config['ReportServerName']
     username = ssrs_config['username']
     password = ssrs_config['password']
+    
+    StartHour = str(StartHour)
+    EndHour = str(EndHour)
+    StartMinute = '00'
+    EndMinute = '30'    
 
     # Build the SSRS report URL
-    ssrs_url = f"http://{ipAddress}:{port}/{ReportServerName}/Pages/ReportViewer.aspx?%2f{database}%2f{reportRDLname}&rs:Command=Render&MinDate={minDate}&MaxDate={maxDate}"
+    ssrs_url = f"http://{ipAddress}:{port}/{ReportServerName}/Pages/ReportViewer.aspx?%2f{database}%2f{reportRDLname}&rs:Command=Render&MinDate={minDate}&MaxDate={maxDate}&StartHour={StartHour}&EndHour={EndHour}"
 
     # Make the request to the SSRS report
     try:

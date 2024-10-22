@@ -123,6 +123,6 @@ def get_report_headers_and_reports_names(engine):
         st.error("No data found. Please check your database or query.")
     else:
         headers_name = df[['HeaderId', 'HeaderName']].drop_duplicates()
-        reports_names = df[['HeaderName', 'HeaderId', 'ReportDisplayName', 'ReportName', 'isPythonReportEnabled']]
+        reports_names = df[['HeaderName', 'HeaderId', 'ReportDisplayName', 'ReportName', 'isPythonReportEnabled']].drop_duplicates()
 
     return headers_name,reports_names
