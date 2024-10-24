@@ -1,6 +1,6 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
-from utilities import get_header_dict, get_report_dict  # Import custom functions from utilities.py
+from functions.utilities import get_header_dict, get_report_dict  # Import custom functions from utilities.py
 from database_connection import mydb
 import styles
 
