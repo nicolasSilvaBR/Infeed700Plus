@@ -8,6 +8,10 @@ st.set_page_config(layout="wide")
 with open('README.md', 'r') as file:
     readme_text = file.read()
 
+# Read the content of the releases.md file
+with open('releases.md', 'r') as file:
+    releases_text = file.read()
+
 # Read the content of the .streamlit/secrets.toml file
 with open('.streamlit/secrets.toml', 'r') as file:
     secrets_toml = file.read()
@@ -104,6 +108,7 @@ with st.sidebar:
         menu_title="Documentation",  # Título do menu
         options=["Overview", 
                  "Infrastructure", 
+                 "releases.md",
                  "README.md", 
                  "Project Structure", 
                  "Dependency Support", 
@@ -119,6 +124,7 @@ with st.sidebar:
                  "Embed SSRS"],  # Incluindo Setup.bat
                  
         icons=["book", 
+               "book",
                "book",
                "file-text", 
                "folder", 
@@ -144,6 +150,9 @@ if selected == "Overview":
 elif selected == "README.md":
     st.title("README.md")
     st.markdown(readme_text)
+
+elif selected == "releases.md":   
+    st.markdown(releases_text)
 
 elif selected == "Project Structure":
     st.title("Project Structure")
