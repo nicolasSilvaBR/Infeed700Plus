@@ -1,10 +1,7 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
-from styles import menu_styles  # Import custom styles for the menu
 import os  # File and path handling
-from functions.utilities import load_local_css,display_footer,get_header_dict,get_report_dict,get_report_headers_and_reports_names  # Import custom functions from utilities.py
-from database_connection import mydb
-import pandas as pd
+from functions.utilities import load_local_css,display_footer,get_report_headers_and_reports_names  # Import custom functions from utilities.py
 
 # Path to the logo image file
 sidebar_logo_image_name = "ICM_300X80_OPT14.png"  
@@ -14,7 +11,7 @@ def LeftMenu(engine):
     """Build the sidebar menu for the Streamlit app.
     The first menu at top of the sidebar below the logo is the "Infeed700" menu.
     """    
-    load_local_css("left_menu/expander_style.css")  # Load the CSS from the file
+    #load_local_css("left_menu/expander_style.css")  # Load the CSS from the file
     png_file_path = os.path.join(f"assets/images", sidebar_logo_image_name) 
     with st.sidebar:
         
@@ -40,10 +37,16 @@ def LeftMenu(engine):
             reports_option = option_menu(
                 menu_title="Reports",
                 menu_icon="bar-chart",
-                icons=["chevron-double-right"] * len(filtered_reports),
+                icons=["circle-fill"] * len(filtered_reports),
                 default_index= 0 ,  # Default to the first option
                 options=filtered_reports['ReportDisplayName'].tolist(),  # Use ReportDisplayName as options
-                key="select_report_options",                
+                key="select_report_options",   
+                styles=  {    
+                        "icon":{                
+                        "font-size": "8px",  # Font size for icons
+                        "justify-content": "center",                          
+                }
+            },  
             )        
             # Filter the reports based on the selected option from the option menu
             selected_report_details = filtered_reports[filtered_reports['ReportDisplayName'] == reports_option]

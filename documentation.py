@@ -28,14 +28,6 @@ with open('main.py', 'r') as file:
 with open('left_menu/left_menu.py', 'r') as file:
     left_menu_code = file.read()
 
-# Read the content of the left_menu/expanderStyle.css file
-with open('left_menu/expander_style.css', 'r') as file:
-    expander_style_css = file.read()
-
-# Read the content of the styles.py file
-with open('styles.py', 'r') as file:
-    styles_py = file.read()
-
 # Read the content of the setup.bat file
 with open('setup.bat', 'r') as file:
     setup_bat_code = file.read()
@@ -119,8 +111,7 @@ with st.sidebar:
                  "Main", 
                  "Data base connection",
                  "Left Menu", 
-                 "Styles",
-                 "Expander Style CSS",
+                 "Styles",                
                  "Embed SSRS"],  # Incluindo Setup.bat
                  
         icons=["book", 
@@ -135,8 +126,7 @@ with st.sidebar:
                "filetype-py",
                "filetype-py", 
                "filetype-py", 
-               "filetype-py", 
-               "filetype-css",
+               "filetype-py",              
                "filetype-sql"],  # Ícones
         menu_icon="list",  # Ícone do menu
         default_index=0,  # Índice padrão selecionado
@@ -169,18 +159,6 @@ elif selected == "Main":
 elif selected == "Left Menu":
     st.title("left_menu/left_menu.py")
     st.code(left_menu_code, language='python')
-
-elif selected == "Expander Style CSS":
-    st.title("left_menu/expanderStyle.css")
-    st.code(expander_style_css, language='css')
-
-elif selected == "Styles":
-    st.title("Styles.py")
-    st.code(expander_style_css, language='css')
-
-elif selected == "Data base connection":
-    st.title("Data base connection.py")
-    st.code(expander_style_css, language='css')
 
 
 elif selected == "Secrets.toml":

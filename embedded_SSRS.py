@@ -3,6 +3,7 @@ import requests
 from requests_ntlm import HttpNtlmAuth
 import pandas as pd
 import datetime as datetime
+from functions.utilities import get_datetime_input
 
 
 def embed_ssrs_report(reportRDLname, minDate, maxDate):
@@ -15,24 +16,10 @@ def embed_ssrs_report(reportRDLname, minDate, maxDate):
         maxDate (str): End date.
     """
     # Section for selecting dates with a calendar icon
-    with st.expander(label="📆 Date Input", expanded=False):
-        st.divider()
-        col1, col2,col3,col4,col5,col6,col_ = st.columns([2,2,1,1,1,1,6])
-        
-        with col1:
-            minDate = st.date_input("Start Date", value=pd.to_datetime("2024-10-01"), format="DD/MM/YYYY")
-        with col2:
-            maxDate = st.date_input("End Date", value=pd.to_datetime("2024-10-30"),format="DD/MM/YYYY")
-        with col3:
-            StartHour = st.selectbox(label='Start Hour',options=list(range(24)),index=0)
-        with col4:
-            EndHour = st.selectbox(label='End Hour',options=list(range(24)),index=23)
-        with col5:
-            StartMinute = st.selectbox(label='Start Minute',options=list(range(60)),index=0)
-        with col6:
-            EndMinute = st.selectbox(label='End Minute',options=list(range(60)),index=59)
 
-        
+    with st.expander(label="📆 Date Input", expanded=False):  
+        minDate,maxDate,StartHour,EndHour,StartMinute,EndMinute = get_datetime_input()
+
     
     # ssrs credentials
     ssrs_config = st.secrets["ssrs_config"]
@@ -50,12 +37,15 @@ def embed_ssrs_report(reportRDLname, minDate, maxDate):
     
     StartHour = str(StartHour)
     EndHour = str(EndHour)
-    StartMinute = '00'
-    EndMinute = '30'    
+    StartMinute = str(StartMinute)
+    EndMinute = str(EndMinute)    
 
     # Build the SSRS report URL
-    ssrs_url = f"http://{ipAddress}:{port}/{ReportServerName}/Pages/ReportViewer.aspx?%2f{database}%2f{reportRDLname}&rs:Command=Render&MinDate={minDate}&MaxDate={maxDate}&StartHour={StartHour}&EndHour={EndHour}"
-
+    ssrs_url = ( 
+        f"http://{ipAddress}:{port}/{ReportServerName}/Pages/ReportViewer.aspx?%2f{database}%2f{reportRDLname}&rs:Command=Render"
+        f"&MinDate={minDate}&MaxDate={maxDate}&StartHour={StartHour}&EndHour={EndHour}"
+        f"&StartMinute={StartMinute}&EndMinute={EndMinute}"
+    )
     # Make the request to the SSRS report
     try:
         response = requests.get(ssrs_url, auth=HttpNtlmAuth(username, password), timeout=100)
