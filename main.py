@@ -15,7 +15,7 @@ def load_local_css(file_name):
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 # Correct path to load the CSS from leftMenu directory or root directory
-load_local_css("assets/css/main_content.css")  # Update this path as needed
+load_local_css("assets/css/style.css")  # Update this path as needed
 
 def main():
     engine = mydb()  # Get the database engine
