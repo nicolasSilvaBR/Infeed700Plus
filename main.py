@@ -8,7 +8,7 @@ import logging
 from database_connection import mydb  # Importing the mydb function
 
 config.set_page_config()
-
+    
 # Load the custom CSS file
 def load_local_css(file_name):
     with open(file_name) as f:

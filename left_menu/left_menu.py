@@ -20,14 +20,16 @@ def LeftMenu(engine):
            
         if "selected-project" not in st.session_state:
             st.session_state["selected-project"] = "Infeed700"
-            
+           
         left, middle = st.columns(2)
         if left.button("Infeed700", icon="🐑",use_container_width=True,type='secondary'):
             st.session_state["selected-project"] = "Infeed700"
         if middle.button("Enecoms", icon="⚡", use_container_width=True):
             st.session_state["selected-project"] = "Enecoms"
-                
-        headers_name, reports_names = get_report_headers_and_reports_names(engine)
+            
+        project = st.session_state["selected-project"]
+           
+        headers_name, reports_names = get_report_headers_and_reports_names(project,engine)
         # Selectbox to choose a category
         selected_header = st.selectbox(
             label='',
@@ -39,12 +41,13 @@ def LeftMenu(engine):
         # Filter reports based on the selected header
         filtered_reports = reports_names[reports_names['HeaderName'] == selected_header]      
         
+        menu_icon = "buildings" if st.session_state["selected-project"] == "Infeed700" else "speedometer2"
         
         # If there are filtered reports, display them in the option menu
         if not filtered_reports.empty:
             reports_option = option_menu(
-                menu_title="Reports",
-                menu_icon="buildings",
+                menu_title=st.session_state["selected-project"],
+                menu_icon= menu_icon,
                 icons=["circle-fill"] * len(filtered_reports),
                 default_index= 0 ,  # Default to the first option
                 options=filtered_reports['ReportDisplayName'].tolist(),  # Use ReportDisplayName as options
