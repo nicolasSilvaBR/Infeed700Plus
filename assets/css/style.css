@@ -127,3 +127,16 @@ body {
     background-color: #fff;
     color: #2c3e50;
 }
+.st-emotion-cache-ue6h4q {
+    font-size: 14px;
+    color: rgb(49, 51, 63);
+    display: flex;
+    visibility: visible;
+    margin-bottom: 0.25rem;
+    height: 0px;
+    min-height: 0;
+    vertical-align: middle;
+    flex-direction: row;
+    -webkit-box-align: center;
+    align-items: center;
+}
