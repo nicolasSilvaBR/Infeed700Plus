@@ -78,7 +78,7 @@ def main():
             index_html = file.read()
         
         index_html = index_html.replace("assets/images/home_header.png", image_url)
-        components.html(index_html, height=900, scrolling=True)
+        components.html(index_html, height=1000, scrolling=True)
         
         col_,col1,col_,col_ = st.columns([5,1,4,1])
         with col1:
