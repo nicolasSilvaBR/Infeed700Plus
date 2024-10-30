@@ -24,8 +24,10 @@ def LeftMenu(engine):
         left, middle = st.columns(2)
         if left.button("Infeed700", icon="🐑",use_container_width=True,type='secondary'):
             st.session_state["selected-project"] = "Infeed700"
+            st.session_state['selected_report'] = None
         if middle.button("Enecoms", icon="⚡", use_container_width=True):
             st.session_state["selected-project"] = "Enecoms"
+            st.session_state['selected_report'] = None
             
         project = st.session_state["selected-project"]
            

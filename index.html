@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infeed700 Reports</title>
+    <style>
+        /* Definindo variáveis de cor */
+        :root {
+            /* Paleta Verde */
+            --primary-green:      #027c40;
+            --dark-green:         #014d28;
+            --medium-dark-green:  #02663a;
+            --medium-light-green: #039f56;
+            --light-green:        #04c16d;
+            --very-light-green:   #a3e1b8;
+
+            /* Paleta Azul (baseada em #2b408a) */
+            --primary-blue:       #2b408a;
+            --dark-blue:          #1f3169;
+            --medium-dark-blue:   #3d5aa8;
+            --medium-light-blue:  #5e78c7;
+            --light-blue:         #8aa4e0;
+            --very-light-blue:    #d0dcf4;
+        }
+
+        /* Base Styles */
+        * {
+          box-sizing: border-box;
+          margin: 0;
+          padding: 0;
+          font-family: Arial, sans-serif;
+          color: #333;
+        }
+
+        html {
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+          background-color: #ffffff; /* Fundo branco */
+          padding: 20px;
+        }
+
+        /* Container */
+        #home-container {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 20px;
+        }
+
+        /* Header with Background Image */
+        #home-header {
+            background: linear-gradient(to right, rgba(31, 49, 105, 0.8), rgba(208, 220, 244, 0.8)), 
+                        url('assets/images/home_header.png');
+            background-color: var(--dark-blue); /* Fallback color */
+            background-size: cover;
+            background-position: center;
+            color: var(--very-light-green);
+            text-align: center;
+            padding: 5vw 2vw;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            height: 200px;
+            display: flex;
+            align-items: center; /* Centraliza o conteúdo verticalmente */
+            justify-content: center; /* Centraliza o conteúdo horizontalmente */
+            margin-bottom: 0px;
+            padding: 0px;
+        }
+
+        #home-header-content h1 {
+          font-size: 2.5em;
+          margin: 0;
+          color: white;
+          padding: 0px;
+          margin-top: 0px;
+          margin-bottom: 0px;
+        }
+
+        #home-header-content p {
+          font-size: 1.2em;
+          margin-top: 10px;
+          max-width: 600px;
+          margin: 10px auto;
+          color: white;
+        }
+
+        #home-header-content p span {
+            color: var(--very-light-green);
+            font-style: italic;
+            background-color: var(--dark-green);
+            padding: 8px 12px;
+            border-radius: 8px;
+            box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.7em; /* Diminui o tamanho da letra */
+            transition: all 0.3s ease;
+        }
+
+        #home-header-content p span:hover {
+            background-color: var(--medium-dark-green);
+            color: var(--light-green);
+            transform: scale(1.05);
+        }
+
+        /* Section Titles */
+        #home-section-header {
+          text-align: center;
+          margin-bottom: 30px;
+          color: var(--dark-blue);
+        }
+        #home-section-header h2 {         
+          color: var(--dark-blue);
+        }
+
+        /* Grid Layout */
+        #home-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+          gap: 20px;
+        }
+
+        /* Card */
+        #home-card1, #home-card2, #home-card3, #home-card4, #home-card5, #home-card6, #home-card7, #home-card8 {
+          background-color: whitesmoke;
+          border-radius: 8px;
+          padding: 20px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          transition: transform 0.2s;
+        }
+
+        #home-card1:hover, #home-card2:hover, #home-card3:hover, #home-card4:hover, #home-card5:hover, #home-card6:hover, #home-card7:hover, #home-card8:hover {
+          transform: scale(1.05);
+        }
+
+        #home-card1 h3, #home-card2 h3, #home-card3 h3, #home-card4 h3, #home-card5 h3, #home-card6 h3, #home-card7 h3, #home-card8 h3 {
+          color: var(--dark-blue);
+        }
+
+        /* Hybrid Section */
+        #home-hybrid {
+          text-align: center;
+          background-color: whitesmoke;
+          padding: 30px;
+          margin-top: 40px;
+          border-radius: 8px;
+          color: var(--dark-blue);
+        }
+        #home-hybrid h2{
+            color: var(--dark-blue);
+        }
+
+        /* Feedback Section */
+        #home-feedback {
+          text-align: center;
+          background-color: var(--very-light-blue); /* Usando um tom mais claro de azul */
+          padding: 30px;
+          border-radius: 8px;
+          margin-top: 40px;
+          color: var(--dark-blue);
+        }
+        #home-feedback h2{
+            color: var(--dark-blue);
+        }
+        #home-feedback p{
+            color: var(--dark-green);
+        }
+
+        #home-feedback-button {
+          background-color: var(--dark-green);
+          color: #fff;
+          padding: 10px 20px;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          font-size: 1em;
+          transition: background-color 0.3s;
+          padding: 10px;
+          margin: 10px;
+        }
+
+        #home-feedback-button:hover {
+          background-color: var(--primary-blue);
+        }
+
+        /* Future Releases Section */
+        #home-future {
+          background-color: whitesmoke;
+          text-align: center;
+          padding: 30px;
+          border-radius: 8px;
+          margin-top: 40px;
+          color: var(--dark-blue);
+        }
+        #home-future h2 {
+            color: var(--dark-blue);
+        }
+        #home-future-button {
+          background-color: var(--dark-green);
+          color: #fff;
+          padding: 10px 20px;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          font-size: 1em;
+          transition: background-color 0.3s;
+          padding: 10px;
+          margin: 10px;
+        }
+
+        #home-future-button:hover {
+          background-color: var(--primary-blue);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header id="home-header">
+        <div id="home-header-content">
+            <h1>Welcome to the New Infeed700 Reports</h1>
+            <p><span>Feed your data, fuel your growth!</span></p>            
+        </div>
+    </header>
+
+    <!-- What's New Section -->
+    <section id="home-container">
+        <div id="home-section-header">
+            <h2>What's New?</h2>
+        </div>
+        <div id="home-grid">
+            <div id="home-card1">
+                <h3>Enhanced Navigation</h3>
+                <p>Smoother, more intuitive navigation experience for users.</p>
+            </div>
+            <div id="home-card2">
+                <h3>Improved Speed</h3>
+                <p>Optimized load times, bringing information faster than ever.</p>
+            </div>
+            <div id="home-card3">
+                <h3>Dynamic Charts</h3>
+                <p>Interactive and real-time visualizations for actionable insights.</p>
+            </div>
+            <div id="home-card4">
+                <h3>Data Lab</h3>
+                <p>Empower yourself to create custom insights and reports.</p>
+            </div>
+            <div id="home-card5">
+                <h3>Key Performance Indicators</h3>
+                <p>Quickly access essential KPIs to monitor performance.</p>
+            </div>
+            <div id="home-card6">
+                <h3>Report Explainer</h3>
+                <p>Get detailed context and explanations for each report.</p>
+            </div>
+            <div id="home-card7">
+                <h3>Report Statistics</h3>
+                <p>Detailed analytics to measure report engagement.</p>
+            </div>
+            <div id="home-card8">
+                <h3>Built on Python</h3>
+                <p>Leverage the most popular language in data science.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hybrid System Section -->
+    <section id="home-hybrid">
+        <h2>Some New, Some Classic</h2>
+        <p>We continue to integrate SSRS to ensure a comprehensive reporting experience.</p>
+    </section>
+
+    <!-- Feedback Section -->
+    <section id="home-feedback">
+        <h2>Give Us Your Feedback</h2>
+        <p>Help us improve by sharing your experience.</p>
+        <button onclick="window.open('https://forms.gle/jm3wTqskS1LD2D328', '_blank')" id="home-feedback-button">Share Feedback</button>
+    </section>
+
+    <!-- Future Releases Section -->
+    <section id="home-future">
+        <h2>Future Releases</h2>
+        <p>Exciting updates coming soon! Stay tuned for new features and improvements to our reporting system.</p>        
+    </section>
+</body>
+</html>
