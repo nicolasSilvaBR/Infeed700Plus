@@ -8,45 +8,35 @@ import logging
 from database_connection import mydb
 import streamlit.components.v1 as components
 from pathlib import Path
-import base64
+from functions.utilities import load_local_css, get_base64_image
 
-# From function folder import condif > set_page_config()
+# From function folder import config > set_page_config()
 config.set_page_config()
 
-# Função para carregar e aplicar CSS
-def load_local_css(file_name):
-    with open(file_name) as f:
-        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
-
-# Carregar o CSS personalizado
+# Load custom CSS
 load_local_css("assets/css/style.css")
 
-# Função para converter imagem em Base64
-def get_base64_image(image_path):
-    with open(image_path, "rb") as img_file:
-        return base64.b64encode(img_file.read()).decode()
-
 def main():
-    # Configurações iniciais e log de conexão com o banco de dados
+    # Initial settings and database connection log
     engine = mydb()
     logging.info(f"Database engine: {engine}")
     LeftMenu(engine)
     
-    # Inicializar variáveis de sessão
+    # Initialize session variables
     if 'selected_report' not in st.session_state:
         st.session_state['selected_report'] = None
     if 'show_report' not in st.session_state:
-        st.session_state['show_report'] = False  # Controla a exibição do relatório
+        st.session_state['show_report'] = False  # Controls report display
     if 'show_content' not in st.session_state:
-        st.session_state['show_content'] = False  # Controla a exibição de conteúdo específico (dashboard ou relatório)
+        st.session_state['show_content'] = False  # Controls specific content display (dashboard or report)
 
-    # Datas padrão
+    # Default dates
     minDate = st.session_state.get('minDate', pd.to_datetime("2024-10-01")).strftime('%Y-%m-%d')
     maxDate = st.session_state.get('maxDate', pd.to_datetime("2024-10-30")).strftime('%Y-%m-%d')
 
-    # Função para exibir o relatório SSRS
+    # Function to display the SSRS report
     def display_ssrs_report():
-        """Exibir o relatório SSRS."""
+        """Display the SSRS report."""
         try:
             with st.spinner('Running Report...'):
                 reportRDLname = st.session_state['selected_report']
@@ -58,22 +48,22 @@ def main():
             elif not st.session_state['selected_report']:
                 st.write('Choose a Category and Report')
 
-    # Função para exibir o dashboard
+    # Function to display the dashboard
     def display_dashboard():
-        """Exibir o conteúdo do dashboard."""
+        """Display dashboard content."""
         intake_page(mindate=minDate, maxdate=maxDate)
 
-    # Exibir conteúdo principal com base no estado da sessão
+    # Display main content based on session state
     st.markdown('<div class="main-content">', unsafe_allow_html=True)
 
-    # Atualizar `show_content` e `show_report` com base no relatório selecionado
+    # Update `show_content` and `show_report` based on the selected report
     if st.session_state['selected_report'] is not None:
         st.session_state['show_report'] = True
         st.session_state['show_content'] = True
 
-    # Exibir a home (index.html) apenas se `show_content` for False
+    # Display the home (index.html) only if `show_content` is False
     if not st.session_state['show_content']:
-        # Carregar a imagem em Base64
+        # Load image in Base64
         image_path = Path("assets/images/home_header.png")
         image_url = ""
         if image_path.exists():
@@ -82,32 +72,32 @@ def main():
         else:
             st.error("Image not found.")
 
-        # Carregar e exibir HTML da página inicial
+        # Load and display HTML for the home page
         with open("index.html", "r") as file:
             index_html = file.read()
         
         index_html = index_html.replace("assets/images/home_header.png", image_url)
         components.html(index_html, height=1000, scrolling=True)
         
-        # Centralizar o botão "See Demo"
+        # Center the "See Demo" button
         col_left, col_center, col_right = st.columns([5, 1, 5])
         with col_center:
             if st.button("See Demo"):
-                st.session_state['show_content'] = True  # Define para mostrar o dashboard
+                st.session_state['show_content'] = True  # Set to show the dashboard
     
-    # Se "See Demo" foi clicado ou um cabeçalho de relatório foi selecionado, exibir o conteúdo específico
+    # If "See Demo" was clicked or a report header was selected, display specific content
     else:
-        # Mostrar o dashboard se "See Demo" foi clicado e nenhum cabeçalho foi selecionado
+        # Show the dashboard if "See Demo" was clicked and no header was selected
         if st.session_state['show_content'] and not st.session_state['show_report']:
             display_dashboard()
         
-        # Mostrar o relatório SSRS se um cabeçalho de relatório foi selecionado
+        # Show the SSRS report if a report header was selected
         elif st.session_state['show_report']:
             display_ssrs_report()
 
-    # Fechar div principal
+    # Close main div
     st.markdown('</div>', unsafe_allow_html=True)
 
-# Ponto de entrada da aplicação
+# Entry point of the application
 if __name__ == '__main__':
     main()

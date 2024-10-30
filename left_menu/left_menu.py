@@ -60,9 +60,9 @@ def LeftMenu(engine):
                 styles=  {    
                         "icon":{                
                         "font-size": "8px",  # Font size for icons
-                        "justify-content": "center",                          
-                }
-            },  
+                        "justify-content": "center"
+                        }   
+                },  
             )        
             # Filter the reports based on the selected option from the option menu
             selected_report_details = filtered_reports[filtered_reports['ReportDisplayName'] == reports_option]
