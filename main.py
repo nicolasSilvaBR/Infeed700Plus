@@ -10,7 +10,7 @@ import streamlit.components.v1 as components
 from pathlib import Path
 import base64
 
-# Configuração inicial da página
+# From function folder import condif > set_page_config()
 config.set_page_config()
 
 # Função para carregar e aplicar CSS

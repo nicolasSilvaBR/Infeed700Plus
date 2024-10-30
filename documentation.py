@@ -5,43 +5,43 @@ from road_map import road_map
 st.set_page_config(layout="wide")
 
 # Read the content of the README.md file
-with open('README.md', 'r') as file:
+with open('README.md', 'r', encoding='utf-8') as file:
     readme_text = file.read()
 
 # Read the content of the releases.md file
-with open('releases.md', 'r') as file:
+with open('releases.md', 'r', encoding='utf-8') as file:
     releases_text = file.read()
 
 # Read the content of the .streamlit/secrets.toml file
-with open('.streamlit/secrets.toml', 'r') as file:
+with open('.streamlit/secrets.toml', 'r', encoding='utf-8') as file:
     secrets_toml = file.read()
 
 # Read the content of the requirements.txt file
-with open('requirements.txt', 'r') as file:
+with open('requirements.txt', 'r', encoding='utf-8') as file:
     requirements_txt = file.read()
 
 # Read the content of the main.py file
-with open('main.py', 'r') as file:
+with open('main.py', 'r', encoding='utf-8') as file:
     main_py_code = file.read()
 
-# Read the content of the left_menu/leftMenu.py file
-with open('left_menu/left_menu.py', 'r') as file:
+# Read the content of the left_menu/left_menu.py file
+with open('left_menu/left_menu.py', 'r', encoding='utf-8') as file:
     left_menu_code = file.read()
 
 # Read the content of the setup.bat file
-with open('setup.bat', 'r') as file:
+with open('setup.bat', 'r', encoding='utf-8') as file:
     setup_bat_code = file.read()
 
 # Read the contents of config.toml into the streamlit_config variable
-with open('.streamlit/config.toml', 'r') as file:  # Ensure the path is correct
+with open('.streamlit/config.toml', 'r', encoding='utf-8') as file:
     streamlit_config = file.read()
 
 # Read the content of the embeddedSSRS.py file
-with open('embedded_SSRS.py', 'r') as file:
+with open('embedded_SSRS.py', 'r', encoding='utf-8') as file:
     embeddedSSRS = file.read()
 
 # Read the content of the databaseConnection.py file
-with open('database_connection.py', 'r') as file:
+with open('database_connection.py', 'r', encoding='utf-8') as file:
     embeddedSSRS = file.read()
 
 # Textos e códigos para as seções
