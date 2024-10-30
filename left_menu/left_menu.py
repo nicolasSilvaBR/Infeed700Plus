@@ -1,7 +1,7 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
 import os  # File and path handling
-from functions.utilities import load_local_css,display_footer,get_report_headers_and_reports_names  # Import custom functions from utilities.py
+from functions.utilities import display_footer,get_report_headers_and_reports_names  # Import custom functions from utilities.py
 
 # Path to the logo image file
 sidebar_logo_image_name = "ICM_300X80_OPT14.png"  
@@ -20,14 +20,17 @@ def LeftMenu(engine):
            
         if "selected-project" not in st.session_state:
             st.session_state["selected-project"] = "Infeed700"
-           
+            
+        def clean_report_session():
+            st.session_state['selected_report'] = False
+        
         left, middle = st.columns(2)
-        if left.button("Infeed700", icon="🐑",use_container_width=True,type='secondary'):
+        if left.button("Infeed700", icon="🐑",use_container_width=True,type='secondary',on_click=clean_report_session):
             st.session_state["selected-project"] = "Infeed700"
-            st.session_state['selected_report'] = None
-        if middle.button("Enecoms", icon="⚡", use_container_width=True):
+            
+        if middle.button("Enecoms", icon="⚡", use_container_width=True,on_click=clean_report_session):
             st.session_state["selected-project"] = "Enecoms"
-            st.session_state['selected_report'] = None
+            
             
         project = st.session_state["selected-project"]
            

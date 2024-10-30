@@ -54,10 +54,11 @@ def embed_ssrs_report(reportRDLname, minDate, maxDate):
             f"&StartMinute={StartMinute}&EndMinute={EndMinute}"
         )
     elif  st.session_state['selected-project'] == 'Enecoms':  
-        ssrs_url = ( 
-            f"http://{ipAddress}:{port}/{ReportServerName}/Pages/ReportViewer.aspx?%2f{database}%2f{reportRDLname}&rs:Command=Render"
-            #f"&MinDate={minDate}&MaxDate={maxDate}"
-        )  
+        if st.session_state['selected_report']:
+            ssrs_url = ( 
+                f"http://{ipAddress}:{port}/{ReportServerName}/Pages/ReportViewer.aspx?%2f{database}%2f{reportRDLname}&rs:Command=Render"
+                #f"&MinDate={minDate}&MaxDate={maxDate}"
+            )  
     else:
         st.write("Check the Project name : Infeed700 / Enecoms and check on Screts the database names")
     
@@ -73,9 +74,11 @@ def embed_ssrs_report(reportRDLname, minDate, maxDate):
             """
             # Usar height grande o suficiente para preencher a tela e garantir que o iframe ocupe 100% da área
             st.components.v1.html(iframe_code, height=780, scrolling=False)
-        else:
+        elif st.session_state['selected_report'] == True:
             st.write(ssrs_url)
             st.error(f"Error accessing the report: {response.status_code}. Check the report name or parameters. Check if the SSRS report '{reportRDLname}.rdl' exist in the web server.")
+        else:
+            st.error(f"Choose a Category and Report")
     except requests.exceptions.ConnectTimeout:
         st.error("Connection error: Timeout while trying to access the server.")
     except requests.exceptions.RequestException as e:
