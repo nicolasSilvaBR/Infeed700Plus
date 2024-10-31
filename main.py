@@ -20,7 +20,7 @@ def main():
     # Initial settings and database connection log
     engine = mydb()
     logging.info(f"Database engine: {engine}")
-    LeftMenu(engine)
+    LeftMenu(engine)    
     
     # Initialize session variables
     if 'selected_report' not in st.session_state:

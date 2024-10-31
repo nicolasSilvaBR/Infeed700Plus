@@ -1,7 +1,9 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
-import os  # File and path handling
-from functions.utilities import display_footer,get_report_headers_and_reports_names  # Import custom functions from utilities.py
+import os 
+from functions.footer import display_footer as footer
+from functions.report_header_name import get_report_headers_and_reports_names
+from functions.sites import IsMultiSiteEnabled
 
 # Path to the logo image file
 sidebar_logo_image_name = "ICM_300X80_OPT14.png"  
@@ -29,10 +31,12 @@ def LeftMenu(engine):
             st.session_state["selected-project"] = "Infeed700"
             
         if middle.button("Enecoms", icon="⚡", use_container_width=True,on_click=clean_report_session):
-            st.session_state["selected-project"] = "Enecoms"
-            
+            st.session_state["selected-project"] = "Enecoms"            
             
         project = st.session_state["selected-project"]
+        
+        # Check if the MultiSiteEnabled is enable and call the function to show the site list
+        IsMultiSiteEnabled(engine)
            
         headers_name, reports_names = get_report_headers_and_reports_names(project,engine)
         # Selectbox to choose a category
@@ -81,7 +85,7 @@ def LeftMenu(engine):
         st.divider()  # Divider before footer
 
         # Call the footer function from utilities.py
-        display_footer()
+        footer()
 
        
 # Execute LeftMenu only if the file is run directly
