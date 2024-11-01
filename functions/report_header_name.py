@@ -1,6 +1,10 @@
 import streamlit as st
 import pandas as pd
 
+db_config = st.secrets["mydb"]
+infeed_database_name = db_config["database"]
+enecoms_database_name = db_config["enecoms_database"]
+
 # Function to fetch and process the SQL query
 def get_report_headers_and_reports_names(project,engine):
     sql_query = f"""
@@ -14,8 +18,8 @@ def get_report_headers_and_reports_names(project,engine):
             ,[ReportDisplayName]
             ,[ReportName]
             ,ItemDisplayOrder           
-        FROM [Infeed700DAS].[Report].[MenuItems]
-        JOIN [Infeed700DAS].[Report].[MenuHeader] ON [MenuHeader].HeaderId = [MenuItems].HeaderId
+        FROM {infeed_database_name}.[Report].[MenuItems]
+        JOIN {infeed_database_name}.[Report].[MenuHeader] ON [MenuHeader].HeaderId = [MenuItems].HeaderId
         WHERE [MenuItems].IsActive = 1 AND [MenuHeader].IsActive = 1
         ORDER BY  
             [MenuHeader].WebHeaderDisplayOrder,
@@ -29,8 +33,8 @@ def get_report_headers_and_reports_names(project,engine):
             ,[ReportDisplayName]
             ,[ReportName]
             ,ItemDisplayOrder      
-        FROM [EnecomsDAS].[Report].[MenuItems]
-        JOIN [EnecomsDAS].[Report].[MenuHeader] ON [MenuHeader].HeaderId = [MenuItems].HeaderId
+        FROM {enecoms_database_name}.[Report].[MenuItems]
+        JOIN {enecoms_database_name}.[Report].[MenuHeader] ON [MenuHeader].HeaderId = [MenuItems].HeaderId
         WHERE [MenuItems].IsActive = 1 AND [MenuHeader].IsActive = 1
         ORDER BY  
             [MenuHeader].WebHeaderDisplayOrder,
