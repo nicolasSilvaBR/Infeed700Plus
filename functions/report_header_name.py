@@ -1,9 +1,11 @@
 import streamlit as st
 import pandas as pd
+from functions.secrets_config import get_secrets_config
 
-db_config = st.secrets["mydb"]
+db_config = get_secrets_config()
 infeed_database_name = db_config["database"]
 enecoms_database_name = db_config["enecoms_database"]
+
 
 # Function to fetch and process the SQL query
 def get_report_headers_and_reports_names(project,engine):
