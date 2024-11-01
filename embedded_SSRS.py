@@ -3,6 +3,8 @@ import requests
 from requests_ntlm import HttpNtlmAuth
 import pandas as pd
 from functions.utilities import get_datetime_input
+import toml
+import os
 
 def embed_ssrs_report(reportRDLname, minDate, maxDate):
     """
@@ -16,26 +18,51 @@ def embed_ssrs_report(reportRDLname, minDate, maxDate):
     # Section for selecting dates with a calendar icon
     with st.expander(label="📆 Date Input", expanded=False):  
         minDate, maxDate, StartHour, EndHour, StartMinute, EndMinute = get_datetime_input()
-    
-    # Load SSRS configuration from secrets
-    ssrs_config = st.secrets["ssrs_config"]  
+
+    # Retrieve the configuration file name from Streamlit secrets
+    secrets_config = st.secrets.get("secrets_config", {"secrets_name": "secrets.toml"})
+    secrets_name = secrets_config.get("secrets_name", "secrets.toml")
+
+    # Ensure the file is located in the `.streamlit` directory
+    if not secrets_name.endswith(".toml"):
+        secrets_name = f".streamlit/{secrets_name}.toml"
+    else:
+        secrets_name = f".streamlit/{secrets_name}"
+
+    # Convert to absolute path and check if the file exists
+    absolute_path = os.path.abspath(secrets_name)
+    if not os.path.isfile(absolute_path):
+        st.error(f"The configuration file '{absolute_path}' was not found. Please check the path and file name.")
+        return
+
+    # Load configuration from the TOML file
+    try:
+        # Load the SSRS configuration section
+        ssrs_config = toml.load(absolute_path)["ssrs_config"]
+    except KeyError:
+        st.error("The 'ssrs_config' section was not found in the configuration file.")
+        return
+    except Exception as e:
+        st.error(f"Error loading the configuration file: {e}")
+        return
 
     # Select the database based on the project
-    if st.session_state['selected-project'] == 'Infeed700':
-        database_session = ssrs_config['database']
-    elif st.session_state['selected-project'] == 'Enecoms':
-        database_session = ssrs_config['database-enecoms']
+    project = st.session_state.get('selected-project')
+    if project == 'Infeed700':
+        database_session = ssrs_config.get('database')
+    elif project == 'Enecoms':
+        database_session = ssrs_config.get('database-enecoms')
     else:
-        st.error("Check the Project name: Infeed700 / Enecoms and ensure database names are correctly specified in secrets.")
+        st.error("Invalid project name. Use 'Infeed700' or 'Enecoms'. Ensure database names are specified in secrets.")
         return
     
     # Check required configuration keys
-    required_keys = ["ipAddress", "port", "database", "ReportServerName", "username", "password"]
+    required_keys = ["ipAddress", "port", "ReportServerName", "username", "password"]
     if not all(key in ssrs_config for key in required_keys):
-        st.error("SSRS configuration not found in secrets.toml. Please add it to use this feature.")
+        st.error("Missing SSRS configuration keys. Please check your secrets.toml.")
         return    
 
-    # Retrieve SSRS credentials
+    # Retrieve SSRS credentials and settings
     ipAddress = ssrs_config["ipAddress"]
     port = ssrs_config["port"]
     database = database_session
@@ -46,11 +73,10 @@ def embed_ssrs_report(reportRDLname, minDate, maxDate):
     # Prepare URL parameters
     StartHour, EndHour = str(StartHour), str(EndHour)
     StartMinute, EndMinute = str(StartMinute), str(EndMinute)
-    site_id = str(st.session_state['selected_site_id'])
-   
-    
+    site_id = str(st.session_state.get('selected_site_id', ''))
+
     # Construct the SSRS report URL based on the selected project
-    if st.session_state['selected-project'] == 'Infeed700':        
+    if project == 'Infeed700':        
         # URL for Infeed700 with optional SiteId
         ssrs_url = ( 
             f"http://{ipAddress}:{port}/{ReportServerName}/Pages/ReportViewer.aspx?%2f{database}%2f{reportRDLname}&rs:Command=Render"
@@ -59,13 +85,14 @@ def embed_ssrs_report(reportRDLname, minDate, maxDate):
         )
         
         # Add SiteId if multi-site is enabled
-        if st.session_state['is_multi_site_enabled']:
+        if st.session_state.get('is_multi_site_enabled'):
             ssrs_url += f"&SiteId={site_id}"
             
-    elif st.session_state['selected-project'] == 'Enecoms':
+    elif project == 'Enecoms':
         # URL for Enecoms without time or SiteId parameters
-        if st.session_state['selected_report']:
-            ssrs_url = ( 
+        selected_report = st.session_state.get('selected_report')
+        if selected_report:
+            ssrs_url = (
                 f"http://{ipAddress}:{port}/{ReportServerName}/Pages/ReportViewer.aspx?%2f{database}%2f{reportRDLname}&rs:Command=Render"
             )
         else:

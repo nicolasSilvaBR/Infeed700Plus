@@ -1,6 +1,6 @@
 __pycache__/
 *.py[cod]
-.streamlit/secrets.toml
+.streamlit/*.toml
 documentation/Streamlit & SSRS.txt
 debug.log
 !important.log
