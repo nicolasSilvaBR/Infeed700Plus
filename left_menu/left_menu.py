@@ -70,9 +70,11 @@ def LeftMenu(engine):
                         "font-size": "14px",  # Tamanho da fonte das opções
                         "text-align": "left",
                         "margin": "0px",
-                        "--hover-color": "#eee",
+                        "--hover-color": "#eee",                                               
                         },
-                        "nav-link-selected": {"background-color": "#475b7c"},   
+                        "nav-link-selected": {"background-color": "#475b7c"},
+                        "nav-link:hover": {"color": "#FF5733",  # Cor do texto ao passar o mouse
+                        }   
                     },  
             )        
             # Filter the reports based on the selected option from the option menu
