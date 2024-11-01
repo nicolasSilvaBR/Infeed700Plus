@@ -1,5 +1,8 @@
 # [server]
 # port = 8501
+[ui]
+hideSidebarNav = true
+hideTopBar = true
 
 [theme]
 primaryColor = "#475b7c"               # Primary color used in the app, buttons, dates, text etc
