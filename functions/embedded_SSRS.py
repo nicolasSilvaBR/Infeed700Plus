@@ -2,9 +2,9 @@ import streamlit as st
 import requests
 from requests_ntlm import HttpNtlmAuth
 import pandas as pd
-import datetime as datetime
 from functions.utilities import get_datetime_input
-
+import toml
+import os
 
 def embed_ssrs_report(reportRDLname, minDate, maxDate):
     """
@@ -16,69 +16,105 @@ def embed_ssrs_report(reportRDLname, minDate, maxDate):
         maxDate (str): End date.
     """
     # Section for selecting dates with a calendar icon
-
     with st.expander(label="📆 Date Input", expanded=False):  
-        minDate,maxDate,StartHour,EndHour,StartMinute,EndMinute = get_datetime_input()
+        minDate, maxDate, StartHour, EndHour, StartMinute, EndMinute = get_datetime_input()
 
+    # Retrieve the configuration file name from Streamlit secrets
+    secrets_config = st.secrets.get("secrets_config", {"secrets_name": "secrets.toml"})
+    secrets_name = secrets_config.get("secrets_name", "secrets.toml")
+
+    # Ensure the file is located in the `.streamlit` directory
+    if not secrets_name.endswith(".toml"):
+        secrets_name = f".streamlit/{secrets_name}.toml"
+    else:
+        secrets_name = f".streamlit/{secrets_name}"
+
+    # Convert to absolute path and check if the file exists
+    absolute_path = os.path.abspath(secrets_name)
+    if not os.path.isfile(absolute_path):
+        st.error(f"The configuration file '{absolute_path}' was not found. Please check the path and file name.")
+        return
+
+    # Load configuration from the TOML file
+    try:
+        # Load the SSRS configuration section
+        ssrs_config = toml.load(absolute_path)["ssrs_config"]
+    except KeyError:
+        st.error("The 'ssrs_config' section was not found in the configuration file.")
+        return
+    except Exception as e:
+        st.error(f"Error loading the configuration file: {e}")
+        return
+
+    # Select the database based on the project
+    project = st.session_state.get('selected-project')
+    if project == 'Infeed700':
+        database_session = ssrs_config.get('database')
+    elif project == 'Enecoms':
+        database_session = ssrs_config.get('database-enecoms')
+    else:
+        st.error("Invalid project name. Use 'Infeed700' or 'Enecoms'. Ensure database names are specified in secrets.")
+        return
     
-    # ssrs credentials
-    ssrs_config = st.secrets["ssrs_config"]
-    
-    if st.session_state['selected-project'] == 'Infeed700':
-        database_session = ssrs_config['database']
-    elif st.session_state['selected-project'] == 'Enecoms':  
-        database_session = ssrs_config['database-enecoms']
-    
-    required_keys = ["ipAddress", "port", "database", "ReportServerName", "username","password"]
+    # Check required configuration keys
+    required_keys = ["ipAddress", "port", "ReportServerName", "username", "password"]
     if not all(key in ssrs_config for key in required_keys):
-        st.error("SSRS configuration not found in secrets.toml. Please add it to use this feature.")
+        st.error("Missing SSRS configuration keys. Please check your secrets.toml.")
         return    
 
+    # Retrieve SSRS credentials and settings
     ipAddress = ssrs_config["ipAddress"]
-    port = ssrs_config["port"]    
+    port = ssrs_config["port"]
     database = database_session
     ReportServerName = ssrs_config['ReportServerName']
     username = ssrs_config['username']
     password = ssrs_config['password']
-    
-    StartHour = str(StartHour)
-    EndHour = str(EndHour)
-    StartMinute = str(StartMinute)
-    EndMinute = str(EndMinute)    
-    
-    # Build the SSRS report URL
-    if st.session_state['selected-project'] == 'Infeed700':        
+
+    # Prepare URL parameters
+    StartHour, EndHour = str(StartHour), str(EndHour)
+    StartMinute, EndMinute = str(StartMinute), str(EndMinute)
+    site_id = str(st.session_state.get('selected_site_id', ''))
+
+    # Construct the SSRS report URL based on the selected project
+    if project == 'Infeed700':        
+        # URL for Infeed700 with optional SiteId
         ssrs_url = ( 
             f"http://{ipAddress}:{port}/{ReportServerName}/Pages/ReportViewer.aspx?%2f{database}%2f{reportRDLname}&rs:Command=Render"
             f"&MinDate={minDate}&MaxDate={maxDate}&StartHour={StartHour}&EndHour={EndHour}"
             f"&StartMinute={StartMinute}&EndMinute={EndMinute}"
         )
-    elif  st.session_state['selected-project'] == 'Enecoms':  
-        if st.session_state['selected_report']:
-            ssrs_url = ( 
+        
+        # Add SiteId if multi-site is enabled
+        if st.session_state.get('is_multi_site_enabled'):
+            ssrs_url += f"&SiteId={site_id}"
+            
+    elif project == 'Enecoms':
+        # URL for Enecoms without time or SiteId parameters
+        selected_report = st.session_state.get('selected_report')
+        if selected_report:
+            ssrs_url = (
                 f"http://{ipAddress}:{port}/{ReportServerName}/Pages/ReportViewer.aspx?%2f{database}%2f{reportRDLname}&rs:Command=Render"
-                #f"&MinDate={minDate}&MaxDate={maxDate}"
-            )  
-    else:
-        st.write("Check the Project name : Infeed700 / Enecoms and check on Screts the database names")
-    
-    # Make the request to the SSRS report
+            )
+        else:
+            st.error("Please select a report for Enecoms.")
+            return
+
+    # Function to render the iframe
+    def render_iframe(url):
+        report_url = f"{url}&rs:Embed=true&rc:Parameters=Collapsed"            
+        iframe_code = f"""
+        <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" 
+                src="{report_url}" frameborder="0" allowfullscreen></iframe>
+        """
+        st.components.v1.html(iframe_code, height=780, scrolling=False)
+
+    # Attempt to access the SSRS report
     try:
         response = requests.get(ssrs_url, auth=HttpNtlmAuth(username, password), timeout=100)
-
         if response.status_code == 200:
-            report_url = f"{ssrs_url}&rs:Embed=true&rc:Parameters=Collapsed"            
-            iframe_code = f"""
-            <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" 
-                    src="{report_url}" frameborder="0" allowfullscreen></iframe>
-            """
-            # Usar height grande o suficiente para preencher a tela e garantir que o iframe ocupe 100% da área
-            st.components.v1.html(iframe_code, height=780, scrolling=False)
-        elif st.session_state['selected_report'] == True:
-            st.write(ssrs_url)
-            st.error(f"Error accessing the report: {response.status_code}. Check the report name or parameters. Check if the SSRS report '{reportRDLname}.rdl' exist in the web server.")
+            render_iframe(ssrs_url)
         else:
-            st.error(f"Choose a Category and Report")
+            st.error(f"Error accessing the report: {response.status_code}. Check the report name or parameters.")
     except requests.exceptions.ConnectTimeout:
         st.error("Connection error: Timeout while trying to access the server.")
     except requests.exceptions.RequestException as e:
