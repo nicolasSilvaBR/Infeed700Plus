@@ -1,11 +1,12 @@
 import functions.config as config
 import streamlit as st
 from left_menu.left_menu import LeftMenu
-from embedded_SSRS import embed_ssrs_report
+#from embedded_SSRS import embed_ssrs_report
+from functions.embedded_SSRS import embed_ssrs_report
 import pandas as pd
 from reports.intake.intake import intake_page
 import logging
-from database_connection import mydb
+from functions.database_connection import mydb
 import streamlit.components.v1 as components
 from pathlib import Path
 from functions.utilities import load_local_css, get_base64_image

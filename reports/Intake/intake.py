@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-from database_connection import mydb
+from functions.database_connection import mydb
 import json
 import os
 import reports.intake.intake_parameters as intake_parameters
