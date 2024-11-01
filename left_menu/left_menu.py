@@ -36,8 +36,8 @@ def LeftMenu(engine):
         project = st.session_state["selected-project"]
         
         # Check if the MultiSiteEnabled is enable and call the function to show the site list
-        IsMultiSiteEnabled(engine)
-           
+        IsMultiSiteEnabled(engine)        
+        
         headers_name, reports_names = get_report_headers_and_reports_names(project,engine)
         # Selectbox to choose a category
         selected_header = st.selectbox(
