@@ -1,16 +1,12 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
-from functions.road_map import road_map
+from road_map import road_map
 
 st.set_page_config(layout="wide")
 
 # Read the content of the README.md file
 with open('README.md', 'r', encoding='utf-8') as file:
     readme_text = file.read()
-
-# Read the content of the releases.md file
-with open('releases.md', 'r', encoding='utf-8') as file:
-    releases_text = file.read()
 
 # Read the content of the .streamlit/secrets.toml file
 with open('.streamlit/secrets.toml', 'r', encoding='utf-8') as file:
@@ -20,6 +16,10 @@ with open('.streamlit/secrets.toml', 'r', encoding='utf-8') as file:
 with open('requirements.txt', 'r', encoding='utf-8') as file:
     requirements_txt = file.read()
 
+# Read the content of the database_connection.py file
+with open('functions/database_connection.py', 'r', encoding='utf-8') as file:
+    database_connection = file.read()
+    
 # Read the content of the main.py file
 with open('main.py', 'r', encoding='utf-8') as file:
     main_py_code = file.read()
@@ -37,12 +37,13 @@ with open('.streamlit/config.toml', 'r', encoding='utf-8') as file:
     streamlit_config = file.read()
 
 # Read the content of the embeddedSSRS.py file
-with open('embedded_SSRS.py', 'r', encoding='utf-8') as file:
+with open('functions/embedded_SSRS.py', 'r', encoding='utf-8') as file:
     embeddedSSRS = file.read()
 
-# Read the content of the databaseConnection.py file
-with open('database_connection.py', 'r', encoding='utf-8') as file:
-    embeddedSSRS = file.read()
+# Read the content of the embeddedSSRS.py file
+with open('assets/css/style.css', 'r', encoding='utf-8') as file:
+    style_css = file.read()
+
 
 # Textos e códigos para as seções
 Overview = '''\
@@ -62,45 +63,91 @@ Infeed700 is not only a tool for data visualization but also a comprehensive sol
 project_structure = '''\
 Infeed700/
 │
-├── images/                     # Directory for images and icons
-│   ├── home.svg                # SVG icon for the sidebar
-│   └── (other images and icons)
+├── .pycache__                  # Python cache directory
 │
-├── LeftMenu/                   # Directory for left menu-related files
-│   ├── left_menu.py             # Contains the logic for the left menu
-│   ├── expanderStyle.css        # Custom styles for the left menu
+├── .streamlit/                 # Streamlit configuration and secrets
+│   ├── secrets.toml            # Secrets for database connection
+│   └── config.toml             # Streamlit configuration settings [theme][server]
 │
-├── styles.py                   # Custom styles for the menu
+├── assets/                     # Static assets like CSS, images, and diagrams
+│   ├── css/
+│   │   └── style.css           # Main stylesheet for the app
+│   ├── images/                 # Additional images used in the app
+│   └── diagrams/               # Diagrams or flowcharts for reference
 │
+├── dev_lab/                    # Development lab files and scripts
+│
+├── documentation/              # Project documentation
+│
+├── functions/                  # Additional helper functions
+│   ├── config.py               # Configuration-related functions
+│   ├── create_card.py          # Function to create cards in the UI
+│   ├── data_lab.py             # Data processing functions for lab data
+│   ├── database_connection.py  # Database connection logic
+│   ├── documentation.py        # Documentation functions
+│   ├── embedded_SSRS.py        # Embedded SSRS report handling
+│   ├── get_base64_image.py     # Helper function for image encoding
+│   ├── get_datetime_input.py   # Functions for handling date/time inputs
+│   ├── load_local_css.py       # Function to load local CSS files
+│   ├── load_svg.py             # Function for loading SVG images
+│   ├── report_header_name.py   # Logic for report headers
+│   ├── road_map.py             # Roadmap and progress-related functions
+│   ├── secrets_config.py       # Helper for managing secrets configuration
+│   ├── sites.py                # Site-specific functions
+│   └── utilities.py            # Utility functions
+│
+├── left_menu/                  # Directory for left menu-related files
+│   ├── left_menu.py            # Contains the logic for the left menu
+│
+├── libs/                       # Libraries used in the project
+│
+├── python_offline_installer/   # Offline installer for Python packages
+│
+├── reports/                    # Directory for different report categories
+│   ├── blending/               # Reports related to blending
+│   ├── intake/                 # Reports related to intake
+│   │   ├── charts/             # Charts specific to intake reports
+│   │   │   ├── line_chart_nett_weight_by_day.py  # Line chart example
+│   │   │   └── (other charts)
+│   │   ├── intake_columns.json  # JSON configuration for intake columns
+│   │   ├── intake_parameters.py # Intake parameters functions
+│   │   └── intake.py            # Main logic for intake reports
+│   └── press/                   # Reports related to press operations
+│
+├── __init__.py                 # Initialization file for the project package
+├── .gitignore                  # Git ignore file for the project
+├── index.html                  # HTML file for the project
 ├── main.py                     # Main entry point for the Streamlit application
-│
-├── requirements.txt             # List of dependencies for the application
-│
-├── setup.bat                    # Batch file for setting up the environment
-│
-└── .streamlit/
-    └── secrets.toml            # Secrets for database connection
-    └── config.toml             # Streamlit Configuration Settings [theme][server]
+├── README.md                   # Project README with setup instructions
+├── requirements.txt            # List of dependencies for the application
+├── run_streamlit_apps.bat      # Batch file to run Streamlit apps
+├── setup.bat                   # Batch file for setting up the environment
+├── streamlit.log               # Log file for Streamlit
+├── test_page.py                # Test page for development and debugging
+└── test.ipynb                  # Jupyter notebook for testing and experimentation
 '''
 dependency_support = '''\
-- **Streamlit**: [Streamlit Documentation](https://docs.streamlit.io/)
-- **Pandas**: [Pandas Documentation](https://pandas.pydata.org/)
-- **NumPy**: [NumPy Documentation](https://numpy.org/)
-- **SQLAlchemy**: [SQLAlchemy Documentation](https://docs.sqlalchemy.org/)
-- **PyODBC**: [PyODBC Documentation](https://github.com/mkleehammer/pyodbc/wiki)
-- **Matplotlib**: [Matplotlib Documentation](https://matplotlib.org/)
-- **Plotly**: [Plotly Documentation](https://plotly.com/)
-- **Requests**: [Requests Documentation](https://docs.python-requests.org/)
-- **Altair**: [Altair Documentation](https://altair-viz.github.io/)
-- **Openpyxl**: [Openpyxl Documentation](https://openpyxl.readthedocs.io/en/stable/)
+- **Streamlit** (>=1.38.0): [Streamlit Documentation](https://docs.streamlit.io/)
+- **Pandas** (>=2.1.0): [Pandas Documentation](https://pandas.pydata.org/)
+- **NumPy** (>=1.25.0): [NumPy Documentation](https://numpy.org/)
+- **SQLAlchemy** (>=2.0.0): [SQLAlchemy Documentation](https://docs.sqlalchemy.org/)
+- **PyODBC** (>=4.0.0): [PyODBC Documentation](https://github.com/mkleehammer/pyodbc/wiki)
+- **Matplotlib** (>=3.9.2): [Matplotlib Documentation](https://matplotlib.org/)
+- **Plotly** (>=5.24.1): [Plotly Documentation](https://plotly.com/)
+- **Requests** (==2.32.3): [Requests Documentation](https://docs.python-requests.org/)
+- **Altair** (>=5.0.0): [Altair Documentation](https://altair-viz.github.io/)
+- **Openpyxl** (>=3.1.0): [Openpyxl Documentation](https://openpyxl.readthedocs.io/en/stable/)
+- **Requests NTLM** (>=1.3.0): [Requests NTLM Documentation](https://pypi.org/project/requests-ntlm/)
+- **Streamlit Option Menu** (>=0.3.13): [Streamlit Option Menu Documentation](https://pypi.org/project/streamlit-option-menu/)
+- **PyArrow** (==17.0.0): [PyArrow Documentation](https://arrow.apache.org/docs/python/)
+- **Gradio** (==5.0.0): [Gradio Documentation](https://gradio.app/)
 '''
 # Configuração do menu lateral usando `streamlit_option_menu` no sidebar
 with st.sidebar:
     selected = option_menu(
         menu_title="Documentation",  # Título do menu
         options=["Overview", 
-                 "Infrastructure", 
-                 "releases.md",
+                 "Infrastructure",                 
                  "README.md", 
                  "Project Structure", 
                  "Dependency Support", 
@@ -111,12 +158,11 @@ with st.sidebar:
                  "Main", 
                  "Data base connection",
                  "Left Menu", 
-                 "Styles",                
+                 "Styles CSS",                
                  "Embed SSRS"],  # Incluindo Setup.bat
                  
         icons=["book", 
-               "book",
-               "book",
+               "book",            
                "file-text", 
                "folder", 
                "link", 
@@ -126,7 +172,7 @@ with st.sidebar:
                "filetype-py",
                "filetype-py", 
                "filetype-py", 
-               "filetype-py",              
+               "filetype-css",              
                "filetype-sql"],  # Ícones
         menu_icon="list",  # Ícone do menu
         default_index=0,  # Índice padrão selecionado
@@ -138,11 +184,8 @@ if selected == "Overview":
     st.markdown(Overview)
 
 elif selected == "README.md":
-    st.title("README.md")
+    st.subheader("README.md")
     st.markdown(readme_text)
-
-elif selected == "releases.md":   
-    st.markdown(releases_text)
 
 elif selected == "Project Structure":
     st.title("Project Structure")
@@ -160,7 +203,6 @@ elif selected == "Left Menu":
     st.title("left_menu/left_menu.py")
     st.code(left_menu_code, language='python')
 
-
 elif selected == "Secrets.toml":
     st.title(".streamlit/secrets.toml")
     st.write("Dont forget to add the secrets file in the right directory")
@@ -173,7 +215,20 @@ elif selected == "Secrets.toml":
         └── .streamlit/
             └── secrets.toml            # Secrets for database connection
             └── config.toml             # Streamlit Configuration Settings [theme][server] 
-    """,language='toml')
+    """, language='toml')
+
+    st.code("""
+    [sidebar]
+    selected_item_color = "#056003"      # Color of the selected item in the sidebar menu 
+    icon_color = "#022601"               # Color of the icons in the sidebar menu
+
+    [secrets_config]
+    secrets_name = "secrets_das"
+
+    [site_info]
+    site_name = 'DAS'
+    """, language='toml')
+
     st.subheader("Current secrets.toml:")
     st.code(secrets_toml, language='toml')
 
@@ -197,10 +252,11 @@ elif selected == "Requirements.txt":
     st.title("requirements.txt")    
     st.subheader("Current requirements:")
     st.code(requirements_txt, language='python')
-
-elif selected == "Styles.py":
-    st.title("styles.py")
-    st.code(styles_py, language='python')
+    
+elif selected == "Data base connection":
+    st.title("functions/database_connection.py")    
+    st.subheader("Data base connection:")
+    st.code(database_connection, language='python')
 
 elif selected == "Setup.bat":
     st.title("setup.bat")
@@ -211,6 +267,10 @@ elif selected == "Embed SSRS":
     st.title("Embed SSRS")
     st.subheader("Current Embed SSRS:")
     st.code(embeddedSSRS, language='python')
+
+elif selected == "Styles CSS":    
+    st.subheader("Styles CSS:")
+    st.code(style_css, language='css')
 
 elif selected == "Infrastructure":       
     road_map()
