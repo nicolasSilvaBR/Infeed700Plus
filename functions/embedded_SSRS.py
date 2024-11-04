@@ -1,7 +1,6 @@
 import streamlit as st
 import requests
 from requests_ntlm import HttpNtlmAuth
-import pandas as pd
 from functions.utilities import get_datetime_input
 import toml
 import os
@@ -33,18 +32,17 @@ def embed_ssrs_report(reportRDLname, minDate, maxDate):
     absolute_path = os.path.abspath(secrets_name)
     if not os.path.isfile(absolute_path):
         st.error(f"The configuration file '{absolute_path}' was not found. Please check the path and file name.")
-        return
+        return  # Stop execution if the file does not exist
 
     # Load configuration from the TOML file
     try:
-        # Load the SSRS configuration section
         ssrs_config = toml.load(absolute_path)["ssrs_config"]
     except KeyError:
         st.error("The 'ssrs_config' section was not found in the configuration file.")
-        return
+        return  # Stop execution if the section is missing
     except Exception as e:
         st.error(f"Error loading the configuration file: {e}")
-        return
+        return  # Stop execution on loading error
 
     # Select the database based on the project
     project = st.session_state.get('selected-project')
@@ -54,13 +52,13 @@ def embed_ssrs_report(reportRDLname, minDate, maxDate):
         database_session = ssrs_config.get('database-enecoms')
     else:
         st.error("Invalid project name. Use 'Infeed700' or 'Enecoms'. Ensure database names are specified in secrets.")
-        return
-    
+        return  # Stop execution on invalid project
+
     # Check required configuration keys
     required_keys = ["ipAddress", "port", "ReportServerName", "username", "password"]
     if not all(key in ssrs_config for key in required_keys):
         st.error("Missing SSRS configuration keys. Please check your secrets.toml.")
-        return    
+        return  # Stop execution if keys are missing
 
     # Retrieve SSRS credentials and settings
     ipAddress = ssrs_config["ipAddress"]
@@ -97,7 +95,7 @@ def embed_ssrs_report(reportRDLname, minDate, maxDate):
             )
         else:
             st.write("Please select a report for Enecoms.")
-            return
+            return  # Stop execution if no report is selected
 
     # Function to render the iframe
     def render_iframe(url):
