@@ -1,7 +1,6 @@
 import functions.config as config
 import streamlit as st
 from left_menu.left_menu import LeftMenu
-#from embedded_SSRS import embed_ssrs_report
 from functions.embedded_SSRS import embed_ssrs_report
 import pandas as pd
 from reports.intake.intake import intake_page
@@ -34,20 +33,24 @@ def main():
     # Default dates
     minDate = st.session_state.get('minDate', pd.to_datetime("2024-10-01")).strftime('%Y-%m-%d')
     maxDate = st.session_state.get('maxDate', pd.to_datetime("2024-10-30")).strftime('%Y-%m-%d')
+    
+    # st.write(st.session_state['selected-project'])
+    # st.write(st.session_state['selected_header'])
+    # st.write(st.session_state['selected_report'])
 
     # Function to display the SSRS report
     def display_ssrs_report():
         """Display the SSRS report."""
         try:
-            with st.spinner('Running Report...'):
+            #with st.spinner('Running Report...'):
                 reportRDLname = st.session_state['selected_report']
-                embed_ssrs_report(reportRDLname, minDate, maxDate)
+                embed_ssrs_report(reportRDLname, minDate, maxDate)                
         except Exception as e:
             if st.session_state['selected_report']:
                 logging.error(f"Error loading report: {e}")
                 st.error("An error occurred while loading the report. Verify that the SSRS server is online.") 
             elif not st.session_state['selected_report']:
-                st.write('Choose a Category and Report')
+                st.write('Choose a Category and Report on left menu')
 
     # Function to display the dashboard
     def display_dashboard():
@@ -94,6 +97,7 @@ def main():
         
         # Show the SSRS report if a report header was selected
         elif st.session_state['show_report']:
+            #st.write('Show the SSRS report if a report header was selected')
             display_ssrs_report()
 
     # Close main div

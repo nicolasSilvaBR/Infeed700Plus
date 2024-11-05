@@ -43,14 +43,18 @@ def embed_ssrs_report(reportRDLname, minDate, maxDate):
     except Exception as e:
         st.error(f"Error loading the configuration file: {e}")
         return  # Stop execution on loading error
-
+    
+    if 'selected-project' not in st.session_state:
+        st.session_state['selected-project'] = 'Infeed700'
+    
     # Select the database based on the project
-    project = st.session_state.get('selected-project')
+    project = st.session_state['selected-project']
     if project == 'Infeed700':
-        database_session = ssrs_config.get('database')
+        database_session = ssrs_config['database']
     elif project == 'Enecoms':
         database_session = ssrs_config.get('database-enecoms')
     else:
+        st.write(st.session_state['selected-project'])
         st.error("Invalid project name. Use 'Infeed700' or 'Enecoms'. Ensure database names are specified in secrets.")
         return  # Stop execution on invalid project
 

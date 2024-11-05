@@ -1,9 +1,4 @@
 import streamlit as st
-
-# Set the page configuration at the start
-from functions.config import set_page_config  # Import only once here
-set_page_config()
-
 # Import each test file
 from test_set_page_config import run_test as set_page_run_test
 from test_secrets_config import run_test as secrets_run_test
