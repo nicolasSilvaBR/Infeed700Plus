@@ -27,9 +27,7 @@ def display_footer():
     st.markdown(
         """
         <div class="footer">
-            <p>
-                <a href="http://10.202.2.22:8503/" target="_blank">Data Lab</a> | 
-                <a href="Http://10.202.2.22:8504/" target="_blank">Support</a> | 
+            <p>               
                 <a href="https://icmcsl.com/contact/" target="_blank">Contact Us</a>                
             </p>
         </div>

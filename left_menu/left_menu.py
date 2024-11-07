@@ -27,7 +27,7 @@ def LeftMenu(engine):
             st.session_state['selected_report'] = False
         
         left, middle = st.columns(2)
-        if left.button("Infeed700", icon="🐑",use_container_width=True,type='secondary',on_click=clean_report_session):
+        if left.button("Infeed700", icon="📊",use_container_width=True,type='secondary',on_click=clean_report_session):
             st.session_state["selected-project"] = "Infeed700"
             
         if middle.button("Enecoms", icon="⚡", use_container_width=True,on_click=clean_report_session):
@@ -50,7 +50,7 @@ def LeftMenu(engine):
         # Filter reports based on the selected header
         filtered_reports = reports_names[reports_names['HeaderName'] == selected_header]      
         
-        menu_icon = "buildings" if st.session_state["selected-project"] == "Infeed700" else "speedometer2"
+        menu_icon = "bar-chart" if st.session_state["selected-project"] == "Infeed700" else "bi-lightning"
         
         # If there are filtered reports, display them in the option menu
         if not filtered_reports.empty:
@@ -64,16 +64,20 @@ def LeftMenu(engine):
                 styles=  {    
                         "icon":{                
                         "font-size": "8px",  # Font size for icons
-                        "justify-content": "center"
+                        "justify-content": "center",
+                        "Hight":"10px",
+                        "line-height":"9px",                                        
                         },
                         "nav-link": {
                         "font-size": "14px",  # Tamanho da fonte das opções
                         "text-align": "left",
-                        "margin": "0px",
-                        "--hover-color": "#eee",                                               
+                        "margin": "2px",
+                        "--hover-color": "#eee", 
+                        "line-height":"9px" ,                                                                   
                         },
                         "nav-link-selected": {"background-color": "#475b7c"},
                         "nav-link:hover": {"color": "#FF5733",  # Cor do texto ao passar o mouse
+                        "line-height":"9px"                   
                         }   
                     },  
             )        

@@ -1,7 +1,8 @@
 import streamlit as st
 import requests
 from requests_ntlm import HttpNtlmAuth
-from functions.utilities import get_datetime_input
+from functions.get_datetime_input import get_datetime_input
+
 import toml
 import os
 

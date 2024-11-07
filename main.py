@@ -68,7 +68,7 @@ def main():
     # Display the home (index.html) only if `show_content` is False
     if not st.session_state['show_content']:
         # Load image in Base64
-        image_path = Path("assets/images/home_header.png")
+        image_path = Path("assets/images/home_silo.png")
         image_url = ""
         if image_path.exists():
             image_base64 = get_base64_image(image_path)
@@ -80,23 +80,13 @@ def main():
         with open("index.html", "r") as file:
             index_html = file.read()
         
-        index_html = index_html.replace("assets/images/home_header.png", image_url)
-        components.html(index_html, height=1000, scrolling=True)
-        
-        # Center the "See Demo" button
-        col_left, col_center, col_right = st.columns([5, 1, 5])
-        with col_center:
-            if st.button("See Demo"):
-                st.session_state['show_content'] = True  # Set to show the dashboard
+        index_html = index_html.replace("assets/images/home_silo.png", image_url)
+        components.html(index_html, height=1000, scrolling=True) 
     
-    # If "See Demo" was clicked or a report header was selected, display specific content
-    else:
-        # Show the dashboard if "See Demo" was clicked and no header was selected
-        if st.session_state['show_content'] and not st.session_state['show_report']:
-            display_dashboard()
-        
+    # If  report header was selected, display specific content
+    else:  
         # Show the SSRS report if a report header was selected
-        elif st.session_state['show_report']:
+        if st.session_state['show_report']:
             #st.write('Show the SSRS report if a report header was selected')
             display_ssrs_report()
 

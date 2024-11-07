@@ -104,9 +104,6 @@ def get_report_headers_and_reports_names(project,engine):
 
     return headers_name,reports_names
 
-
-
-def get_datetime_input():
     
     try:
         def add_timedelta():
