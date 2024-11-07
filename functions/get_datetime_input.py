@@ -51,11 +51,7 @@ def get_datetime_input():
                 ["Custom","Today","Yesterday","Last 7 days", "Last 30 days", "Year to Date","Year"], 
                 horizontal=False, 
                 key="radio_range", 
-                on_change=subtract_timedelta,
-                help=""" 
-                    When selecting the range, choose either the Start or End date, and the other date will be automatically calculated based on the selected range.
-                    For example, if you select "30 Days," and choose a Start Date, the End Date will be set to 30 days later.     
-                """
+                on_change=subtract_timedelta,                
             )
         if "Quarter" not in st.session_state['radio_range']:
             st.session_state['radio_range'] == None  

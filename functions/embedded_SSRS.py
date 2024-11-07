@@ -14,9 +14,9 @@ def embed_ssrs_report(reportRDLname, minDate, maxDate):
         reportRDLname (str): Name of the report to display.
         minDate (str): Start date.
         maxDate (str): End date.
-    """
+    """      
     # Section for selecting dates with a calendar icon
-    with st.expander(label="📆 Date Input", expanded=False):  
+    with st.expander(label=f"📶 {st.session_state['select_report_options']} Parameters ", expanded=False):  
         minDate, maxDate, StartHour, EndHour, StartMinute, EndMinute = get_datetime_input()
 
     # Retrieve the configuration file name from Streamlit secrets
@@ -109,7 +109,7 @@ def embed_ssrs_report(reportRDLname, minDate, maxDate):
         <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" 
                 src="{report_url}" frameborder="0" allowfullscreen></iframe>
         """
-        st.components.v1.html(iframe_code, height=780, scrolling=False)
+        st.components.v1.html(iframe_code, height=820, scrolling=False)
 
     # Attempt to access the SSRS report
     try:
