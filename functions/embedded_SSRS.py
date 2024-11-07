@@ -99,7 +99,7 @@ def embed_ssrs_report(reportRDLname, minDate, maxDate):
                 f"http://{ipAddress}:{port}/{ReportServerName}/Pages/ReportViewer.aspx?%2f{database}%2f{reportRDLname}&rs:Command=Render"
             )
         else:
-            st.write("Please select a report for Enecoms.")
+            st.write("💬 Please select a Category and Report from the left menu.")
             return  # Stop execution if no report is selected
 
     # Function to render the iframe
@@ -120,7 +120,7 @@ def embed_ssrs_report(reportRDLname, minDate, maxDate):
             if st.session_state['selected_header']:
                 st.error(f"Error accessing the report: {response.status_code}. Check the report name or parameters.")
             else:
-                st.write("Please select a report")                    
+                st.write("💬 Please select a Category and Report from the left menu.")                    
     except requests.exceptions.ConnectTimeout:
         st.error("Connection error: Timeout while trying to access the server.")
     except requests.exceptions.RequestException as e:

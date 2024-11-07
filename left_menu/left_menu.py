@@ -92,7 +92,10 @@ def LeftMenu(engine):
                 st.session_state['selected_report']  
                 
         else:
-            st.write("No reports available for the selected category.")
+            if 'selected_header'not in st.session_state:
+                st.write("💬No reports available for the selected category.")
+            else:
+                st.write("💬Let's start by selecting the report category.")
         
         
         st.divider()  # Divider before footer
