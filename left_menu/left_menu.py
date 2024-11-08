@@ -6,7 +6,7 @@ from functions.report_header_name import get_report_headers_and_reports_names
 from functions.sites import IsMultiSiteEnabled
 
 # Path to the logo image file
-sidebar_logo_image_name = "ICM_300X80_OPT14.png"  
+sidebar_logo_image_name = "ICM_300X80_OPT15.png"  
 
 # Function to generate the sidebar menu
 def LeftMenu(engine):

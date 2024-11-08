@@ -31,17 +31,20 @@ body {
 
 /* Block container adjustments for margins and padding */
 .block-container {
-    padding: 12px !important;    
+    padding-left: 12px !important;  
+    padding-right: 12px !important;  
     margin-right: 50px !important;
     margin-left: 50px !important;
+    margin-top: 0px;
+    padding-top: 0px;
 }
 
-/* Main block container margin adjustment */
+/* Main content container adjustments */
 .stMainBlockContainer, #stMainBlockContainer {
     margin: 10px;
 }
 
-/* Main content area adjustments */
+/* Adjustments for main content area */
 .main-content {
     max-width: 100%;
     padding: 0px;
@@ -128,6 +131,7 @@ body {
     background-color: #fff;
     color: #2c3e50;
 }
+
 /* Apply styling to the iframe to give it a shadow and rounded corners */
 iframe {
     width: 100%; /* Ensure the iframe takes up the full width */
@@ -139,11 +143,30 @@ iframe {
     margin-bottom: 5px;
     transition: box-shadow 0.3s ease;
 }
-/* Side Bar menu Background*/
+
+/* Sidebar background and styling */
 .stSidebar.st-emotion-cache-11z0mw6.eczjsme18 {
-    background: linear-gradient(to right, rgb(217, 217, 217,0.8), rgba(217, 217, 217,0.2));                
-    background-size: cover; /* Ensure the image covers the sidebar */
+    background: linear-gradient(to right, rgb(217, 217, 217, 0.8), rgba(217, 217, 217, 0.2));                
+    background-size: cover; /* Ensure the background covers the sidebar */
     background-position: center; /* Center the background image */
-    background-repeat: no-repeat; /* Prevent the image from repeating */
+    background-repeat: no-repeat; /* Prevent background repetition */
+    border-top-right-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15), /* Larger, softer shadow */
+                0 2px 8px rgba(0, 0, 0, 0.08); /* Closer, sharper shadow */
+    margin-top: 5px;
 }
 
+/* Main container margin adjustments */
+.stMainBlockContainer, #stMainBlockContainer {
+    margin-top: 0px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.st-emotion-cache-15dtbf3 {
+    width: 0px;
+    position: relative;
+    display: flex;
+    flex: 1 1 0%;
+    flex-direction: column;    
+}

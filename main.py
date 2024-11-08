@@ -81,7 +81,7 @@ def main():
             index_html = file.read()
         
         index_html = index_html.replace("assets/images/home_silo.png", image_url)
-        components.html(index_html, height=870, scrolling=True) 
+        components.html(index_html, height=900, scrolling=True) 
     
     # If  report header was selected, display specific content
     else:  

@@ -109,7 +109,7 @@ def embed_ssrs_report(reportRDLname, minDate, maxDate):
         <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" 
                 src="{report_url}" frameborder="0" allowfullscreen></iframe>
         """
-        st.components.v1.html(iframe_code, height=820, scrolling=False)
+        st.components.v1.html(iframe_code, height=840, scrolling=False)
 
     # Attempt to access the SSRS report
     try:
@@ -118,7 +118,7 @@ def embed_ssrs_report(reportRDLname, minDate, maxDate):
             render_iframe(ssrs_url)
         else:
             if st.session_state['selected_header']:
-                st.error(f"Error accessing the report: {response.status_code}. Check the report name or parameters.")
+                st.error(f"Error accessing the report: {response.status_code}. Check the report name or parameters for {reportRDLname}.rdl")
             else:
                 st.write("💬 Please select a Category and Report from the left menu.")                    
     except requests.exceptions.ConnectTimeout:
