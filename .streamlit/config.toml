@@ -16,11 +16,3 @@ backgroundColor = "#f6f7f8"            # Background color for the widgets
 secondaryBackgroundColor = "#3F7373"    # Secondary background color for the widgets
 textColor = "#1b4d57"                  # Color of the text in the widgets
 font = "sans serif"                    # Font used in the widgets
-
-
-
-
-
-
-
-

@@ -56,7 +56,7 @@
             padding: 5vw 2vw;
             border-radius: 10px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-            height: 300px;
+            height: 250px;
             display: flex;
             align-items: center; /* Centraliza o conteúdo verticalmente */
             justify-content: center; /* Centraliza o conteúdo horizontalmente */
@@ -116,10 +116,11 @@
           color: var(--dark-blue);
         }  
         #home-releases {
-            margin-top: 40px;
-            padding: 20px;
+            margin-top: 20px;
+            padding: 0px;
             background-color: white;
             border-radius: 8px;
+            padding-bottom: 30px;
         }
         #home-releases h2 {
             text-align: center;
@@ -153,7 +154,49 @@
         }
         .release-card li {
             margin-bottom: 5px;
+        }    
+
+        /* Seção de Contato */
+        #home-contact {
+            background-color: whitesmoke;
+            padding: 20px;
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            color: var(--dark-green);
         }
+
+        #home-contact-content h1 {
+            color: var(--primary-green);
+            font-size: 24px;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        #home-contact-content p {
+            color: var(--dark-green);
+            font-size: 14px;
+            line-height: 1.4;
+            margin: 0;
+        }
+
+        #home-contact-content span {
+            display: block;
+            color: var(--medium-dark-green);
+            font-weight: 500;
+        }
+
+        #home-contact-content p span a {
+            color: var(--primary-green);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        #home-contact-content p span a:hover {
+            color: var(--medium-light-green);
+        }
+    
 
     </style>
 </head>
@@ -164,13 +207,21 @@
           <h1>Welcome to Infeed Reports</h1>
           <p><span>Feed your data, fuel your growth!</span></p>            
       </div>      
-  </header> 
-  
+  </header>   
 
   <section id="home-releases">
     <h2>Latest Releases</h2>
-    <div id="release-grid">
-        
+    <div id="release-grid">        
+        <div class="release-card">
+            <h3>Release 1.1</h3>
+            <ul>
+                <li>New left menu for easier navigation</li>
+                <li>Added input for date and time selection</li>
+                <li>New button for seamless navigation between Infeed700 and Enecoms</li>
+                <li>Various performance improvements and bug fixes</li>
+            </ul>
+        </div>   
+        <!-- Add more release cards as needed -->   
         <div class="release-card">
             <h3>Release 1.0</h3>
             <ul>
@@ -179,11 +230,23 @@
                 <li>New button for seamless navigation between Infeed700 and Enecoms</li>
                 <li>Various performance improvements and bug fixes</li>
             </ul>
-        </div>   
-        <!-- Add more release cards as needed -->
-        
+        </div>         
     </div>
-</section>
+    </section>
+    <section>
+        <!-- Contact Session -->
+        <header id="home-contact">
+            <div id="home-contact-content">
+                <h1>Contact</h1>
+                <p>
+                    <span>ICM Computer Systems Limited</span>
+                    <span><a href="https://www.icmcsl.com" target="_blank">www.icmcsl.com</a></span>
+                    <span><a href="mailto:info@icmcsl.ie">info@icmcsl.ie</a></span>
+                    <span>+353578622651</span>
+                </p>            
+            </div>      
+        </header> 
+    </section>
 
 </body>
 </html>

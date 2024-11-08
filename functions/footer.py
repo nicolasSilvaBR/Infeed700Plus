@@ -1,5 +1,7 @@
 import streamlit as st
 
+release = st.secrets['release']['current_release']
+
 # Function to display the footer
 def display_footer():
     """Display footer with custom CSS at the bottom of the sidebar."""
@@ -25,10 +27,11 @@ def display_footer():
     )
 
     st.markdown(
-        """
+        f"""
         <div class="footer">
             <p>               
-                <a href="https://icmcsl.com/contact/" target="_blank">Contact Us</a>                
+                <a href="https://icmcsl.com/contact/" target="_blank">Contact Us</a> |
+                {release}                            
             </p>
         </div>
         """,
