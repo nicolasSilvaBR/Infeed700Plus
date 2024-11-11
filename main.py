@@ -15,9 +15,9 @@ import tracemalloc
 config.set_page_config()
 
 # Start tracing memory allocations
-tracemalloc.start()
-# Take a snapshot
-snapshot1 = tracemalloc.take_snapshot()
+# tracemalloc.start()
+# # Take a snapshot
+# snapshot1 = tracemalloc.take_snapshot()
 
 # Load custom CSS
 load_local_css("assets/css/style.css")
@@ -56,7 +56,7 @@ def main():
                 logging.error(f"Error loading report: {e}")
                 st.error("An error occurred while loading the report. Verify that the SSRS server is online.") 
             elif not st.session_state['selected_report']:
-                st.write('Choose a Category and Report on left menu')
+                st.write("💬 Please select a Category and Report from the left menu.")
 
     # Function to display the dashboard
     def display_dashboard():
@@ -100,19 +100,19 @@ def main():
     st.markdown('</div>', unsafe_allow_html=True)
 
     
-    # Take another snapshot
-    snapshot2 = tracemalloc.take_snapshot()    
-     # Compare snapshots
-    top_stats = snapshot2.compare_to(snapshot1, 'lineno')
-    st.write("[ Top memory-consuming lines ]")
-    for stat in top_stats[:10]:
-        print(stat)
-    # Current and peak memory usage
-    current, peak = tracemalloc.get_traced_memory()
-    st.write(f"Current memory usage: {current / 1024 / 1024:.1f} MB")
-    st.write(f"Peak usage: {peak / 1024 / 1024:.1f} MB")
+    # # Take another snapshot
+    # snapshot2 = tracemalloc.take_snapshot()    
+    #  # Compare snapshots
+    # top_stats = snapshot2.compare_to(snapshot1, 'lineno')
+    # st.write("[ Top memory-consuming lines ]")
+    # for stat in top_stats[:10]:
+    #     print(stat)
+    # # Current and peak memory usage
+    # current, peak = tracemalloc.get_traced_memory()
+    # st.write(f"Current memory usage: {current / 1024 / 1024:.1f} MB")
+    # st.write(f"Peak usage: {peak / 1024 / 1024:.1f} MB")
 
-    tracemalloc.stop()
+    # tracemalloc.stop()
     
 # Entry point of the application
 if __name__ == '__main__':

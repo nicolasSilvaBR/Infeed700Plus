@@ -16,7 +16,7 @@ def embed_ssrs_report(reportRDLname, minDate, maxDate):
         maxDate (str): End date.
     """      
     # Section for selecting dates with a calendar icon
-    with st.expander(label=f"📶 {st.session_state['select_report_options']} Parameters ", expanded=False):  
+    with st.expander(label=f"📶 {st.session_state['select_report_options']} Report Parameters ", expanded=False):  
         minDate, maxDate, StartHour, EndHour, StartMinute, EndMinute = get_datetime_input()
 
     # Retrieve the configuration file name from Streamlit secrets
