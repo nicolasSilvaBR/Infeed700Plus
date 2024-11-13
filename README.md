@@ -1,3 +1,7 @@
+# Version 1.0
+# 13/11/2024
+# Python 3.12.5
+
 # Table of Contents
 1. [Overview](#overview)  
 2. [Installation Instructions](#installation-instructions)  

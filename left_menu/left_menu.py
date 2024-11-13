@@ -4,6 +4,7 @@ import os
 from functions.footer import display_footer as footer
 from functions.report_header_name import get_report_headers_and_reports_names
 from functions.sites import IsMultiSiteEnabled
+from functions.is_enecoms_enabled import IsEnecomsEnabled
 
 # Path to the logo image file
 sidebar_logo_image_name = "ICM_300X80_OPT15.png"  
@@ -26,13 +27,16 @@ def LeftMenu(engine):
         def clean_report_session():
             st.session_state['selected_report'] = False
         
-        # Create buttons for "Infeed700" and "Enecoms" projects
-        left, middle = st.columns(2)
-        if left.button("Infeed700", icon="📊", use_container_width=True, type='secondary', on_click=clean_report_session):
-            st.session_state["selected-project"] = "Infeed700"
-            
-        if middle.button("Enecoms", icon="⚡", use_container_width=True, on_click=clean_report_session):
-            st.session_state["selected-project"] = "Enecoms"            
+        # Check if the Site has Enecoms Enabled
+        EnecomsEnabled = IsEnecomsEnabled(engine)        
+        if EnecomsEnabled == '1':
+            # Create buttons for "Infeed700" and "Enecoms" projects
+            left, middle = st.columns(2)
+            if left.button("Infeed700", icon="📊", use_container_width=True, type='secondary', on_click=clean_report_session):
+                st.session_state["selected-project"] = "Infeed700"
+                
+            if middle.button("Enecoms", icon="⚡", use_container_width=True, on_click=clean_report_session):
+                st.session_state["selected-project"] = "Enecoms"            
         
         project = st.session_state["selected-project"]
         
