@@ -12,11 +12,13 @@ def IsEnecomsEnabled(engine):
         FROM {infeed_database_name}.[Report].[Config] 
         WHERE ConfigName = 'IsEnecomsEnabled'      
     """
-    # Read the SQL query into a DataFrame
-    df = pd.read_sql_query(sql_query, engine)
-    # Ensure the DataFrame is not empty
-    if df.empty:
-        st.error("No data found. Please check your database or query.")
-    else:
-        # Return only the value of ConfigSetting without DataFrame structure
-        return df.iloc[0, 0]  # Access the first value directly
+    try:
+        # Read the SQL query into a DataFrame
+        df = pd.read_sql_query(sql_query, engine)
+        
+        # Ensure the DataFrame is not empty
+        if not df.empty:
+            # Return only the value of ConfigSetting without DataFrame structure
+            return df.iloc[0, 0]  # Access the first value directly
+    except Exception:
+        return '0'
