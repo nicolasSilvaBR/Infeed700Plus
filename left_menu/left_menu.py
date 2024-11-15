@@ -1,84 +1,125 @@
+import os
+import base64
+import toml
 import streamlit as st
 from streamlit_option_menu import option_menu
-import os
 from functions.footer import display_footer as footer
 from functions.report_header_name import get_report_headers_and_reports_names
 from functions.sites import IsMultiSiteEnabled
 from functions.is_enecoms_enabled import IsEnecomsEnabled
 
-# Path to the logo image file
-sidebar_logo_image_name = "ICM_300X80_OPT15.png"  
+# Function to load secrets
+def load_secrets():
+    """Loads the primary secrets file to determine which additional secrets file to use."""
+    try:
+        primary_secrets = toml.load(".streamlit/secrets.toml")
+        secrets_name = primary_secrets["secrets_config"]["secrets_name"]
+        secrets_path = f".streamlit/{secrets_name}.toml"
+        return toml.load(secrets_path)
+    except Exception as e:
+        st.warning(f"Could not load secrets file. Error: {e}")
+        return None
+
+# Function to convert image to Base64
+def get_image_as_base64(image_path):
+    """Converts an image to Base64 for use in HTML."""
+    with open(image_path, "rb") as img_file:
+        return base64.b64encode(img_file.read()).decode("utf-8")
 
 # Function to generate the sidebar menu
 def LeftMenu(engine):
-    """Build the sidebar menu for the Streamlit app."""
+    """Builds the sidebar menu for the Streamlit app."""
+    secrets = load_secrets()
     
-    png_file_path = os.path.join("assets/images", sidebar_logo_image_name) 
-    with st.sidebar:               
-        # Display the logo directly using st.image
+    # Default: Disable the link
+    server_url = None
+
+    # Try to get server details from secrets
+    if secrets:
+        try:
+            streamlit_server = secrets.get("streamlit_server", {})
+            ip_address = streamlit_server.get("ip_address")
+            port = streamlit_server.get("port")
+            if ip_address and port:
+                server_url = f"http://{ip_address}:{port}"
+        except KeyError:
+            st.warning("The 'streamlit_server' section is missing or incomplete in the secrets file. Logo link is disabled.")
+
+    # Path to the logo image file
+    sidebar_logo_image_name = "ICM_300X80_OPT15.png"
+    png_file_path = os.path.join("assets/images", sidebar_logo_image_name)
+
+    with st.sidebar:
+        # Display the logo
         if os.path.exists(png_file_path):
-            st.image(png_file_path, use_column_width=True)  # Adjust the width to fit the sidebar  
-        
-        # Set default project if not already set in session state
+            logo_base64 = get_image_as_base64(png_file_path)
+            if server_url:
+                # Clickable logo with link
+                st.markdown(
+                    f"""
+                    <a href="{server_url}" target="_self">
+                        <img src="data:image/png;base64,{logo_base64}" style="width:100%;">
+                    </a>
+                    """,
+                    unsafe_allow_html=True
+                )
+            else:
+                # Non-clickable logo
+                st.markdown(
+                    f"""
+                    <img src="data:image/png;base64,{logo_base64}" style="width:100%;">
+                    """,
+                    unsafe_allow_html=True
+                )
+
+        # Default project setup
         if "selected-project" not in st.session_state:
             st.session_state["selected-project"] = "Infeed700"
-        
-        # Function to clear the selected report session
+
         def clean_report_session():
+            """Clears the selected report session."""
             st.session_state['selected_report'] = False
-        
-        # Check if the Site has Enecoms Enabled
-        EnecomsEnabled = IsEnecomsEnabled(engine)        
+
+        # Check if Enecoms is enabled
+        EnecomsEnabled = IsEnecomsEnabled(engine)
         if EnecomsEnabled == '1':
-            # Create buttons for "Infeed700" and "Enecoms" projects
             left, middle = st.columns(2)
-            if left.button("Infeed700", icon="📊", use_container_width=True, type='secondary', on_click=clean_report_session):
+            if left.button("Infeed700", use_container_width=True, type='secondary', on_click=clean_report_session):
                 st.session_state["selected-project"] = "Infeed700"
-                
-            if middle.button("Enecoms", icon="⚡", use_container_width=True, on_click=clean_report_session):
-                st.session_state["selected-project"] = "Enecoms"            
-        
+            if middle.button("Enecoms", use_container_width=True, on_click=clean_report_session):
+                st.session_state["selected-project"] = "Enecoms"
+
         project = st.session_state["selected-project"]
-        
-        # Check if MultiSiteEnabled is active and show site list if true
-        IsMultiSiteEnabled(engine)        
-        
-        # Get report headers and report names based on the selected project
+        IsMultiSiteEnabled(engine)
+
         headers_name, reports_names = get_report_headers_and_reports_names(project, engine)
-        
-        # Selectbox to choose a category
         selected_header = st.selectbox(
             label='',
             options=headers_name['HeaderName'],
             index=None,
             placeholder='Choose a category',
             key='selected_header'
-        ) 
-        
-        # Filter reports based on the selected header
-        filtered_reports = reports_names[reports_names['HeaderName'] == selected_header]      
-        
-        # Set icon based on the selected project
-        menu_icon = "bar-chart" if st.session_state["selected-project"] == "Infeed700" else "bi-lightning"        
-              
-        # Display option menu
+        )
+        filtered_reports = reports_names[reports_names['HeaderName'] == selected_header]
+        menu_icon = "bar-chart" if st.session_state["selected-project"] == "Infeed700" else "bi-lightning"
+
         if not filtered_reports.empty:
             reports_option = option_menu(
                 menu_title=st.session_state["selected-project"],
                 menu_icon=menu_icon,
                 icons=["circle-fill"] * len(filtered_reports),
-                default_index=0,  # Default to the first option
-                options=filtered_reports['ReportDisplayName'].tolist(),  # Use ReportDisplayName as options
-                key="select_report_options",   
+                default_index=0,
+                options=filtered_reports['ReportDisplayName'].tolist(),
+                key="select_report_options",
                 styles={
-                    "icon": {                
-                        "font-size": "8px",  # Font size for icons
+                    "icon": {
+                        "font-size": "8px",
                         "justify-content": "center",
-                        "height": "10px",                                      
+                        "height": "10px",
                         "line-height": "9px",
                     },
                     "nav-link": {
-                        "font-size": "14px",  # Font size for options
+                        "font-size": "14px",
                         "text-align": "left",
                         "margin": "2px",
                         "--hover-color": "#eee",
@@ -90,28 +131,14 @@ def LeftMenu(engine):
                 }
             )
 
-            # Filter the reports based on the selected option from the option menu
             selected_report_details = filtered_reports[filtered_reports['ReportDisplayName'] == reports_option]
-            
-            # Extract the 'ReportName' value as a simple string
             if not selected_report_details.empty:
-                selected_report_name = selected_report_details['ReportName'].iloc[0]
-                st.session_state['selected_report'] = selected_report_name                
+                st.session_state['selected_report'] = selected_report_details['ReportName'].iloc[0]
             else:
-                st.session_state['selected_report']  
-                
+                st.session_state['selected_report']
+
         else:
-            if 'selected_header' not in st.session_state:
-                st.write("💬 No reports available for the selected category.")
-            else:
-                st.write("💬 Let's start by selecting the report category.")
-        
-        # Divider before footer
+            st.write("💬 No reports available for the selected category.")
+
         st.divider()
-
-        # Call the footer function
         footer()
-
-# Execute LeftMenu only if the file is run directly
-if __name__ == "__main__":
-    LeftMenu()
