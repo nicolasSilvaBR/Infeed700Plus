@@ -170,3 +170,19 @@ iframe {
     flex: 1 1 0%;
     flex-direction: column;    
 }
+
+.st-emotion-cache-162k657{
+    width: 100%;
+    padding: 10px;
+    margin: 0px;
+    font-size: 14px;  
+    border-radius: 8px;    
+    color: #2c3e50;    
+    outline: none;
+    /*box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12), /* Larger, softer shadow */
+    /*            0 2px 8px rgba(0, 0, 0, 0.06); Closer, sharper shadow*/
+    height: 30px;
+}
+.st-emotion-cache-162k657 select:hover {
+    background-color: #efefee;
+}
