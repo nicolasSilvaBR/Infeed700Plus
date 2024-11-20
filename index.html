@@ -133,16 +133,13 @@
             margin-top: 20px;
         }
         .release-card {
-            background-color: whitesmoke;
+            background-color: white;
             border-radius: 8px;
             padding: 15px;  
             width: 100%;          
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+           
             transition: transform 0.2s;
-        }
-        .release-card:hover {
-            transform: scale(1.05);
-        }
+        }       
         .release-card h3 {
             color: var(--primary-green);
             font-size: 1.2em;
@@ -160,8 +157,10 @@
         /* Seção de Contato */
         #home-contact {
             background-color: whitesmoke;
+            margin-top: 0px;
             padding: 20px;
             width: 100%;
+            padding-top: 20px;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             text-align: left;
@@ -197,6 +196,39 @@
         #home-contact-content p span a:hover {
             color: var(--medium-light-green);
         }
+        #having-an-issue {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+          
+            text-align: left;
+            color: var(--dark-blue);
+        }
+
+        #having-an-issue h1 {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: var(--primary-green);
+        }
+
+        #having-an-issue p {
+            font-size: 1em;
+            line-height: 1.5;
+            color: #333;
+        }
+
+        #having-an-issue p a {
+            color: var(--primary-blue);
+            text-decoration: underline;
+            transition: color 0.3s;
+        }
+
+        #having-an-issue p a:hover {
+            color: var(--medium-light-green);
+        }
+
     
 
     </style>
@@ -208,10 +240,16 @@
           <h1>Welcome to Infeed Reports</h1>
           <p><span>Feed your data, fuel your growth!</span></p>            
       </div>      
-  </header>   
-
-  <section id="home-releases">
-    <h2>Latest Releases</h2>
+  </header>  
+  <section id="having-an-issue">
+    <h1>Encountering an Issue?</h1>
+    <p>
+        If you are facing a problem, please take a screenshot, include the date range and the specific report you are trying to access, 
+        and email it to our support team at <a href="mailto:reports@icmcsl.ie">reports@icmcsl.ie</a>.<br>
+        Our team is here to help and will be happy to assist you!
+    </p>
+  </section>
+  <section id="home-releases">    
     <div id="release-grid">        
         <div class="release-card">
             <h3>Release 1.0</h3>
@@ -233,7 +271,7 @@
                 <p>
                     <span>ICM Computer Systems Limited</span>
                     <span><a href="https://www.icmcsl.com" target="_blank">www.icmcsl.com</a></span>
-                    <span><a href="mailto:info@icmcsl.ie">info@icmcsl.ie</a></span>
+                    <span><a href="mailto:reports@icmcsl.ie">reports@icmcsl.ie</a></span>
                     <span>+353578622651</span>
                 </p>            
             </div>      
