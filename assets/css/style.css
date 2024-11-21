@@ -89,7 +89,9 @@ body {
 #MainMenu {
     visibility: hidden;
 }
-
+.stAppDeployButton{
+    visibility: hidden;
+}
 /* Sidebar menu styling */
 .sidebar-menu {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
