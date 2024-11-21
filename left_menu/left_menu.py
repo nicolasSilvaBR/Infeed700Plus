@@ -115,15 +115,15 @@ def LeftMenu(engine):
                 reports_option = option_menu(
                     menu_title=st.session_state["selected-project"],
                     menu_icon=menu_icon,            
-                    #icons=["circle-fill"] * len(filtered_reports),
+                    icons=["dot"] * len(filtered_reports),
                     default_index=0,
                     options=filtered_reports['ReportDisplayName'].tolist(),
                     key="select_report_options",
                     styles={
                         "icon": {
-                            "font-size": "8px",  
+                            "font-size": "12px",  
                             "margin-right": "2px",  
-                            "padding": "0px",
+                            "padding": "2px",
                             "justify-content": "center",
                             "align-items": "center",
                             "display": "flex"
@@ -140,6 +140,7 @@ def LeftMenu(engine):
                             "text-align": "left",
                             "align-items": "center",
                             "display": "flex",
+                            "color":"#4a4a4a",
                             "transition": "background-color 0.3s ease, color 0.3s ease",  
                             ":hover": {
                                 "color": "#000",  

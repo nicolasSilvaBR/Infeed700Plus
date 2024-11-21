@@ -53,8 +53,21 @@ def get_datetime_input():
                 key="radio_range", 
                 on_change=subtract_timedelta,                
             )
+            interval_options = {
+                15: "15 Minutes",
+                60: "1 Hour",
+                1440: "1 Day",
+                10080: "1 Week",
+                40320: "4 Weeks"
+}
+            if st.session_state['selected-project'] == 'Enecoms':
+                selected_value = st.selectbox("Select a time frame:", list(interval_options.values()))  
+                selected_index = [key for key, value in interval_options.items() if value == selected_value][0]                
+                st.session_state['selected_timeframe_index'] = selected_index
+                
         if "Quarter" not in st.session_state['radio_range']:
             st.session_state['radio_range'] == None  
+        
             
         with col_min:            
             minDate = st.date_input("Start date", key="start_date", on_change=subtract_timedelta,format="DD/MM/YYYY")
