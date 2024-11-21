@@ -100,9 +100,16 @@ def embed_ssrs_report(reportRDLname, minDate, maxDate):
             )
         else:
             st.write("💬 Please select a Category and Report from the left menu.")
-            return  # Stop execution if no report is selected
-
-    
+            return  # Stop execution if no report is selected    
+   
+    st.markdown(
+        f"""
+        <p style="font-size:12px; color:gray;">
+            Date From: {minDate.strftime('%d/%m/%Y')} To: {maxDate.strftime('%d/%m/%Y')}
+        </p>
+        """,
+        unsafe_allow_html=True
+    )
     
     # Function to render the iframe
     def render_iframe(url):
@@ -111,10 +118,34 @@ def embed_ssrs_report(reportRDLname, minDate, maxDate):
         <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" 
                 src="{report_url}" frameborder="0" allowfullscreen></iframe>
         """
-        st.components.v1.html(iframe_code, height=840, scrolling=False)
+        st.components.v1.html(iframe_code, height=820, scrolling=False)
         st.markdown(
-            f""" <a href="{ssrs_url}" target="_blank">Open RDL Report</a> 
+            f""" <a href="{ssrs_url}" target="_blank">Open SSRS Report</a> 
             """,unsafe_allow_html=True
+        )        
+        
+        # To Create a botton to report a issue with more information
+        site_info = st.secrets['site_info']
+        site_info = site_info['site_name']
+        
+        st.markdown(
+            f"""
+            <a href="mailto:reports@icmcsl.ie?subject=Report Issue Details - {site_info}&body=To ICM Reports Team%0A%0A
+            Project: {st.session_state['selected-project']}%0A
+            ReportRDL: {st.session_state['selected_report']}%0A
+            Date From: {minDate.strftime('%d/%m/%Y')}%0A
+            Start Hour: {StartHour}%0A
+            Start Minute: {StartMinute}%0A
+            Date To: {maxDate.strftime('%d/%m/%Y')}%0A
+            End Hour: {EndHour}%0A
+            End Minute: {EndMinute}%0A%0A
+            Describe the issue:
+            "
+            style="text-decoration:none; font-size:14px; color:white; background-color:#007bff; padding:8px 8px; border-radius:5px;">
+            Report an Issue via Email
+            </a>
+            """,
+            unsafe_allow_html=True
         )
 
     # Attempt to access the SSRS report
