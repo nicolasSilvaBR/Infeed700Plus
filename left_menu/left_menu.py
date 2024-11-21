@@ -7,6 +7,7 @@ from functions.footer import display_footer as footer
 from functions.report_header_name import get_report_headers_and_reports_names
 from functions.sites import IsMultiSiteEnabled
 from functions.is_enecoms_enabled import IsEnecomsEnabled
+from functions.python_demo_enabled import IsPythonDemoEnabled
 
 # Function to load secrets
 def load_secrets():
@@ -82,84 +83,96 @@ def LeftMenu(engine):
 
         # Check if Enecoms is enabled
         EnecomsEnabled = IsEnecomsEnabled(engine)
+        PythonEnabled = IsPythonDemoEnabled(engine)
+        
         if EnecomsEnabled == '1':
             left, middle = st.columns(2)
-            if left.button("📊 Infeed700", use_container_width=True, type='secondary', on_click=clean_report_session):
+            if left.button("📊 Infeed700", key='Infeed700',use_container_width=True, type='secondary', on_click=clean_report_session):
                 st.session_state["selected-project"] = "Infeed700"
-            if middle.button("⚡ Enecoms", use_container_width=True, on_click=clean_report_session):
+            if middle.button("⚡Enecoms", key='Enecoms',use_container_width=True, on_click=clean_report_session):
                 st.session_state["selected-project"] = "Enecoms"
+        if PythonEnabled == '1':
+            if left.button("Python", key='IsPythonDemoEnabled',use_container_width=True, type='secondary', on_click=clean_report_session):  
+                st.session_state["selected-project"] = "Python"
 
         project = st.session_state["selected-project"]
         IsMultiSiteEnabled(engine)
 
-        headers_name, reports_names = get_report_headers_and_reports_names(project, engine)
-        selected_header = st.selectbox(
-            label='',
-            options=headers_name['HeaderName'],
-            index=None,
-            placeholder='Choose a category',
-            key='selected_header'
-        )
-        filtered_reports = reports_names[reports_names['HeaderName'] == selected_header]
-        menu_icon = "bar-chart" if st.session_state["selected-project"] == "Infeed700" else "bi-lightning"
-
-        if not filtered_reports.empty:
-            reports_option = option_menu(
-                menu_title=st.session_state["selected-project"],
-                menu_icon=menu_icon,            
-                #icons=["circle-fill"] * len(filtered_reports),
-                default_index=0,
-                options=filtered_reports['ReportDisplayName'].tolist(),
-                key="select_report_options",
-                styles={
-                    "icon": {
-                        "font-size": "12px",  # Aumentar ou ajustar o tamanho do ícone
-                        "margin-right": "2px",  # Adicionar espaço entre o ícone e o texto
-                        "padding": "0px",
-                        "justify-content": "center",
-                        "align-items": "center",
-                        "display": "flex"
-                    }
-                    ,
-                   "nav-link": {
-                        "font-size": "14px",
-                        "text-align": "left",
-                        "margin-bottom": "1px",
-                        "padding-bottom": "10px",
-                        "--hover-color": "#eee",
-                        "line-height": "15px",
-                        "justify-content": "left",
-                        "text-align": "left",
-                        "align-items": "center",
-                        "display": "flex",
-                        "transition": "background-color 0.3s ease, color 0.3s ease",  # Adiciona transição suave
-                        ":hover": {
-                            "color": "#000",  # Cor do texto ao passar o mouse
-                            "background-color": "#f0f0f0"  # Fundo ao passar o mouse
-                        }
-                    },
-                    "nav-link-selected": {
-                        "background-color": "#475b7c",
-                        "color": "#fff",  # Cor do texto no item selecionado
-                        "font-weight": "bold",  # Deixar o texto mais destacado
-                        "border-left": "4px solid #007BFF"  # Adicionar uma borda lateral
-                    }
-                    ,
-                    "nav-item": {
-                        "margin": "0px",
-                        "padding": "0px",
-                    }
-                }
+        if st.session_state["selected-project"] != "Python":
+            
+            headers_name, reports_names = get_report_headers_and_reports_names(project, engine)
+            selected_header = st.selectbox(
+                label='',
+                options=headers_name['HeaderName'],
+                index=None,
+                placeholder='Choose a category',
+                key='selected_header'
             )
+            filtered_reports = reports_names[reports_names['HeaderName'] == selected_header]
+            menu_icon = "bar-chart" if st.session_state["selected-project"] == "Infeed700" else "bi-lightning"
 
-            selected_report_details = filtered_reports[filtered_reports['ReportDisplayName'] == reports_option]
-            if not selected_report_details.empty:
-                st.session_state['selected_report'] = selected_report_details['ReportName'].iloc[0]
+            if not filtered_reports.empty:
+                reports_option = option_menu(
+                    menu_title=st.session_state["selected-project"],
+                    menu_icon=menu_icon,            
+                    #icons=["circle-fill"] * len(filtered_reports),
+                    default_index=0,
+                    options=filtered_reports['ReportDisplayName'].tolist(),
+                    key="select_report_options",
+                    styles={
+                        "icon": {
+                            "font-size": "8px",  
+                            "margin-right": "2px",  
+                            "padding": "0px",
+                            "justify-content": "center",
+                            "align-items": "center",
+                            "display": "flex"
+                        }
+                        ,
+                    "nav-link": {
+                            "font-size": "14px",
+                            "text-align": "left",
+                            "margin-bottom": "1px",
+                            "padding-bottom": "10px",
+                            "--hover-color": "#eee",
+                            "line-height": "15px",
+                            "justify-content": "left",
+                            "text-align": "left",
+                            "align-items": "center",
+                            "display": "flex",
+                            "transition": "background-color 0.3s ease, color 0.3s ease",  
+                            ":hover": {
+                                "color": "#000",  
+                                "background-color": "#f0f0f0"  
+                            }
+                        },
+                        "nav-link-selected": {
+                            "background-color": "#475b7c",
+                            "color": "#fff",  
+                            "font-weight": "bold", 
+                            "border-left": "4px solid #007BFF"  
+                        }
+                        ,
+                        "nav-item": {
+                            "margin": "0px",
+                            "padding": "0px",
+                        }
+                    }
+                )
+
+                selected_report_details = filtered_reports[filtered_reports['ReportDisplayName'] == reports_option]
+                if not selected_report_details.empty:
+                    st.session_state['selected_report'] = selected_report_details['ReportName'].iloc[0]
+                else:
+                    st.session_state['selected_report']
+
             else:
-                st.session_state['selected_report']
-
+                st.write("💬 No reports available for the selected category.")
+                
+        # If Python Project is Selected
         else:
-            st.write("💬 No reports available for the selected category.")
-
+            st.write('To Create Python Reports Menu items')
+            
+            
         st.divider()
         footer()

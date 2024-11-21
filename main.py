@@ -9,15 +9,9 @@ from functions.database_connection import mydb
 import streamlit.components.v1 as components
 from pathlib import Path
 from functions.utilities import load_local_css, get_base64_image
-import tracemalloc
 
 # From function folder import config > set_page_config()
 config.set_page_config()
-
-# Start tracing memory allocations
-# tracemalloc.start()
-# # Take a snapshot
-# snapshot1 = tracemalloc.take_snapshot()
 
 # Load custom CSS
 load_local_css("assets/css/style.css")
@@ -69,7 +63,7 @@ def main():
     # Update `show_content` and `show_report` based on the selected report
     if st.session_state['selected_report'] is not None:
         st.session_state['show_report'] = True
-        st.session_state['show_content'] = True
+        st.session_state['show_content'] = True # Show SSRS Report
 
     # Display the home (index.html) only if `show_content` is False
     if not st.session_state['show_content']:
@@ -94,25 +88,13 @@ def main():
         # Show the SSRS report if a report header was selected
         if st.session_state['show_report']:
             #st.write('Show the SSRS report if a report header was selected')
-            display_ssrs_report()
+            if st.session_state['selected-project'] == 'Infeed700' or st.session_state['selected-project'] == 'Enecoms':
+                display_ssrs_report()
+            elif st.session_state['selected-project'] == 'Python':
+                display_dashboard()
 
     # Close main div
-    st.markdown('</div>', unsafe_allow_html=True)
-
-    
-    # # Take another snapshot
-    # snapshot2 = tracemalloc.take_snapshot()    
-    #  # Compare snapshots
-    # top_stats = snapshot2.compare_to(snapshot1, 'lineno')
-    # st.write("[ Top memory-consuming lines ]")
-    # for stat in top_stats[:10]:
-    #     print(stat)
-    # # Current and peak memory usage
-    # current, peak = tracemalloc.get_traced_memory()
-    # st.write(f"Current memory usage: {current / 1024 / 1024:.1f} MB")
-    # st.write(f"Peak usage: {peak / 1024 / 1024:.1f} MB")
-
-    # tracemalloc.stop()
+    st.markdown('</div>', unsafe_allow_html=True)    
     
 # Entry point of the application
 if __name__ == '__main__':
