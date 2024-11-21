@@ -102,6 +102,8 @@ def embed_ssrs_report(reportRDLname, minDate, maxDate):
             st.write("💬 Please select a Category and Report from the left menu.")
             return  # Stop execution if no report is selected
 
+    
+    
     # Function to render the iframe
     def render_iframe(url):
         report_url = f"{url}&rs:Embed=true&rc:Parameters=Collapsed"            
@@ -110,6 +112,10 @@ def embed_ssrs_report(reportRDLname, minDate, maxDate):
                 src="{report_url}" frameborder="0" allowfullscreen></iframe>
         """
         st.components.v1.html(iframe_code, height=840, scrolling=False)
+        st.markdown(
+            f""" <a href="{ssrs_url}" target="_blank">Open RDL Report</a> 
+            """,unsafe_allow_html=True
+        )
 
     # Attempt to access the SSRS report
     try:
