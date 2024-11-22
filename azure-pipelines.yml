@@ -1,0 +1,17 @@
+trigger:
+- main  # Ou a branch que você quer monitorar
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '3.12.5'  # Escolha a versão do Python
+    addToPath: true
+
+- script: |
+    python -m pip install --upgrade pip
+    pip install -r requirements.txt
+    python -m pytest
+  displayName: 'Install dependencies and run tests'
