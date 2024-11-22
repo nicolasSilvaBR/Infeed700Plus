@@ -92,7 +92,7 @@ def LeftMenu(engine):
             if middle.button("⚡Enecoms", key='Enecoms',use_container_width=True, on_click=clean_report_session):
                 st.session_state["selected-project"] = "Enecoms"
         if PythonEnabled == '1':
-            if left.button("Python", key='IsPythonDemoEnabled',use_container_width=True, type='secondary', on_click=clean_report_session):  
+            if left.button("Python", key='IsPythonEnabled',use_container_width=True, type='secondary', on_click=clean_report_session):  
                 st.session_state["selected-project"] = "Python"
 
         project = st.session_state["selected-project"]
