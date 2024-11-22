@@ -10,7 +10,7 @@ def IsPythonDemoEnabled(engine):
     sql_query = f"""  
         SELECT TOP 1 [ConfigSetting] 
         FROM {infeed_database_name}.[Report].[Config] 
-        WHERE ConfigName = 'isPythonDemoEnabled'      
+        WHERE ConfigName = 'isPythonEnabled'      
     """
     try:
         # Read the SQL query into a DataFrame

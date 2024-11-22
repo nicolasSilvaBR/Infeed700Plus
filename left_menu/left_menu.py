@@ -7,7 +7,7 @@ from functions.footer import display_footer as footer
 from functions.report_header_name import get_report_headers_and_reports_names
 from functions.sites import IsMultiSiteEnabled
 from functions.is_enecoms_enabled import IsEnecomsEnabled
-from functions.python_demo_enabled import IsPythonDemoEnabled
+from functions.python_enabled import IsPythonDemoEnabled
 
 # Function to load secrets
 def load_secrets():
