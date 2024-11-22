@@ -159,6 +159,10 @@ def embed_ssrs_report(reportRDLname, minDate, maxDate):
                 
                 # Provide a button to report the issue
                 report_an_issue_button(minDate, StartHour, StartMinute, maxDate, EndHour, EndMinute)
+                st.markdown(
+                    f""" <a href="{ssrs_url}" target="_blank">Open SSRS Report</a> 
+                    """, unsafe_allow_html=True
+                )     
             else:
                 # Prompt user to select a category or report
                 st.write("💬 Please select a Category and Report from the left menu.")                    
