@@ -11,7 +11,7 @@ steps:
 # Step 1: Set up the Python version
 - task: UsePythonVersion@0
   inputs:
-    versionSpec: '3.x'  # Use Python version 3.x (replace with your specific version if needed)
+    versionSpec: '3.12.5'  # Use Python version 3.x (replace with your specific version if needed)
     addToPath: true
   displayName: 'Set up Python'
 
