@@ -1,17 +1,31 @@
+# Starter pipeline for Continuous Integration (CI)
+# This pipeline will trigger on pushes to the 'main' branch and test the project.
+
 trigger:
-- main  # Ou a branch que você quer monitorar
+- main  # Monitors the 'main' branch for changes
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: 'ubuntu-latest'  # Use the latest Ubuntu image for the build agent
 
 steps:
+# Step 1: Set up the Python version
 - task: UsePythonVersion@0
   inputs:
-    versionSpec: '3.12.5'  # Escolha a versão do Python
+    versionSpec: '3.x'  # Use Python version 3.x (replace with your specific version if needed)
     addToPath: true
+  displayName: 'Set up Python'
 
+# Step 2: Install dependencies and run tests
 - script: |
-    python -m pip install --upgrade pip
-    pip install -r requirements.txt
-    python -m pytest
+    python -m pip install --upgrade pip  # Upgrade pip to the latest version
+    pip install -r requirements.txt  # Install dependencies from requirements.txt
+    pytest  # Run tests using pytest
   displayName: 'Install dependencies and run tests'
+
+# Step 3: Publish test results (optional but recommended)
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'JUnit'  # Specify test results format
+    testResultsFiles: '**/test-results.xml'  # Test results file location
+    failTaskOnFailedTests: true  # Mark pipeline as failed if any tests fail
+  displayName: 'Publish test results'
