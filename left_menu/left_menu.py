@@ -87,93 +87,102 @@ def LeftMenu(engine):
         
         if EnecomsEnabled == '1':
             left, middle = st.columns(2)
-            if left.button("📊 Infeed700", key='Infeed700',use_container_width=True, type='secondary', on_click=clean_report_session):
+            if left.button("📊 Infeed700", key='Infeed700', use_container_width=True, type='secondary', on_click=clean_report_session):
                 st.session_state["selected-project"] = "Infeed700"
-            if middle.button("⚡Enecoms", key='Enecoms',use_container_width=True, on_click=clean_report_session):
+            if middle.button("⚡Enecoms", key='Enecoms', use_container_width=True, on_click=clean_report_session):
                 st.session_state["selected-project"] = "Enecoms"
         if PythonEnabled == '1':
-            if left.button("Python", key='IsPythonEnabled',use_container_width=True, type='secondary', on_click=clean_report_session):  
+            if left.button("Python", key='IsPythonEnabled', use_container_width=True, type='secondary', on_click=clean_report_session):  
                 st.session_state["selected-project"] = "Python"
 
         project = st.session_state["selected-project"]
+        
         IsMultiSiteEnabled(engine)
 
         if st.session_state["selected-project"] != "Python":
-            
-            headers_name, reports_names = get_report_headers_and_reports_names(project, engine)
-            selected_header = st.selectbox(
-                label='',
-                options=headers_name['HeaderName'],
-                index=None,
-                placeholder='Choose a category',
-                key='selected_header'
-            )
-            filtered_reports = reports_names[reports_names['HeaderName'] == selected_header]
-            menu_icon = "bar-chart" if st.session_state["selected-project"] == "Infeed700" else "bi-lightning"
+            try:
+                # Fetch headers and reports using the provided function
+                headers_name, reports_names = get_report_headers_and_reports_names(project, engine)
 
-            if not filtered_reports.empty:
-                reports_option = option_menu(
-                    menu_title=st.session_state["selected-project"],
-                    menu_icon=menu_icon,            
-                    icons=["dot"] * len(filtered_reports),
-                    default_index=0,
-                    options=filtered_reports['ReportDisplayName'].tolist(),
-                    key="select_report_options",
-                    styles={
-                        "icon": {
-                            "font-size": "12px",  
-                            "margin-right": "2px",  
-                            "padding": "2px",
-                            "justify-content": "center",
-                            "align-items": "center",
-                            "display": "flex"
-                        }
-                        ,
-                    "nav-link": {
-                            "font-size": "14px",
-                            "text-align": "left",
-                            "margin-bottom": "1px",
-                            "padding-bottom": "10px",
-                            "--hover-color": "#eee",
-                            "line-height": "15px",
-                            "justify-content": "left",
-                            "text-align": "left",
-                            "align-items": "center",
-                            "display": "flex",
-                            "color":"#4a4a4a",
-                            "transition": "background-color 0.3s ease, color 0.3s ease",  
-                            ":hover": {
-                                "color": "#000",  
-                                "background-color": "#f0f0f0"  
+                if headers_name is not None and reports_names is not None:
+                    selected_header = st.selectbox(
+                        label='',
+                        options=headers_name['HeaderName'],
+                        index=None,
+                        placeholder='Choose a category',
+                        key='selected_header'
+                    )
+                    filtered_reports = reports_names[reports_names['HeaderName'] == selected_header]
+                    menu_icon = "bar-chart" if st.session_state["selected-project"] == "Infeed700" else "bi-lightning"
+
+                    if not filtered_reports.empty:
+                        reports_option = option_menu(
+                            menu_title=st.session_state["selected-project"],
+                            menu_icon=menu_icon,            
+                            icons=["dot"] * len(filtered_reports),
+                            default_index=0,
+                            options=filtered_reports['ReportDisplayName'].tolist(),
+                            key="select_report_options",
+                            styles={
+                                "icon": {
+                                    "font-size": "12px",  
+                                    "margin-right": "2px",  
+                                    "padding": "2px",
+                                    "justify-content": "center",
+                                    "align-items": "center",
+                                    "display": "flex"
+                                },
+                                "nav-link": {
+                                    "font-size": "14px",
+                                    "text-align": "left",
+                                    "margin-bottom": "1px",
+                                    "padding-bottom": "10px",
+                                    "--hover-color": "#eee",
+                                    "line-height": "15px",
+                                    "justify-content": "left",
+                                    "text-align": "left",
+                                    "align-items": "center",
+                                    "display": "flex",
+                                    "color": "#4a4a4a",
+                                    "transition": "background-color 0.3s ease, color 0.3s ease",  
+                                    ":hover": {
+                                        "color": "#000",  
+                                        "background-color": "#f0f0f0"  
+                                    }
+                                },
+                                "nav-link-selected": {
+                                    "background-color": "#475b7c",
+                                    "color": "#fff",  
+                                    "font-weight": "bold", 
+                                    "border-left": "4px solid #007BFF"  
+                                },
+                                "nav-item": {
+                                    "margin": "0px",
+                                    "padding": "0px",
+                                }
                             }
-                        },
-                        "nav-link-selected": {
-                            "background-color": "#475b7c",
-                            "color": "#fff",  
-                            "font-weight": "bold", 
-                            "border-left": "4px solid #007BFF"  
-                        }
-                        ,
-                        "nav-item": {
-                            "margin": "0px",
-                            "padding": "0px",
-                        }
-                    }
-                )
+                        )
 
-                selected_report_details = filtered_reports[filtered_reports['ReportDisplayName'] == reports_option]
-                if not selected_report_details.empty:
-                    st.session_state['selected_report'] = selected_report_details['ReportName'].iloc[0]
+                        selected_report_details = filtered_reports[filtered_reports['ReportDisplayName'] == reports_option]
+                        if not selected_report_details.empty:
+                            st.session_state['selected_report'] = selected_report_details['ReportName'].iloc[0]
+                        else:
+                            st.session_state['selected_report']
+
+                    else:
+                        st.write("💬 No reports available for the selected category.")
                 else:
-                    st.session_state['selected_report']
+                    st.error("Failed to load report headers or report names. Please check the database name or query. Check the Secrets files parameters.")
 
-            else:
-                st.write("💬 No reports available for the selected category.")
-                
-        # If Python Project is Selected
+            except Exception as e:
+                # Handle any errors in fetching headers or reports
+                st.error(
+                    f"An error occurred while loading the left menu: {e}. "
+                    "Please make sure the database connection and queries are correct."
+                )
         else:
             st.write('To Create Python Reports Menu items')
             
-            
         st.divider()
         footer()
+

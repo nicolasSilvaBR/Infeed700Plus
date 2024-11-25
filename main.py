@@ -32,11 +32,7 @@ def main():
 
     # Default dates
     minDate = st.session_state.get('minDate', pd.to_datetime("2024-10-01")).strftime('%Y-%m-%d')
-    maxDate = st.session_state.get('maxDate', pd.to_datetime("2024-10-30")).strftime('%Y-%m-%d')
-    
-    # st.write(st.session_state['selected-project'])
-    # st.write(st.session_state['selected_header'])
-    # st.write(st.session_state['selected_report'])  
+    maxDate = st.session_state.get('maxDate', pd.to_datetime("2024-10-30")).strftime('%Y-%m-%d')      
     
     # Function to display the SSRS report
     def display_ssrs_report():
