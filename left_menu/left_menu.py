@@ -7,10 +7,7 @@ from functions.footer import display_footer as footer
 from functions.report_header_name import get_report_headers_and_reports_names
 from functions.sites import IsMultiSiteEnabled
 from functions.is_enecoms_enabled import IsEnecomsEnabled
-<<<<<<< HEAD
 from functions.python_enabled import IsPythonDemoEnabled
-=======
->>>>>>> 934ee94fdcebb5b55a0b06d8ad4518e879a85435
 
 # Function to load secrets
 def load_secrets():
@@ -86,7 +83,6 @@ def LeftMenu(engine):
 
         # Check if Enecoms is enabled
         EnecomsEnabled = IsEnecomsEnabled(engine)
-<<<<<<< HEAD
         PythonEnabled = IsPythonDemoEnabled(engine)
         
         if EnecomsEnabled == '1':
@@ -179,65 +175,5 @@ def LeftMenu(engine):
             st.write('To Create Python Reports Menu items')
             
             
-=======
-        if EnecomsEnabled == '1':
-            left, middle = st.columns(2)
-            if left.button("Infeed700", use_container_width=True, type='secondary', on_click=clean_report_session):
-                st.session_state["selected-project"] = "Infeed700"
-            if middle.button("Enecoms", use_container_width=True, on_click=clean_report_session):
-                st.session_state["selected-project"] = "Enecoms"
-
-        project = st.session_state["selected-project"]
-        IsMultiSiteEnabled(engine)
-
-        headers_name, reports_names = get_report_headers_and_reports_names(project, engine)
-        selected_header = st.selectbox(
-            label='',
-            options=headers_name['HeaderName'],
-            index=None,
-            placeholder='Choose a category',
-            key='selected_header'
-        )
-        filtered_reports = reports_names[reports_names['HeaderName'] == selected_header]
-        menu_icon = "bar-chart" if st.session_state["selected-project"] == "Infeed700" else "bi-lightning"
-
-        if not filtered_reports.empty:
-            reports_option = option_menu(
-                menu_title=st.session_state["selected-project"],
-                menu_icon=menu_icon,
-                icons=["circle-fill"] * len(filtered_reports),
-                default_index=0,
-                options=filtered_reports['ReportDisplayName'].tolist(),
-                key="select_report_options",
-                styles={
-                    "icon": {
-                        "font-size": "8px",
-                        "justify-content": "center",
-                        "height": "10px",
-                        "line-height": "9px",
-                    },
-                    "nav-link": {
-                        "font-size": "14px",
-                        "text-align": "left",
-                        "margin": "2px",
-                        "--hover-color": "#eee",
-                        "line-height": "9px",
-                    },
-                    "nav-link-selected": {
-                        "background-color": "#475b7c"
-                    }
-                }
-            )
-
-            selected_report_details = filtered_reports[filtered_reports['ReportDisplayName'] == reports_option]
-            if not selected_report_details.empty:
-                st.session_state['selected_report'] = selected_report_details['ReportName'].iloc[0]
-            else:
-                st.session_state['selected_report']
-
-        else:
-            st.write("💬 No reports available for the selected category.")
-
->>>>>>> 934ee94fdcebb5b55a0b06d8ad4518e879a85435
         st.divider()
         footer()
