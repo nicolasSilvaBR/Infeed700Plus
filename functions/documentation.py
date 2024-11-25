@@ -1,9 +1,18 @@
+import sys
+import os
 import streamlit as st
 from streamlit_option_menu import option_menu
-from road_map import road_map
+
+# Add the parent directory of the current script to sys.path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+# Import modules from the 'functions' directory
+from functions.database_connection import mydb
+from functions.road_map import road_map
+from functions.version_log_database import get_database_version_log_tfs_update
 
 st.set_page_config(layout="wide")
-
+engine = mydb()
 def run_documentation():
     # Read the content of the README.md file
     with open('README.md', 'r', encoding='utf-8') as file:
@@ -156,8 +165,9 @@ def run_documentation():
                     "Requirements.txt", 
                     "Setup.bat",
                     "Secrets.toml",
-                    "Config.toml",                   
-                     "Error Troubleshooting Guide"],
+                    "Config.toml",
+                    "Last TFS Update",                   
+                    "Error Troubleshooting Guide"],
                     
             icons=["book", 
                 "book",            
@@ -279,6 +289,9 @@ def run_documentation():
     elif selected == "Infrastructure":       
         road_map()
         
+    elif selected == "Last TFS Update":   
+        get_database_version_log_tfs_update(engine)
+        
 # LOGIN FORM     
 if "authenticated" not in st.session_state:
     st.session_state.authenticated = False
@@ -304,6 +317,5 @@ if not st.session_state.authenticated:
         login(username, password)
 
 # Exibir o conteúdo da aplicação após o login
-else:
-    st.write("Welcome to the application!")
+else:    
     run_documentation()

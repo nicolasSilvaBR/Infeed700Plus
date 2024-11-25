@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from functions.secrets_config import get_secrets_config
+from secrets_config import get_secrets_config
 
 db_config = get_secrets_config()
 infeed_database_name = db_config["database"]
@@ -8,15 +8,21 @@ infeed_database_name = db_config["database"]
 # Function to fetch and process the SQL query
 def get_database_version_log_tfs_update(engine):
     sql_query = f"""  
-        SELECT top 1 AppliedDT as AppliedDate
+        SELECT top 1 VersionId,VersionInfo,VersionDesc,AppliedBy,AppliedDT 
         FROM {infeed_database_name}.[dbo].[VersionLog] order by VersionId desc  
     """
     # Read the SQL query into a DataFrame
     df = pd.read_sql_query(sql_query, engine)
     # Ensure the DataFrame is not empty
-    if df.empty:
-        st.error("No data found. Please check your database or query.")
-    else:
-        database_version_log = df[['HeaderId']].drop_duplicates()        
-
-    return database_version_log
+    try:
+        # Read the SQL query into a DataFrame
+        df = pd.read_sql_query(sql_query, engine)
+        
+        # Ensure the DataFrame is not empty
+        if not df.empty:
+            # Return only the value of ConfigSetting without DataFrame structure
+            st.subheader("Last TFS Update")
+            st.write(df)  # Access the first value directly
+            
+    except Exception:
+        return '0'

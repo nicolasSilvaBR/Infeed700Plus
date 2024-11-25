@@ -20,6 +20,20 @@ Documentation Application   = http://10.202.2.48:8510/
 ## BHB - DEV
 Wrapper Application         = http://10.202.2.48:8511/
 Documentation Application   = http://10.202.2.48:8512/
+## MAP - DEV
+Wrapper Application         = http://10.202.2.48:8513/
+Documentation Application   = http://10.202.2.48:8514/
+## JMW - DEV
+Wrapper Application         = http://10.202.2.48:8515/
+Documentation Application   = http://10.202.2.48:8516/
+## CFW - DEV
+Wrapper Application         = http://10.202.2.48:8517/
+Documentation Application   = http://10.202.2.48:8518/
+## PVE - DEV
+Wrapper Application         = http://10.202.2.48:8519/
+Documentation Application   = http://10.202.2.48:8520/
+
+
 
 # LIVE SITES
 
