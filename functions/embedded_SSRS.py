@@ -161,6 +161,11 @@ def embed_ssrs_report(reportRDLname, minDate, maxDate):
                 
                 # Provide a button to report the issue
                 report_an_issue_button(minDate, StartHour, StartMinute, maxDate, EndHour, EndMinute)
+                url_for_debug = (f"http://{ipAddress}:{port}/{ReportServerName}/Pages/ReportViewer.aspx?%2f{database}%2f{reportRDLname}&rs:Command=Render"
+                )
+                st.markdown(f""" <a href="{url_for_debug}" target="_blank">Open SSRS Report</a> 
+                    """, unsafe_allow_html=True
+                )  
             else:
                 # Prompt user to select a category or report
                 st.write("💬 Please select a Category and Report from the left menu.")                    
