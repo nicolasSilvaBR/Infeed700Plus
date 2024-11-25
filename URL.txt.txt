@@ -1,0 +1,9 @@
+List all address
+
+DGL - DEV
+Wrapper Application
+http://10.202.2.48:8505/
+
+Documentation Application
+http://10.202.2.48:8506/
+

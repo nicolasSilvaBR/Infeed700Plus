@@ -36,8 +36,8 @@ def main():
     
     # st.write(st.session_state['selected-project'])
     # st.write(st.session_state['selected_header'])
-    # st.write(st.session_state['selected_report'])
-
+    # st.write(st.session_state['selected_report'])  
+    
     # Function to display the SSRS report
     def display_ssrs_report():
         """Display the SSRS report."""
@@ -50,7 +50,7 @@ def main():
                 logging.error(f"Error loading report: {e}")
                 st.error("An error occurred while loading the report. Verify that the SSRS server is online.") 
             elif not st.session_state['selected_report']:
-                st.write('Choose a Category and Report on left menu')
+                st.write("💬 Please select a Category and Report from the left menu.")
 
     # Function to display the dashboard
     def display_dashboard():
@@ -63,7 +63,7 @@ def main():
     # Update `show_content` and `show_report` based on the selected report
     if st.session_state['selected_report'] is not None:
         st.session_state['show_report'] = True
-        st.session_state['show_content'] = True
+        st.session_state['show_content'] = True # Show SSRS Report
 
     # Display the home (index.html) only if `show_content` is False
     if not st.session_state['show_content']:
@@ -88,11 +88,15 @@ def main():
         # Show the SSRS report if a report header was selected
         if st.session_state['show_report']:
             #st.write('Show the SSRS report if a report header was selected')
-            display_ssrs_report()
+            if st.session_state['selected-project'] == 'Infeed700' or st.session_state['selected-project'] == 'Enecoms':
+                display_ssrs_report()
+            elif st.session_state['selected-project'] == 'Python':
+                display_dashboard()
 
     # Close main div
-    st.markdown('</div>', unsafe_allow_html=True)
-
+    st.markdown('</div>', unsafe_allow_html=True)    
+    
 # Entry point of the application
 if __name__ == '__main__':
     main()
+

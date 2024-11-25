@@ -89,7 +89,9 @@ body {
 #MainMenu {
     visibility: hidden;
 }
-
+.stAppDeployButton{
+    visibility: hidden;
+}
 /* Sidebar menu styling */
 .sidebar-menu {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -146,7 +148,7 @@ iframe {
 
 /* Sidebar background and styling */
 .stSidebar.st-emotion-cache-11z0mw6.eczjsme18 {
-    background: linear-gradient(to right, rgb(217, 217, 217, 0.8), rgba(217, 217, 217, 0.2));                
+    background: linear-gradient(to right, rgb(217, 217, 217, 0.4), rgba(217, 217, 217, 0.1));                
     background-size: cover; /* Ensure the background covers the sidebar */
     background-position: center; /* Center the background image */
     background-repeat: no-repeat; /* Prevent background repetition */
@@ -169,4 +171,20 @@ iframe {
     display: flex;
     flex: 1 1 0%;
     flex-direction: column;    
+}
+
+.st-emotion-cache-162k657{
+    width: 100%;
+    padding: 10px;
+    margin: 0px;
+    font-size: 14px;  
+    border-radius: 8px;    
+    color: #2c3e50;    
+    outline: none;
+    /*box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12), /* Larger, softer shadow */
+    /*            0 2px 8px rgba(0, 0, 0, 0.06); Closer, sharper shadow*/
+    height: 30px;
+}
+.st-emotion-cache-162k657 select:hover {
+    background-color: #efefee;
 }
