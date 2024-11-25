@@ -152,7 +152,9 @@ def embed_ssrs_report(reportRDLname, minDate, maxDate):
             if st.session_state.get('selected_header'):
                 error_msg = (
                     f"Error accessing the report: {response.status_code}. "
-                    f"Check the report name or parameters for {reportRDLname}.rdl"
+                    f"Check the report name or parameters for {reportRDLname}.rdl "
+                    f"Check the Secrets File > Connection details for the SSRS server. "
+                    f"Check the ReportServerName, username, password"
                 )
                 st.error(error_msg)
                 st.session_state['error_msg'] = error_msg
@@ -166,6 +168,7 @@ def embed_ssrs_report(reportRDLname, minDate, maxDate):
     except requests.exceptions.ConnectTimeout:
         # Handle timeout errors
         st.error("Connection error: Timeout while trying to access the server.")
+        st.error("Connection error: Check the Connection details on Secrets file.")
         
     except requests.exceptions.RequestException as e:
         # Handle other HTTP request errors

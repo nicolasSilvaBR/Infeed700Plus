@@ -44,7 +44,10 @@ def run_documentation():
     # Read the content of the embeddedSSRS.py file
     with open('assets/css/style.css', 'r', encoding='utf-8') as file:
         style_css = file.read()
-
+    
+    # Read the content of the Application Error Troubleshooting Guide file
+    with open('error_troubleshooting_guide.md', 'r', encoding='utf-8') as file:
+        troubleshooting_guide = file.read()
 
     # Textos e códigos para as seções
     Overview = '''\
@@ -139,9 +142,7 @@ def run_documentation():
     - **Altair** (>=5.0.0): [Altair Documentation](https://altair-viz.github.io/)
     - **Openpyxl** (>=3.1.0): [Openpyxl Documentation](https://openpyxl.readthedocs.io/en/stable/)
     - **Requests NTLM** (>=1.3.0): [Requests NTLM Documentation](https://pypi.org/project/requests-ntlm/)
-    - **Streamlit Option Menu** (>=0.3.13): [Streamlit Option Menu Documentation](https://pypi.org/project/streamlit-option-menu/)
-    - **PyArrow** (==17.0.0): [PyArrow Documentation](https://arrow.apache.org/docs/python/)
-    - **Gradio** (==5.0.0): [Gradio Documentation](https://gradio.app/)
+    - **Streamlit Option Menu** (>=0.3.13): [Streamlit Option Menu Documentation](https://pypi.org/project/streamlit-option-menu/)   
     '''
     # Configuração do menu lateral usando `streamlit_option_menu` no sidebar
     with st.sidebar:
@@ -155,12 +156,8 @@ def run_documentation():
                     "Requirements.txt", 
                     "Setup.bat",
                     "Secrets.toml",
-                    "Config.toml",
-                    "Main", 
-                    "Data base connection",
-                    "Left Menu", 
-                    "Styles CSS",                
-                    "Embed SSRS"],  # Incluindo Setup.bat
+                    "Config.toml",                   
+                     "Error Troubleshooting Guide"],
                     
             icons=["book", 
                 "book",            
@@ -169,12 +166,8 @@ def run_documentation():
                 "link", 
                 "filetype-txt", 
                 "windows", 
-                "filetype-py",
-                "filetype-py",
-                "filetype-py", 
-                "filetype-py", 
-                "filetype-css",              
-                "filetype-sql"],  # Ícones
+                "filetype-py",              
+                "bug"],  # Ícones
             menu_icon="list",  # Ícone do menu
             default_index=0,  # Índice padrão selecionado
         )
@@ -195,7 +188,10 @@ def run_documentation():
     elif selected == "Dependency Support":
         st.title("Dependency Support")
         st.markdown(dependency_support)
-
+        
+    elif selected == "Error Troubleshooting Guide":       
+        st.markdown(troubleshooting_guide)
+    
     elif selected == "Main":
         st.title("main.py")
         st.code(main_py_code, language='python')
