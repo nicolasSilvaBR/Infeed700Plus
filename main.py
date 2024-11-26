@@ -9,6 +9,7 @@ from functions.database_connection import mydb
 import streamlit.components.v1 as components
 from pathlib import Path
 from functions.utilities import load_local_css, get_base64_image
+from functions.is_web_app_enabled import IsWebAppEnabled
 
 # From function folder import config > set_page_config()
 config.set_page_config()
@@ -16,11 +17,39 @@ config.set_page_config()
 # Load custom CSS
 load_local_css("assets/css/style.css")
 
+# Initialize Sessions
+if 'pin-number' not in st.session_state:
+    st.session_state['pin-number'] = None
+if 'pin-IsWebAppEnabled' not in st.session_state:
+    st.session_state['pin-IsWebAppEnabled'] = None  
+if 'selected-project' not in st.session_state:        
+    st.session_state["selected-project"] = None 
+if 'is-logged' not in st.session_state:        
+    st.session_state["is-logged"] = False       
+
 def main():
     # Initial settings and database connection log
     engine = mydb()
     logging.info(f"Database engine: {engine}")
-    LeftMenu(engine)    
+    
+    # Check if PIn is Required    
+    is_pin_required = IsWebAppEnabled(engine)
+    project = st.session_state["selected-project"]
+    is_logged = st.session_state['is-logged']
+    
+    if is_pin_required == '1' and project == 'Infeed700':
+        text_input_container = st.empty()       
+        pin_number = text_input_container.text_input(label="🔑 Please enter the PIN to select a report from the left menu",key='text-input-pin-number')   
+        st.session_state['pin-number'] = pin_number    
+        st.session_state['IsWebAppEnabled'] = True
+        st.session_state['is-logged'] = True
+        
+        if pin_number != "":
+            text_input_container.empty()  
+        LeftMenu(engine)    
+
+    else:
+        LeftMenu(engine)    
     
     # Initialize session variables
     if 'selected_report' not in st.session_state:

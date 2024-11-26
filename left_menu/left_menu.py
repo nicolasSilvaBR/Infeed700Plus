@@ -9,6 +9,9 @@ from functions.sites import IsMultiSiteEnabled
 from functions.is_enecoms_enabled import IsEnecomsEnabled
 from functions.python_enabled import IsPythonDemoEnabled
 
+if 'pin-number' not in st.session_state:
+    st.session_state['pin-number'] = None  
+    
 # Function to load secrets
 def load_secrets():
     """Loads the primary secrets file to determine which additional secrets file to use."""
@@ -27,11 +30,13 @@ def get_image_as_base64(image_path):
     with open(image_path, "rb") as img_file:
         return base64.b64encode(img_file.read()).decode("utf-8")
 
+
 # Function to generate the sidebar menu
 def LeftMenu(engine):
     """Builds the sidebar menu for the Streamlit app."""
-    secrets = load_secrets()
     
+    secrets = load_secrets() 
+
     # Default: Disable the link
     server_url = None
 
@@ -95,15 +100,18 @@ def LeftMenu(engine):
             if left.button("Python", key='IsPythonEnabled', use_container_width=True, type='secondary', on_click=clean_report_session):  
                 st.session_state["selected-project"] = "Python"
 
+                 
+                   
         project = st.session_state["selected-project"]
         
         IsMultiSiteEnabled(engine)
 
         if st.session_state["selected-project"] != "Python":
             try:
-                # Fetch headers and reports using the provided function
-                headers_name, reports_names = get_report_headers_and_reports_names(project, engine)
-
+                pin_number = st.session_state['pin-number']
+                # Fetch headers and reports using the provided function                
+                headers_name, reports_names = get_report_headers_and_reports_names(project, engine,pin_number)               
+                
                 if headers_name is not None and reports_names is not None:
                     selected_header = st.selectbox(
                         label='',
