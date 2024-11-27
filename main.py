@@ -37,6 +37,10 @@ def main():
     project = st.session_state["selected-project"]
     is_logged = st.session_state['is-logged']
     
+    # -- 1 // Pin Check....prompt for pin
+    # -- 2 // Terminal black list...so not prompting for pin or terminal but security is enabled.
+    # -- 0 // 0 = No Security, 1 = Pin Check and 2 = Terminal black list
+
     if is_pin_required == '1' and project == 'Infeed700':
         text_input_container = st.empty()       
         pin_number = text_input_container.text_input(label="🔑 Please enter the PIN to select a report from the left menu",key='text-input-pin-number')   
